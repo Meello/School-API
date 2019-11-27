@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>StoneCo.Buy4.School.DataContracts</AssemblyName>
+    <RootNamespace>StoneCo.Buy4.School.DataContracts</RootNamespace>
+  </PropertyGroup>
+
+</Project>
