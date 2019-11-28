@@ -5,6 +5,7 @@ using System.Text;
 using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
 namespace School.Core.Mapping
 {
@@ -22,7 +23,7 @@ namespace School.Core.Mapping
                 Id = teacher.Id,
                 Name = teacher.Name,
                 Gender = teacher.Gender,
-                Level = teacher.LevelId,
+                Level = teacher.Level,
                 Salary = teacher.Salary,
                 AdmitionDate = teacher.AdmitionDate
             };
@@ -53,10 +54,29 @@ namespace School.Core.Mapping
                 Id = requestData.Id,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                LevelId = requestData.Level,
+                Level = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             };
         }
+        
+        public UpdateTeacherRequestData BuildFrom(UpdateTeacherRequestData requestData)
+        {
+            if (requestData == null)
+            {
+                return null;
+            }
+
+            return new UpdateTeacherRequestData
+            {                
+                Id = requestData.Id,
+                Name = requestData.Name,
+                Gender = requestData.Gender,
+                Level = requestData.Level,
+                Salary = requestData.Salary,
+                AdmitionDate = requestData.AdmitionDate
+            };
+        }
+        
     }
 }

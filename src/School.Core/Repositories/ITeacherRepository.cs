@@ -1,4 +1,5 @@
 ﻿using School.Core.Models;
+using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,7 @@ namespace School.Core.Repositories
 
         Teacher Insert(Teacher teacher);
 
-        Teacher Update(long id, string name, char? gender, char? levelId, decimal? salary, DateTime? admitionDate);
+        Teacher Update(UpdateTeacherRequestData teacher);
 
         Teacher Delete(long id);
     }

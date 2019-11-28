@@ -1,0 +1,58 @@
+﻿{
+	{
+		"code" : "001"
+		"message" : "Request can't be null" 
+	},
+	{
+		"code" : "002"
+		"message" : "Id can't be null"
+	},
+	{
+		"code" : "003" 
+		"message" : "Id not found"
+	},
+	{
+		"code" : "004" 
+		"message" : "Name lenght don't supported! Limit: 32 caracters"
+	},
+	{
+		"code" : "005" 
+		"message" : "Invalid Gender! Choose M or F"
+	},
+	{
+		"code" : "006" 
+		"message" : "Invalid Level! Choose J or P or S"
+	},
+	{
+		"code" : "007" 
+		"message" : "Value don't accepted! Choose some value betewwn 1000 and 10000"
+	},
+	{
+		"code" : "008" 
+		"message" : "Admition date can't be bigger than today"
+	},
+	{
+		"code" : "009"
+		"message" : "Name can't be null"
+	},
+	{
+		"code" : "010"
+		"message" : "Gender can't be null"
+	},
+	{
+		"code" : "011"
+		"message" : "Level can't be null"
+	},
+	{
+		"code" : "012"
+		"message" : "Salary can't be null"
+	},
+	{
+		"code" : "013"
+		"message" : "Admition date can't be null"
+	}
+	{
+		"code" : "014"
+		"message" : "Operation can't be done. Id already exist"
+	}
+}

@@ -1,5 +1,6 @@
 ﻿using School.Core.Models;
 using School.Core.Repositories;
+using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace School.Repositories
                 Id = 1,
                 Name = "Bruno",
                 Gender = 'M',
-                LevelId = 'S',
+                Level = 'S',
                 Salary = 1000.00m, //m para dizer que é decimal
                 AdmitionDate = DateTime.Now
             }
@@ -53,6 +54,12 @@ namespace School.Repositories
 
         public Teacher Insert(Teacher teacherToInsert)
         {
+            if (_teachers.Find(x => x.Id == teacherToInsert.Id) == null)
+            {
+                teacherToInsert.Id = -1;
+                return teacherToInsert;
+            }
+            
             _teachers.Add(teacherToInsert);
 
             return teacherToInsert;
@@ -63,39 +70,45 @@ namespace School.Repositories
             return _teachers;
         }
 
-        //Update é teacher ou boolean?
-        public Teacher Update(long id, string name, char? gender, char? levelId, decimal? salary, DateTime? admitionDate)
+        public Teacher Update(UpdateTeacherRequestData requestData)
         {
-            if (id <= 0)
+            if (requestData.Id == 0)
             {
-                throw new Exception();
+                return new Teacher 
+                {
+                    Id = requestData.Id
+                };
+            }
+            Teacher teacherToUpdate = _teachers.Find(x => x.Id == requestData.Id);
+
+            if(teacherToUpdate == null)
+            {
+                return null;
             }
 
-            Teacher teacherToUpdate = _teachers.Find(x => x.Id == id) ;
-
-            if(!string.IsNullOrWhiteSpace(name))
+            if(!string.IsNullOrWhiteSpace(requestData.Name))
             {
-                teacherToUpdate.Name = name;
+                teacherToUpdate.Name = requestData.Name;
             }
 
-            if (gender != '\u0000'|| gender == 'F' || gender == 'M')
+            if (requestData.Gender != null|| requestData.Gender == 'F' || requestData.Gender == 'M')
             {
-                teacherToUpdate.Gender = gender.Value;
+                teacherToUpdate.Gender = requestData.Gender.Value;
             }
 
-            if (levelId != '\u0000' || levelId == 'J' || levelId == 'P' || levelId == 'S')
+            if (requestData.Level != null || requestData.Level == 'J' || requestData.Level == 'P' || requestData.Level == 'S')
             {
-                teacherToUpdate.LevelId = levelId.Value;
+                teacherToUpdate.Level = requestData.Level.Value;
             }
 
-            if (salary != decimal.Zero)
+            if (requestData.Salary != null)
             {
-                teacherToUpdate.Salary = salary.Value;
+                teacherToUpdate.Salary = requestData.Salary.Value;
             }
 
-            if(admitionDate != DateTime.MinValue)
+            if(requestData.AdmitionDate != null)
             {
-                teacherToUpdate.AdmitionDate = admitionDate.Value;
+                teacherToUpdate.AdmitionDate = requestData.AdmitionDate.Value;
             }
 
             return teacherToUpdate;

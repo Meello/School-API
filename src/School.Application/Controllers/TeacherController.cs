@@ -84,15 +84,19 @@ namespace School.Application.Controllers
         }
 
         [HttpPut]
-        public ActionResult<UpdateTeacherResponse> Update(long id, string name, char gender, char levelId, decimal salary, DateTime admitionDate)
+        public ActionResult<UpdateTeacherResponse> Update([FromBody]UpdateTeacherRequestData requestData)
         {
-            //não consegui pegar todo o teacher
-            UpdateTeacherRequest request = new UpdateTeacherRequest(id, name, gender, levelId, salary, admitionDate);
+            UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
             UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);
 
             if (response == null)
             {
                 return NotFound();
+            }
+
+            if (response.Success == false)
+            {
+                return BadRequest(response);
             }
 
             return Ok(response);
