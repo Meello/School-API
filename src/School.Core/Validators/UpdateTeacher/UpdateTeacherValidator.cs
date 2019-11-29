@@ -9,32 +9,6 @@ namespace School.Core.Validators.UpdateTeacher
 {
     public class UpdateTeacherValidator : IUpdateTeacherValidator
     {
-        /*
-        public UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
-        {
-            UpdateTeacherResponse response = new UpdateTeacherResponse
-            {
-                Errors = new List<OperationError>()
-            };
-
-            this.ValidateFormat(request, response);
-
-            if(response.Errors.Count > 0)
-            {
-                return response;
-            }
-
-            this.ValidateBusinessRules(request, response);
-
-            if(response.Errors.Count == 0)
-            {
-                response.Success = true;
-            }
-
-            return response;
-        }
-        */
-
         public UpdateTeacherResponse ValidateFormat(UpdateTeacherRequest request, UpdateTeacherResponse response)
         {
             if (request.Data.CPF == 0)

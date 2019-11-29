@@ -1,8 +1,11 @@
-﻿using School.Core.Models;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using School.Core.Models;
 using School.Core.Repositories;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -10,7 +13,21 @@ namespace School.Repositories
 {
     public class TeacherRepository : ITeacherRepository
     {
-        private static List<Teacher> _teachers = new List<Teacher> 
+        private readonly IConfiguration _configuration;
+
+        public TeacherRepository(IConfiguration configuration)
+        {
+            this._configuration = configuration;
+        }
+        
+        public string GetConnection()
+        {
+            var connection = _configuration.GetSection("ConnectionStrings").GetSection("TeacherConnection").Value;
+            return connection;
+        }
+
+
+        private static List<Teacher>  _teachers = new List<Teacher> 
         //Para private static usar _ e nome em minúsculo
         {
             new Teacher
@@ -61,7 +78,28 @@ namespace School.Repositories
 
         public List<Teacher> ListAll()
         {
-            return _teachers;
+            var connectionString = this.GetConnection();
+            List<Teacher> teacher = new List<Teacher>();
+            using (var con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    var query = "SELECT * FROM Produtos";
+                    teacher = con.Query<Teacher>(query).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    con.Close();
+                }
+                return teacher;
+            }
+
+            //return _teachers;
         }
 
         public Teacher Update(UpdateTeacherRequestData requestData)

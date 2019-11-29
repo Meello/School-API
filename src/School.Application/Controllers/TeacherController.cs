@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using School.Core.Models;
 using School.Core.Operations.DeleteTeacher;
 using School.Core.Operations.GetTeacher;
@@ -11,6 +12,7 @@ using StoneCo.Buy4.School.DataContracts.GetTeachers;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
+using System.Data.SqlClient;
 
 namespace School.Application.Controllers
 {
@@ -61,13 +63,15 @@ namespace School.Application.Controllers
         [HttpGet]
         public ActionResult<GetTeachersResponse> Get()
         {
+            
+
             GetTeachersResponse response = this._getTeachers.ProcessOperation();
 
             return Ok(response);
             //Aparece o status 200 e retorna o dado
+            //Não precisa do return notfound quando não tem dados, porque a lista pode estar vazia
+            //salvo exceções, exemplo erro 500, internal error
         }
-        //Não precisa do return notfound quando não tem dados, porque a lista pode estar vazia
-        //salvo exceções, exemplo erro 500, internal error
 
         [HttpDelete("{cpf}")]
         public ActionResult<DeleteTeacherResponse> Delete(long cpf)
