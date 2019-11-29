@@ -4,7 +4,8 @@ using System.Text;
 
 namespace School.Core.Validators.ValidateTeacherObjects.ValidateIfIsNull
 {
-    class ValidateNameNull
+    public class ValidateNameNull
     {
+
     }
 }
