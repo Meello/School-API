@@ -6,11 +6,11 @@ namespace StoneCo.Buy4.School.DataContracts.DeleteTeacher
 {
     public class DeleteTeacherRequest
     {
-        public DeleteTeacherRequest(long id)
+        public DeleteTeacherRequest(long cpf)
         {
-            this.Id = id;
+            this.CPF = cpf;
         }
 
-        public long Id { get; }
+        public long CPF { get; }
     }
 }

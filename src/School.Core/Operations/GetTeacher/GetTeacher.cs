@@ -26,7 +26,7 @@ namespace School.Core.Operations.GetTeacher
                 Success = false
             };
 
-            Teacher teacher = this._teacherRepository.Get(request.Id);
+            Teacher teacher = this._teacherRepository.Get(request.CPF);
             
             if(teacher is null)
             {

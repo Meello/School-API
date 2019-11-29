@@ -9,7 +9,7 @@ namespace School.Core.Repositories
     public interface ITeacherRepository
     {
         //Interface define o contrato
-        Teacher Get(long id);
+        Teacher Get(long cpf);
 
         List<Teacher> ListAll();
 
@@ -17,6 +17,6 @@ namespace School.Core.Repositories
 
         Teacher Update(UpdateTeacherRequestData teacher);
 
-        Teacher Delete(long id);
+        Teacher Delete(long cpf);
     }
 }

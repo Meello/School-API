@@ -6,11 +6,11 @@ namespace StoneCo.Buy4.School.DataContracts.GetTeacher
 {
     public class GetTeacherRequest
     {
-        public GetTeacherRequest(long id)
+        public GetTeacherRequest(long cpf)
         {
-            this.Id = id;
+            this.CPF = cpf;
         }
 
-        public long Id{ get; }
+        public long CPF{ get; }
     }
 }

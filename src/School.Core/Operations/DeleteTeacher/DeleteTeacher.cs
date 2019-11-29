@@ -29,7 +29,7 @@ namespace School.Core.Operations.DeleteTeacher
             //Requisição --> request
             //Delete --> verbo usado para deletar o teacher requisitado
             //request. para pegar o valor do objeto request da classe DeleteTeacherRequest
-            Teacher teacher = this._teacherRepository.Delete(request.Id);
+            Teacher teacher = this._teacherRepository.Delete(request.CPF);
 
             //Conferir se a requisição é nula ou não exista no banco de dados
             if(teacher == null)

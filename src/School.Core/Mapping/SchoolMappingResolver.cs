@@ -20,7 +20,7 @@ namespace School.Core.Mapping
 
             return new TeacherResponseData
             {
-                Id = teacher.Id,
+                CPF = teacher.CPF,
                 Name = teacher.Name,
                 Gender = teacher.Gender,
                 Level = teacher.Level,
@@ -51,7 +51,8 @@ namespace School.Core.Mapping
 
             return new Teacher
             {
-                Id = requestData.Id,
+                
+                CPF = requestData.CPF,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
                 Level = requestData.Level,
@@ -69,7 +70,7 @@ namespace School.Core.Mapping
 
             return new UpdateTeacherRequestData
             {                
-                Id = requestData.Id,
+                CPF = requestData.CPF,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
                 Level = requestData.Level,

@@ -43,10 +43,10 @@ namespace School.Application.Controllers
             this._insertTeacher = insertTeacher;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<GetTeacherResponse> Get(long id)
+        [HttpGet("{cpf}")]
+        public ActionResult<GetTeacherResponse> Get(long cpf)
         {
-            GetTeacherRequest request = new GetTeacherRequest(id);
+            GetTeacherRequest request = new GetTeacherRequest(cpf);
             GetTeacherResponse response = this._getTeacher.ProcessOperation(request);
 
             if(response == null)
@@ -69,10 +69,10 @@ namespace School.Application.Controllers
         //Não precisa do return notfound quando não tem dados, porque a lista pode estar vazia
         //salvo exceções, exemplo erro 500, internal error
 
-        [HttpDelete("{id}")]
-        public ActionResult<DeleteTeacherResponse> Delete(long id)
+        [HttpDelete("{cpf}")]
+        public ActionResult<DeleteTeacherResponse> Delete(long cpf)
         {
-            DeleteTeacherRequest request = new DeleteTeacherRequest(id);
+            DeleteTeacherRequest request = new DeleteTeacherRequest(cpf);
             DeleteTeacherResponse response = this._deleteTeacher.ProcessOperation(request);
 
             if (response == null)

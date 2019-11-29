@@ -10,6 +10,8 @@ using School.Core.Operations.GetTeachers;
 using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
+using School.Core.Validators;
+using School.Core.Validators.UpdateTeacher;
 using School.Repositories;
 
 namespace School.Application
@@ -36,6 +38,8 @@ namespace School.Application
             services.AddScoped<IDeleteTeacher, DeleteTeacher>();
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
             services.AddScoped<IInsertTeacher, InsertTeacher>();
+            services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
+            services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

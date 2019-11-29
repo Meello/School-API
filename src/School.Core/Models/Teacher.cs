@@ -6,7 +6,7 @@ namespace School.Core.Models
 {
     public class Teacher
     {
-        public long Id { get; set; }
+        public long CPF { get; set; }
         
         public string Name { get; set; }
         

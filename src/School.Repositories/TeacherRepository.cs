@@ -15,7 +15,7 @@ namespace School.Repositories
         {
             new Teacher
             {
-                Id = 1,
+                CPF = 1,
                 Name = "Bruno",
                 Gender = 'M',
                 Level = 'S',
@@ -24,11 +24,11 @@ namespace School.Repositories
             }
         };
 
-        public Teacher Delete(long id)
+        public Teacher Delete(long cpf)
         {
             for (int i = 0; i < _teachers.Count; i++)
             {
-                if (_teachers[i].Id == id)
+                if (_teachers[i].CPF == cpf)
                 {
                     Teacher teacher = _teachers.ElementAt(i);
                     _teachers.Remove(teacher);
@@ -39,11 +39,11 @@ namespace School.Repositories
             return null;
         }
 
-        public Teacher Get(long id)
+        public Teacher Get(long cpf)
         {
             for (int i = 0; i < _teachers.Count; i++)
             {
-                if (_teachers[i].Id == id)
+                if (_teachers[i].CPF == cpf)
                 {
                     Teacher teacher = _teachers.ElementAt(i);
                     return teacher;
@@ -54,12 +54,6 @@ namespace School.Repositories
 
         public Teacher Insert(Teacher teacherToInsert)
         {
-            if (_teachers.Find(x => x.Id == teacherToInsert.Id) == null)
-            {
-                teacherToInsert.Id = -1;
-                return teacherToInsert;
-            }
-            
             _teachers.Add(teacherToInsert);
 
             return teacherToInsert;
@@ -72,46 +66,24 @@ namespace School.Repositories
 
         public Teacher Update(UpdateTeacherRequestData requestData)
         {
-            if (requestData.Id == 0)
-            {
-                return new Teacher 
-                {
-                    Id = requestData.Id
-                };
-            }
-            Teacher teacherToUpdate = _teachers.Find(x => x.Id == requestData.Id);
-
-            if(teacherToUpdate == null)
+            if (_teachers.Find(x => x.CPF == requestData.CPF) == null)
             {
                 return null;
             }
-
-            if(!string.IsNullOrWhiteSpace(requestData.Name))
+            
+            for (int i = 0; i < _teachers.Count; i++)
             {
-                teacherToUpdate.Name = requestData.Name;
+                if (_teachers[i].CPF == requestData.CPF)
+                {
+                    _teachers[i].AdmitionDate = requestData.AdmitionDate.Value;
+                    _teachers[i].Gender = requestData.Gender.Value;
+                    _teachers[i].Level = requestData.Level.Value;
+                    _teachers[i].Name = requestData.Name;
+                    _teachers[i].Salary = requestData.Salary.Value;
+                }
             }
 
-            if (requestData.Gender != null|| requestData.Gender == 'F' || requestData.Gender == 'M')
-            {
-                teacherToUpdate.Gender = requestData.Gender.Value;
-            }
-
-            if (requestData.Level != null || requestData.Level == 'J' || requestData.Level == 'P' || requestData.Level == 'S')
-            {
-                teacherToUpdate.Level = requestData.Level.Value;
-            }
-
-            if (requestData.Salary != null)
-            {
-                teacherToUpdate.Salary = requestData.Salary.Value;
-            }
-
-            if(requestData.AdmitionDate != null)
-            {
-                teacherToUpdate.AdmitionDate = requestData.AdmitionDate.Value;
-            }
-
-            return teacherToUpdate;
+            return _teachers.Find(x => x.CPF == requestData.CPF);
         }
     }
 }
