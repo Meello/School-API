@@ -4,8 +4,8 @@ using System.Text;
 
 namespace School.Core.Validators.ValidateTeacherObjects.ValidateIfIsNull
 {
-    public class ValidateNameNull
+    public interface IValidateNameNull
     {
-
+        bool ValidateIfNameIsNull(string str);
     }
 }

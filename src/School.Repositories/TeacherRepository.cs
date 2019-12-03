@@ -5,6 +5,7 @@ using School.Core.Repositories;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -20,108 +21,105 @@ namespace School.Repositories
             this._configuration = configuration;
         }
         
-        public string GetConnection()
+        public string GetConnectionString()
         {
-            var connection = _configuration.GetSection("ConnectionStrings").GetSection("TeacherConnection").Value;
+            var connection = _configuration.GetConnectionString("SchoolConnection");
             return connection;
         }
 
-
-        private static List<Teacher>  _teachers = new List<Teacher> 
-        //Para private static usar _ e nome em minúsculo
+        public IEnumerable<Teacher> ListAll()
         {
-            new Teacher
+            string sql = @"
+                SELECT 
+	                TeacherId,
+	                Name,
+	                Gender,
+	                LevelId,
+	                Salary,
+	                AdmitionDate
+                FROM 
+	                dbo.Teacher";
+
+            using (SqlConnection sqlConnection = new SqlConnection(this.GetConnectionString()))
             {
-                CPF = 1,
-                Name = "Bruno",
-                Gender = 'M',
-                Level = 'S',
-                Salary = 1000.00m, //m para dizer que é decimal
-                AdmitionDate = DateTime.Now
+                sqlConnection.Open();
+
+                return sqlConnection.Query<Teacher>(sql);
             }
-        };
+        }
+
+        public Teacher Get(long cpf)
+        {
+            string sql = @"
+                SELECT 
+	                TeacherId,
+	                Name,
+	                Gender,
+	                LevelId,
+	                Salary,
+	                AdmitionDate
+                FROM 
+	                dbo.Teacher
+                WHERE
+	                TeacherId = @Cpf";
+
+            //Para passar um parâmetro na query
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Cpf", cpf, DbType.Int64);
+
+            using (SqlConnection sqlConnection = new SqlConnection(this.GetConnectionString()))
+            {
+                sqlConnection.Open();
+
+                return sqlConnection.QuerySingleOrDefault<Teacher>(sql,parameters);
+            }
+        }
+        public Teacher Insert(Teacher teacherToInsert)
+        {
+            return null;
+            //_teachers.Add(teacherToInsert);
+
+            //return teacherToInsert;
+        }
 
         public Teacher Delete(long cpf)
         {
-            for (int i = 0; i < _teachers.Count; i++)
+            /*for (int i = 0; i < _teachers.Count; i++)
             {
-                if (_teachers[i].CPF == cpf)
+                if (_teachers[i].TeacherId == cpf)
                 {
                     Teacher teacher = _teachers.ElementAt(i);
                     _teachers.Remove(teacher);
                     return teacher;
                 }
-            }
+            }*/
 
             return null;
         }
 
-        public Teacher Get(long cpf)
-        {
-            for (int i = 0; i < _teachers.Count; i++)
-            {
-                if (_teachers[i].CPF == cpf)
-                {
-                    Teacher teacher = _teachers.ElementAt(i);
-                    return teacher;
-                }
-            }
-            return null;
-        }
-
-        public Teacher Insert(Teacher teacherToInsert)
-        {
-            _teachers.Add(teacherToInsert);
-
-            return teacherToInsert;
-        }
-
-        public List<Teacher> ListAll()
-        {
-            var connectionString = this.GetConnection();
-            List<Teacher> teacher = new List<Teacher>();
-            using (var con = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    con.Open();
-                    var query = "SELECT * FROM Produtos";
-                    teacher = con.Query<Teacher>(query).ToList();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    con.Close();
-                }
-                return teacher;
-            }
-
-            //return _teachers;
-        }
+        
 
         public Teacher Update(UpdateTeacherRequestData requestData)
         {
-            if (_teachers.Find(x => x.CPF == requestData.CPF) == null)
+            /*if (_teachers.Find(x => x.TeacherId == requestData.CPF) == null)
             {
                 return null;
             }
             
             for (int i = 0; i < _teachers.Count; i++)
             {
-                if (_teachers[i].CPF == requestData.CPF)
+                if (_teachers[i].TeacherId == requestData.CPF)
                 {
                     _teachers[i].AdmitionDate = requestData.AdmitionDate.Value;
                     _teachers[i].Gender = requestData.Gender.Value;
-                    _teachers[i].Level = requestData.Level.Value;
+                    _teachers[i].LevelId = requestData.Level.Value;
                     _teachers[i].Name = requestData.Name;
                     _teachers[i].Salary = requestData.Salary.Value;
                 }
             }
 
-            return _teachers.Find(x => x.CPF == requestData.CPF);
+            return _teachers.Find(x => x.TeacherId == requestData.CPF);*/
+            return null;
         }
     }
 }

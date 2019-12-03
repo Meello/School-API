@@ -49,7 +49,7 @@ namespace School.Core.Operations.InsertTeacher
                 Errors = new List<OperationError>()
             };
 
-            if (teacher.CPF == -1)
+            if (teacher.TeacherId == -1)
             {
                 response.Errors.Add(new OperationError("014", "Operation can't be done. CPF already exist"));
                 return response;

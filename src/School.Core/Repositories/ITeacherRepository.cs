@@ -11,7 +11,7 @@ namespace School.Core.Repositories
         //Interface define o contrato
         Teacher Get(long cpf);
 
-        List<Teacher> ListAll();
+        IEnumerable<Teacher> ListAll();
 
         Teacher Insert(Teacher teacher);
 

@@ -6,13 +6,13 @@ namespace School.Core.Models
 {
     public class Teacher
     {
-        public long CPF { get; set; }
+        public long TeacherId { get; set; }
         
         public string Name { get; set; }
         
         public char Gender { get; set; }
         
-        public char Level { get; set; }
+        public char LevelId { get; set; }
         
         public decimal Salary { get; set; }
         

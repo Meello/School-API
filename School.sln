@@ -14,9 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Application", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.DataContracts", "src\School.DataContracts\School.DataContracts.csproj", "{7A144714-C3F5-45D6-9470-30528B22D2E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Core", "src\School.Core\School.Core.csproj", "{1CCA5334-64FF-4A51-8F4F-3F5A649431C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Core", "src\School.Core\School.Core.csproj", "{1CCA5334-64FF-4A51-8F4F-3F5A649431C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Repositories", "src\School.Repositories\School.Repositories.csproj", "{7118A38F-F15C-4756-9B5D-5E41C86E7094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Repositories", "src\School.Repositories\School.Repositories.csproj", "{7118A38F-F15C-4756-9B5D-5E41C86E7094}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

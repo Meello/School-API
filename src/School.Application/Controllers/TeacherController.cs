@@ -1,6 +1,4 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using School.Core.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using School.Core.Operations.DeleteTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
@@ -11,8 +9,8 @@ using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using StoneCo.Buy4.School.DataContracts.GetTeachers;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
-using System;
-using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace School.Application.Controllers
 {
@@ -63,8 +61,6 @@ namespace School.Application.Controllers
         [HttpGet]
         public ActionResult<GetTeachersResponse> Get()
         {
-            
-
             GetTeachersResponse response = this._getTeachers.ProcessOperation();
 
             return Ok(response);

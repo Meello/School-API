@@ -20,10 +20,10 @@ namespace School.Core.Mapping
 
             return new TeacherResponseData
             {
-                CPF = teacher.CPF,
+                CPF = teacher.TeacherId,
                 Name = teacher.Name,
                 Gender = teacher.Gender,
-                Level = teacher.Level,
+                Level = teacher.LevelId,
                 Salary = teacher.Salary,
                 AdmitionDate = teacher.AdmitionDate
             };
@@ -31,7 +31,7 @@ namespace School.Core.Mapping
 
 
 
-        public List<TeacherResponseData> BuildFrom(List<Teacher> teachers)
+        public List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teachers)
             //sobrecarga de método --> capacidade de um método ter o mesmo nome com assinaturas diferentes
             //variando o tipo e a quantidade de variáveis
         {
@@ -52,10 +52,10 @@ namespace School.Core.Mapping
             return new Teacher
             {
                 
-                CPF = requestData.CPF,
+                TeacherId = requestData.CPF,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                Level = requestData.Level,
+                LevelId = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             };
