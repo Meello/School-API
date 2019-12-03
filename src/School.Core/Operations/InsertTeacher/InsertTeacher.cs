@@ -34,29 +34,12 @@ namespace School.Core.Operations.InsertTeacher
 
             Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
 
-            Teacher insertedTeacher = this._teacherRepository.Insert(teacher);
+            Teacher insertedTeacher = this._teacherRepository.Insert(teacher, response);
 
             response.Data = this._mappingResolver.BuildFrom(insertedTeacher);
             response.Success = true;
 
             return response;
-        }
-        
-        private InsertTeacherResponse ValidateInsert(Teacher teacher)
-        {
-            InsertTeacherResponse response = new InsertTeacherResponse
-            {
-                Errors = new List<OperationError>()
-            };
-
-            if (teacher.TeacherId == -1)
-            {
-                response.Errors.Add(new OperationError("014", "Operation can't be done. CPF already exist"));
-                return response;
-            }
-
-            response.Success = true;
-            return response;            
         }
     }
 }

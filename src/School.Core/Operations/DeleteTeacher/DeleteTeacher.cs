@@ -22,16 +22,10 @@ namespace School.Core.Operations.DeleteTeacher
 
         public DeleteTeacherResponse ProcessOperation(DeleteTeacherRequest request)
         {
-            //Criar objeto response para retornar os valores
             DeleteTeacherResponse response = new DeleteTeacherResponse();
 
-            //Criar objeto teacher da classe Teacher para receber os valores correspondentes da requisição
-            //Requisição --> request
-            //Delete --> verbo usado para deletar o teacher requisitado
-            //request. para pegar o valor do objeto request da classe DeleteTeacherRequest
-            Teacher teacher = this._teacherRepository.Delete(request.CPF);
+            Teacher teacher = this._teacherRepository.Delete(request.CPF, response);
 
-            //Conferir se a requisição é nula ou não exista no banco de dados
             if(teacher == null)
             {
                 response.Success = false;

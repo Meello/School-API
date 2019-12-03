@@ -12,6 +12,7 @@ using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
 using School.Core.Validators.UpdateTeacher;
+using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
 
 namespace School.Application
@@ -29,8 +30,9 @@ namespace School.Application
         public void ConfigureServices(IServiceCollection services)
         {
             // Repositories
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
-            
+            services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            //services.AddScoped<ITeacherRepository, TeacherRepository>();
+
             // Operations
             services.AddScoped<ISchoolMappingResolver, SchoolMappingResolver>();
             services.AddScoped<IGetTeacher, GetTeacher>();
@@ -40,6 +42,7 @@ namespace School.Application
             services.AddScoped<IInsertTeacher, InsertTeacher>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
             services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
+            services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>(); 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

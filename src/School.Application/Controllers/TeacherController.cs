@@ -49,7 +49,7 @@ namespace School.Application.Controllers
             GetTeacherRequest request = new GetTeacherRequest(cpf);
             GetTeacherResponse response = this._getTeacher.ProcessOperation(request);
 
-            if(response == null)
+            if(response.Data == null)
             {
                 return NotFound();
             }
@@ -75,7 +75,7 @@ namespace School.Application.Controllers
             DeleteTeacherRequest request = new DeleteTeacherRequest(cpf);
             DeleteTeacherResponse response = this._deleteTeacher.ProcessOperation(request);
 
-            if (response == null)
+            if (response.Data == null)
             {
                 return NotFound();
             }
@@ -89,7 +89,7 @@ namespace School.Application.Controllers
             UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
             UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);
 
-            if (response == null)
+            if (response.Data == null)
             {
                 return NotFound();
             }

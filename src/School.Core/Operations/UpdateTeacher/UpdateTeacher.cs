@@ -25,12 +25,7 @@ namespace School.Core.Operations.UpdateTeacher
 
         public UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = new UpdateTeacherResponse
-            {
-                Errors = new List<OperationError>()
-            };
-
-            this._validator.ValidateFormat(request, response);
+            UpdateTeacherResponse response = this._validator.ValidateProcess(request);
 
             if(response.Success == false)
             {
@@ -41,9 +36,9 @@ namespace School.Core.Operations.UpdateTeacher
 
             //O objeto para ser passado para o BuildFrom deve ser o que recebe o repositório
             //Tomar cuidado para não enviar a requisição
-            Teacher updatedTeacher = this._teacherRepository.Update(teacher);
+            Teacher updatedTeacher = this._teacherRepository.Update(teacher, response);
 
-            this._validator.ValidateBusinessRules(request, response);
+            //this._validator.ValidateBusinessRules(request, response);
 
             response.Data = this._mappingResolver.BuildFrom(updatedTeacher);
             response.Success = true;

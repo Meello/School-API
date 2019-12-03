@@ -1,4 +1,6 @@
-﻿using StoneCo.Buy4.School.DataContracts;
+﻿using School.Core.Models;
+using School.Core.Validators.ValidateTeacherParameters;
+using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System;
 using System.Collections.Generic;
@@ -21,93 +23,30 @@ namespace School.Core.Validators
                 return response;
             }
 
-            this.ValidateFormat(request, response);
+            TeacherParametersValidator validator = new TeacherParametersValidator();
+            //Validate if parameters are null
+            validator.ValidateNullOrZero(request.Data.CPF, response, nameof(InsertTeacherRequest.Data.CPF));
+            validator.ValidateNullOrZero(request.Data.Name, response, "Name");
+            validator.ValidateNullOrZero(request.Data.Gender, response, "Gender");
+            validator.ValidateNullOrZero(request.Data.Level, response, "Level");
+            validator.ValidateNullOrZero(request.Data.Salary, response, "Salary");
+            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, "AdmitionDate");
+            //Validate format
+            validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
+            validator.ValidateGender(request.Data.Gender, response);
+            validator.ValidateLevel(request.Data.Level, response);
+            validator.ValidateSalary(request.Data.Salary, response);
+            validator.ValidateAdmitionDate(request.Data.AdmitionDate, response);
 
             if (response.Errors.Count > 0)
             {
                 return response;
             }
 
-            this.ValidateBusinessRules(request, response);
-
-            if (response.Errors.Count == 0)
-            {
-                response.Success = true;
-            }
-
+            response.Success = true;
             return response;
+
+            //falta validar se o cpf já existe
         }
-
-        private void ValidateFormat(InsertTeacherRequest request, InsertTeacherResponse response)
-        {
-            if (request.Data.CPF == 0)
-            {
-                response.Errors.Add(new OperationError("002", "CPF can't be null"));
-            }
-
-            if (request.Data.Name == null)
-            {
-                response.Errors.Add(new OperationError("009", "Name can't be null"));
-            }
-            else
-            {
-                if (request.Data.Name.Length > 32)
-                {
-                    response.Errors.Add(new OperationError("004", "Name lenght don't supported! Limit: 32 caracters"));
-                }
-            }
-
-            if (request.Data.Gender == '\u0000')
-            {
-                response.Errors.Add(new OperationError("010", "Gender can't be null"));
-            }
-            else
-            {
-                if (request.Data.Gender != 'F' && request.Data.Gender != 'M')
-                {
-                    response.Errors.Add(new OperationError("005", "Invalid Gender! Choose M or F"));
-                }
-            }
-
-            if (request.Data.Level == '\u0000')
-            {
-                response.Errors.Add(new OperationError("011", "Level can't be null"));
-            }
-            else
-            {
-                if (request.Data.Level != 'J' && request.Data.Level != 'P' && request.Data.Level != 'S')
-                {
-                    response.Errors.Add(new OperationError("006", "Invalid Level! Choose J or P or S"));
-                }
-            }
-
-            if (request.Data.Salary == decimal.Zero)
-            {
-                response.Errors.Add(new OperationError("012", "Salary can't be null"));
-            }
-            else
-            {
-                if (request.Data.Salary < 1000 || request.Data.Salary > 10000)
-                {
-                    response.Errors.Add(new OperationError("007", "Value don't accepted! Choose some value betewwn 1000 and 10000"));
-                }
-            }
-
-            if (request.Data.AdmitionDate == DateTime.MinValue)
-            {
-                response.Errors.Add(new OperationError("013", "AdmitionDate can't be null"));
-            }
-            else
-            {
-                if (request.Data.AdmitionDate > DateTime.Today)
-                {
-                    response.Errors.Add(new OperationError("008", "Admition date can't be bigger than today"));
-                }
-            }
-        }
-        private void ValidateBusinessRules(InsertTeacherRequest request, InsertTeacherResponse response)
-        {
-
-        } 
     }
 }
