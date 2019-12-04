@@ -6,6 +6,7 @@ using School.Core.Repositories;
 using System.Text;
 using School.Core.Validators.ValidateTeacherParameters;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using School.Core.Models;
 
 namespace School.Core.Validators.UpdateTeacher
 {
@@ -33,10 +34,10 @@ namespace School.Core.Validators.UpdateTeacher
                 return response;
             }
             
-            validator.ValidateMaxLength(request.Data.Name, response);
+            validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
             validator.ValidateGender(request.Data.Gender, response);
             validator.ValidateLevel(request.Data.Level, response);
-            validator.ValidateSalary(request.Data.Salary, response);
+            validator.ValidateMinMaxSalary(request.Data.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
             validator.ValidateAdmitionDate(request.Data.AdmitionDate, response);
 
             if (response.Errors.Count == 0)

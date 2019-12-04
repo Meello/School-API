@@ -10,6 +10,9 @@ namespace School.Core.Models
         {
             public const int NameMaxLength = 32;
 
+            public const decimal MinSalary = 1000;
+
+            public const decimal MaxSalary = 10000;
         }
 
     }

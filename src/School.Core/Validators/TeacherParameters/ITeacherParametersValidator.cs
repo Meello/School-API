@@ -17,13 +17,13 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         void ValidateNullOrZero(DateTime? value, OperationResponseBase response, string fieldName);
 
-        void ValidateMaxLength(string name, OperationResponseBase response);
+        void ValidateMaxLength(string name, int maxlength, OperationResponseBase response);
 
         void ValidateGender(char? gender, OperationResponseBase response);
 
         void ValidateLevel(char? level, OperationResponseBase response);
 
-        void ValidateSalary(decimal? salary, OperationResponseBase response);
+        void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response);
 
         void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response);
     }

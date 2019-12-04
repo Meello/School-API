@@ -76,9 +76,9 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
         }
 
-        public void ValidateSalary(decimal? salary, OperationResponseBase response)
+        public void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response)
         {
-            if (salary != null && salary != decimal.Zero && salary < 1000 || salary > 10000)
+            if (salary != null && salary != decimal.Zero && salary < minsalary || salary > maxsalary)
             {
                 response.Errors.Add(new OperationError("007", "Value don't accepted! Choose some value between 1000 and 10000"));
             }
