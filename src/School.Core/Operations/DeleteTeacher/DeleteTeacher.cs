@@ -1,6 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
+using School.Core.Validators.IdValidator;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
 using System;
 using System.Collections.Generic;
@@ -13,26 +14,27 @@ namespace School.Core.Operations.DeleteTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
+        private readonly IIdExistValidator _idExistValidator;
 
-        public DeleteTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver )
+        public DeleteTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IIdExistValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
+            this._idExistValidator = idExistValidator;
         }
 
         public DeleteTeacherResponse ProcessOperation(DeleteTeacherRequest request)
         {
             DeleteTeacherResponse response = new DeleteTeacherResponse();
 
-            Teacher teacher = this._teacherRepository.Delete(request.CPF, response);
-
-            if(teacher == null)
+            if (this._idExistValidator.ValidateIdExist(request.CPF) == false)
             {
                 response.Success = false;
                 return response;
             }
 
-            response.Data = this._mappingResolver.BuildFrom(teacher);
+            this._teacherRepository.Delete(request.CPF);
+
             response.Success = true;
 
             return response;

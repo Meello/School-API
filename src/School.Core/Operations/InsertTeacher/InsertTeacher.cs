@@ -2,6 +2,7 @@
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators;
+using School.Core.Validators.IdValidator;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System;
@@ -15,12 +16,14 @@ namespace School.Core.Operations.InsertTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IInsertTeacherValidator _validator;
+        private readonly IIdExistValidator _idExistValidator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IIdExistValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
+            this._idExistValidator = idExistValidator;
         }
 
         public InsertTeacherResponse ProcessOperation(InsertTeacherRequest request)
@@ -32,11 +35,16 @@ namespace School.Core.Operations.InsertTeacher
                 return response;
             }
 
+            if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == true)
+            {
+                response.Success = false;
+                return response;
+            }
+
             Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
 
-            Teacher insertedTeacher = this._teacherRepository.Insert(teacher, response);
+            this._teacherRepository.Insert(teacher);
 
-            response.Data = this._mappingResolver.BuildFrom(insertedTeacher);
             response.Success = true;
 
             return response;

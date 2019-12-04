@@ -11,7 +11,7 @@ namespace School.Core.Mapping
 {
     public class SchoolMappingResolver : ISchoolMappingResolver
     {
-        public TeacherResponseData BuildFrom(Teacher teacher)
+        public TeacherResponseData BuildFrom(Models.Teacher teacher)
         {
             if(teacher == null)
             {
@@ -31,7 +31,7 @@ namespace School.Core.Mapping
 
 
 
-        public List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teachers)
+        public List<TeacherResponseData> BuildFrom(IEnumerable<Models.Teacher> teachers)
             //sobrecarga de método --> capacidade de um método ter o mesmo nome com assinaturas diferentes
             //variando o tipo e a quantidade de variáveis
         {
@@ -49,7 +49,7 @@ namespace School.Core.Mapping
                 return null;
             }
 
-            return new Teacher
+            return new Models.Teacher
             {
                 TeacherId = requestData.CPF,
                 Name = requestData.Name,
@@ -60,19 +60,19 @@ namespace School.Core.Mapping
             };
         }
         
-        public UpdateTeacherRequestData BuildFrom(UpdateTeacherRequestData requestData)
+        public Teacher BuildFrom(UpdateTeacherRequestData requestData)
         {
             if (requestData == null)
             {
                 return null;
             }
 
-            return new UpdateTeacherRequestData
+            return new Teacher
             {                
-                CPF = requestData.CPF,
+                TeacherId = requestData.CPF,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                Level = requestData.Level,
+                LevelId = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             };

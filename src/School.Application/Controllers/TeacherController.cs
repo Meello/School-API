@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using School.Core.Models;
 using School.Core.Operations.DeleteTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
@@ -28,7 +29,7 @@ namespace School.Application.Controllers
 
         //Criando lista, deve colocar no plural
         //sempre que precisar de alguma dependência, acrescentar no construtor
-
+        
         public TeacherController(
             IGetTeacher getTeacher,
             IGetTeachers getTeachers,
@@ -75,28 +76,9 @@ namespace School.Application.Controllers
             DeleteTeacherRequest request = new DeleteTeacherRequest(cpf);
             DeleteTeacherResponse response = this._deleteTeacher.ProcessOperation(request);
 
-            if (response.Data == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPut]
-        public ActionResult<UpdateTeacherResponse> Update([FromBody]UpdateTeacherRequestData requestData)
-        {
-            UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
-            UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);
-
-            if (response.Data == null)
-            {
-                return NotFound();
-            }
-
             if (response.Success == false)
             {
-                return BadRequest(response);
+                return NotFound();
             }
 
             return Ok(response);
@@ -115,6 +97,24 @@ namespace School.Application.Controllers
 
             return Ok(response);
         }
+       
+        [HttpPut]
+        public ActionResult<UpdateTeacherResponse> Update([FromBody]UpdateTeacherRequestData requestData)
+        {
+            UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
+            UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);
+
+            if(response.Data == null)
+            {
+                return NotFound();
+            }
             
+            if (response.Success == false)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

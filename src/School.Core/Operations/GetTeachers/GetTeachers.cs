@@ -25,10 +25,8 @@ namespace School.Core.Operations.GetTeachers
         public GetTeachersResponse ProcessOperation()
         {
             GetTeachersResponse response = new GetTeachersResponse();
-            //Default do booleano é falso, logo, não precisa colocar a estrutura do GetTeacher
 
             IEnumerable<Teacher> teachers = this._teacherRepository.ListAll();
-            //CUIDADO COM PARÊNTESES
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 

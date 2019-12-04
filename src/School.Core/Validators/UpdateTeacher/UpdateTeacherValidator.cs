@@ -33,13 +33,20 @@ namespace School.Core.Validators.UpdateTeacher
             {
                 return response;
             }
-            
+
+            //Validate if parameters are null
+            validator.ValidateNullOrZero(request.Data.Name, response, "Name");
+            validator.ValidateNullOrZero(request.Data.Gender, response, "Gender");
+            validator.ValidateNullOrZero(request.Data.Level, response, "Level");
+            validator.ValidateNullOrZero(request.Data.Salary, response, "Salary");
+            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, "AdmitionDate");
+            //Validate format
             validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
             validator.ValidateGender(request.Data.Gender, response);
             validator.ValidateLevel(request.Data.Level, response);
             validator.ValidateMinMaxSalary(request.Data.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
             validator.ValidateAdmitionDate(request.Data.AdmitionDate, response);
-
+            
             if (response.Errors.Count == 0)
             {
                 response.Success = true;

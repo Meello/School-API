@@ -4,6 +4,7 @@ using System.Text;
 using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
+using School.Core.Validators.IdValidator;
 using School.Core.Validators.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
@@ -15,32 +16,37 @@ namespace School.Core.Operations.UpdateTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IUpdateTeacherValidator _validator;
+        private readonly IIdExistValidator _idExistValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IIdExistValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
+            this._idExistValidator = idExistValidator;
         }
 
         public UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
         {
             UpdateTeacherResponse response = this._validator.ValidateProcess(request);
 
-            if(response.Success == false)
+            response.Data = request.Data;
+
+            if (response.Success == false)
             {
                 return response;
             }
 
-            UpdateTeacherRequestData teacher = this._mappingResolver.BuildFrom(request.Data);
+            if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == false)
+            {
+                response.Data = null;
+                return response;
+            }
 
-            //O objeto para ser passado para o BuildFrom deve ser o que recebe o repositório
-            //Tomar cuidado para não enviar a requisição
-            Teacher updatedTeacher = this._teacherRepository.Update(teacher, response);
+            Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
 
-            //this._validator.ValidateBusinessRules(request, response);
+            this._teacherRepository.Update(teacher);
 
-            response.Data = this._mappingResolver.BuildFrom(updatedTeacher);
             response.Success = true;
 
             return response;

@@ -29,8 +29,6 @@ namespace School.Core.Operations.GetTeacher
                 Success = false
             };
 
-            //bool validator = this._idExistValidator.ValidateIdExist(request.CPF);
-
             if (this._idExistValidator.ValidateIdExist(request.CPF) == false)
             {
                 response.Success = false;

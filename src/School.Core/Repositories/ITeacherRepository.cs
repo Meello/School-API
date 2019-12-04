@@ -13,12 +13,12 @@ namespace School.Core.Repositories
         //Interface define o contrato
         Teacher Get(long cpf);
 
-        IEnumerable<Teacher> ListAll();
+        IEnumerable<Models.Teacher> ListAll();
 
-        Teacher Insert(Teacher teacher, InsertTeacherResponse response);
+        void Insert(Models.Teacher teacher);
 
-        Teacher Update(UpdateTeacherRequestData teacher, UpdateTeacherResponse response);
+        void Update(Teacher teacher);
 
-        Teacher Delete(long cpf, DeleteTeacherResponse response);
+        void Delete(long cpf);
     }
 }
