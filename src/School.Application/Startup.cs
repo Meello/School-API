@@ -11,6 +11,7 @@ using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
+using School.Core.Validators.IdValidator;
 using School.Core.Validators.UpdateTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
@@ -31,6 +32,7 @@ namespace School.Application
         {
             // Repositories
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<IIdExistValidator>(provider => new IdExistValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             //services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             // Operations

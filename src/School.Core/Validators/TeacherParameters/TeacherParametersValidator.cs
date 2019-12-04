@@ -7,11 +7,6 @@ namespace School.Core.Validators.ValidateTeacherParameters
 {
     public class TeacherParametersValidator : ITeacherParametersValidator
     {
-        /*
-          public void ValidateNullOrZero(object value, OperationResponseBase response, string fieldName)
-          Pode fazer assim? Usando object
-         */
-
         public void ValidateNullOrZero(long? value, OperationResponseBase response, string fieldName)
         {
             if (value == null || value == 0)
