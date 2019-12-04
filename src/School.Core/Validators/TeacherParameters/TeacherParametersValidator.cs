@@ -83,9 +83,18 @@ namespace School.Core.Validators.ValidateTeacherParameters
         {
             if (admitionDate != null && admitionDate != DateTime.MinValue && admitionDate > DateTime.Today)
             {
-
                 response.Errors.Add(new OperationError("008", "Admition date can't be bigger than today"));
             }
+        }
+
+        public char ValidateUpperCase(char? c)
+        {
+            if (char.IsUpper(c.Value) == false)
+            {
+                c = char.ToUpper(c.Value);
+            }
+
+            return c.Value;
         }
     }
 }

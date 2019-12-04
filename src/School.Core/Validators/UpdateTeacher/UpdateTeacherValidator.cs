@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using School.Core.Repositories;
 using System.Text;
 using School.Core.Validators.ValidateTeacherParameters;
-using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using School.Core.Models;
 
 namespace School.Core.Validators.UpdateTeacher
@@ -27,19 +26,21 @@ namespace School.Core.Validators.UpdateTeacher
 
             TeacherParametersValidator validator = new TeacherParametersValidator();
 
-            validator.ValidateNullOrZero(request.Data.CPF, response, "CPF");
-            
-            if(response.Errors.Count > 0)
+            validator.ValidateNullOrZero(request.Data.CPF, response, nameof(UpdateTeacherRequest.Data.CPF));
+
+            if (response.Errors.Count > 0)
             {
                 return response;
             }
-
+            //Put gender and level in upper case if they aren't
+            request.Data.Gender = validator.ValidateUpperCase(request.Data.Gender);
+            request.Data.Level = validator.ValidateUpperCase(request.Data.Level);
             //Validate if parameters are null
-            validator.ValidateNullOrZero(request.Data.Name, response, "Name");
-            validator.ValidateNullOrZero(request.Data.Gender, response, "Gender");
-            validator.ValidateNullOrZero(request.Data.Level, response, "Level");
-            validator.ValidateNullOrZero(request.Data.Salary, response, "Salary");
-            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, "AdmitionDate");
+            validator.ValidateNullOrZero(request.Data.Name, response, nameof(UpdateTeacherRequest.Data.Name));
+            validator.ValidateNullOrZero(request.Data.Gender, response, nameof(UpdateTeacherRequest.Data.Gender));
+            validator.ValidateNullOrZero(request.Data.Level, response, nameof(UpdateTeacherRequest.Data.Level));
+            validator.ValidateNullOrZero(request.Data.Salary, response, nameof(UpdateTeacherRequest.Data.Salary));
+            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, nameof(UpdateTeacherRequest.Data.AdmitionDate));
             //Validate format
             validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
             validator.ValidateGender(request.Data.Gender, response);

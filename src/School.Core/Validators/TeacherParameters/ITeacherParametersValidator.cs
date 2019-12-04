@@ -26,5 +26,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
         void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response);
 
         void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response);
+
+        char ValidateUpperCase(char? c);
     }
 }

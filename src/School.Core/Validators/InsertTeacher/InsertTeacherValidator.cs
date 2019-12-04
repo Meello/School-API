@@ -23,14 +23,19 @@ namespace School.Core.Validators
                 return response;
             }
 
+
+
             TeacherParametersValidator validator = new TeacherParametersValidator();
+            //Put gender and level in upper case if they aren't
+            request.Data.Gender = validator.ValidateUpperCase(request.Data.Gender);
+            request.Data.Level = validator.ValidateUpperCase(request.Data.Level);
             //Validate if parameters are null
             validator.ValidateNullOrZero(request.Data.CPF, response, nameof(InsertTeacherRequest.Data.CPF));
-            validator.ValidateNullOrZero(request.Data.Name, response, "Name");
-            validator.ValidateNullOrZero(request.Data.Gender, response, "Gender");
-            validator.ValidateNullOrZero(request.Data.Level, response, "Level");
-            validator.ValidateNullOrZero(request.Data.Salary, response, "Salary");
-            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, "AdmitionDate");
+            validator.ValidateNullOrZero(request.Data.Name, response, nameof(InsertTeacherRequest.Data.Name));
+            validator.ValidateNullOrZero(request.Data.Gender, response, nameof(InsertTeacherRequest.Data.Gender));
+            validator.ValidateNullOrZero(request.Data.Level, response, nameof(InsertTeacherRequest.Data.Level));
+            validator.ValidateNullOrZero(request.Data.Salary, response, nameof(InsertTeacherRequest.Data.Salary));
+            validator.ValidateNullOrZero(request.Data.AdmitionDate, response, nameof(InsertTeacherRequest.Data.AdmitionDate));
             //Validate format
             validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
             validator.ValidateGender(request.Data.Gender, response);
