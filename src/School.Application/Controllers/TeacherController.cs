@@ -1,12 +1,16 @@
 ﻿ using Microsoft.AspNetCore.Mvc;
 using School.Core.Models;
+using School.Core.Operations;
 using School.Core.Operations.DeleteTeacher;
+using School.Core.Operations.FilterTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
 using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
+using StoneCo.Buy4.School.DataContracts.FilterTeacher;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
+using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.GetTeachers;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
@@ -26,22 +30,28 @@ namespace School.Application.Controllers
         private readonly IDeleteTeacher _deleteTeacher;
         private readonly IUpdateTeacher _updateTeacher;
         private readonly IInsertTeacher _insertTeacher;
+        private readonly ISearchTeacher _filterTeacher;
+        private readonly IGetTeachersPerPage _getTeachersPerPage;
 
         //Criando lista, deve colocar no plural
         //sempre que precisar de alguma dependência, acrescentar no construtor
-        
+
         public TeacherController(
             IGetTeacher getTeacher,
             IGetTeachers getTeachers,
             IDeleteTeacher deleteTeacher,
             IUpdateTeacher updateTeacher,
-            IInsertTeacher insertTeacher)
+            IInsertTeacher insertTeacher,
+            ISearchTeacher filterTeacher,
+            IGetTeachersPerPage getTeachersPerPage)
         {
             this._getTeacher = getTeacher;
             this._getTeachers = getTeachers;
             this._deleteTeacher = deleteTeacher;
             this._updateTeacher = updateTeacher;
             this._insertTeacher = insertTeacher;
+            this._filterTeacher = filterTeacher;
+            this._getTeachersPerPage = getTeachersPerPage;
         }
 
         [HttpGet("{cpf}")]
@@ -50,7 +60,7 @@ namespace School.Application.Controllers
             GetTeacherRequest request = new GetTeacherRequest(cpf);
             GetTeacherResponse response = this._getTeacher.ProcessOperation(request);
 
-            if(response.Data == null)
+            if (response.Data == null)
             {
                 return NotFound();
             }
@@ -58,7 +68,41 @@ namespace School.Application.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{requestData}")]
+        public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
+        {
+            SearchTeacherRequest request = new SearchTeacherRequest(requestData);
+            SearchTeacherResponse response = this._filterTeacher.ProcessOperation(request);
+
+            if(response.Data == null)
+            {
+                return NotFound();
+            }
+
+            if(response.Success == false)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        //[HttpGet("{requestData}")]
+
         [HttpGet]
+        public ActionResult<GetTeachersPerPageResponse> GetPerPage([FromBody]GetTeachersPerPageRequestData requestData)
+        {
+            GetTeachersPerPageRequest request = new GetTeachersPerPageRequest(requestData);
+            GetTeachersPerPageResponse response = this._getTeachersPerPage.ProcessOperation(request);
+
+            if(response.Success == false)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
         public ActionResult<GetTeachersResponse> Get()
         {
             GetTeachersResponse response = this._getTeachers.ProcessOperation();

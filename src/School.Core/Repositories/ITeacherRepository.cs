@@ -1,5 +1,7 @@
 ﻿using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
+using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
@@ -13,9 +15,13 @@ namespace School.Core.Repositories
         //Interface define o contrato
         Teacher Get(long cpf);
 
-        IEnumerable<Models.Teacher> ListAll();
+        List<Teacher> Search(SearchTeacherRequestData requestData);
 
-        void Insert(Models.Teacher teacher);
+        IEnumerable<Teacher> ListAll();
+
+        List<Teacher> GetPerPage(GetTeachersPerPageRequestData requestData);
+
+        void Insert(Teacher teacher);
 
         void Update(Teacher teacher);
 

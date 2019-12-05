@@ -13,13 +13,11 @@ namespace School.Core.Operations.DeleteTeacher
     public class DeleteTeacher : IDeleteTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
-        private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IIdExistValidator _idExistValidator;
 
-        public DeleteTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IIdExistValidator idExistValidator)
+        public DeleteTeacher(ITeacherRepository teacherRepository, IIdExistValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
-            this._mappingResolver = mappingResolver;
             this._idExistValidator = idExistValidator;
         }
 

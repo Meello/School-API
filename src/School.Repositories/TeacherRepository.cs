@@ -4,6 +4,8 @@ using School.Core.Models;
 using School.Core.Repositories;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
+using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
@@ -48,11 +50,43 @@ namespace School.Repositories
             {
                 sqlConnection.Open();
 
-                return sqlConnection.QuerySingleOrDefault<Core.Models.Teacher>(sql, parameters);
+                return sqlConnection.QuerySingleOrDefault<Teacher>(sql, parameters);
             }
         }
 
-        //Criar novo ListAll para ser paginável e poder aplicar filtro
+        public List<Teacher> GetPerPage(GetTeachersPerPageRequestData requestData)
+        {
+            string sql = @"
+                SELECT 
+                	TeacherId,
+                	Name,
+                	Gender,
+                	LevelId,
+                	Salary,
+                	AdmitionDate
+                FROM 
+                	dbo.Teacher
+                ORDER BY TeacherId
+                	OFFSET (@PageNumber - 1)*@TeachersPerPage  ROWS
+                	FETCH NEXT @PageNumber ROWS ONLY";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("TeachersPerPage", requestData.TeachersPerPage, DbType.Int32);
+            parameters.Add("PageNumber", requestData.PageNumber, DbType.Int32);
+
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                sqlConnection.Open();
+
+                return sqlConnection.QueryFirstOrDefault<List<Teacher>>(sql);
+            }
+        }
+
+        public List<Teacher> Search(SearchTeacherRequestData requestData)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Teacher> ListAll()
         {
             string sql = @"

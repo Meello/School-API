@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using School.Core.Mapping;
+using School.Core.Operations;
 using School.Core.Operations.DeleteTeacher;
+using School.Core.Operations.FilterTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
 using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
+using School.Core.Validators.GetTeachersPerPage;
 using School.Core.Validators.IdValidator;
 using School.Core.Validators.UpdateTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
@@ -33,6 +36,7 @@ namespace School.Application
             // Repositories
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<IIdExistValidator>(provider => new IdExistValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<IGetTeachersPerPageValidator>(provider => new GetTeachersPerPageValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             //services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             // Operations
@@ -42,6 +46,8 @@ namespace School.Application
             services.AddScoped<IDeleteTeacher, DeleteTeacher>();
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
             services.AddScoped<IInsertTeacher, InsertTeacher>();
+            services.AddScoped<ISearchTeacher, SearchTeacher>();
+            services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
             services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>(); 

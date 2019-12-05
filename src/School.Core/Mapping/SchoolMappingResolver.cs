@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
+using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
@@ -11,7 +12,7 @@ namespace School.Core.Mapping
 {
     public class SchoolMappingResolver : ISchoolMappingResolver
     {
-        public TeacherResponseData BuildFrom(Models.Teacher teacher)
+        public TeacherResponseData BuildFrom(Teacher teacher)
         {
             if(teacher == null)
             {
@@ -29,9 +30,7 @@ namespace School.Core.Mapping
             };
         }
 
-
-
-        public List<TeacherResponseData> BuildFrom(IEnumerable<Models.Teacher> teachers)
+        public List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teachers)
             //sobrecarga de método --> capacidade de um método ter o mesmo nome com assinaturas diferentes
             //variando o tipo e a quantidade de variáveis
         {
@@ -39,6 +38,7 @@ namespace School.Core.Mapping
             {
                 return null;
             }
+
             return teachers.Select(model => BuildFrom(model)).ToList();
         }
 
@@ -49,7 +49,7 @@ namespace School.Core.Mapping
                 return null;
             }
 
-            return new Models.Teacher
+            return new Teacher
             {
                 TeacherId = requestData.CPF,
                 Name = requestData.Name,
@@ -77,6 +77,15 @@ namespace School.Core.Mapping
                 AdmitionDate = requestData.AdmitionDate
             };
         }
-        
+
+        public List<TeacherResponseData> BuildFrom(List<Teacher> teachers)
+        {
+            if (teachers == null)
+            {
+                return null;
+            }
+
+            return teachers.Select(model => BuildFrom(model)).ToList(); 
+        }
     }
 }
