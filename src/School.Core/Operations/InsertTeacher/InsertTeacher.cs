@@ -37,6 +37,7 @@ namespace School.Core.Operations.InsertTeacher
 
             if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == true)
             {
+                response.Errors.Add(new OperationError("013", "CPF already exist"));
                 response.Success = false;
                 return response;
             }

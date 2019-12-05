@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using School.Core.Models;
 using School.Core.Operations.DeleteTeacher;
 using School.Core.Operations.GetTeacher;
@@ -56,7 +56,6 @@ namespace School.Application.Controllers
             }
 
             return Ok(response);
-            //Aparece o status 200 e retorna o dado
         }
 
         [HttpGet]
@@ -104,11 +103,6 @@ namespace School.Application.Controllers
             UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
             UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);
 
-            if(response.Data == null)
-            {
-                return NotFound();
-            }
-            
             if (response.Success == false)
             {
                 return BadRequest(response);

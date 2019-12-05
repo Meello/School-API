@@ -14,7 +14,7 @@ namespace School.Core.Mapping
 
         Teacher BuildFrom(TeacherRequestData requestData);
 
-        List<TeacherResponseData> BuildFrom(IEnumerable<Models.Teacher> teacher);
+        List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teacher);
 
         Teacher BuildFrom(UpdateTeacherRequestData data);
     }

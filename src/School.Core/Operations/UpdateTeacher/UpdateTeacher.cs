@@ -30,8 +30,6 @@ namespace School.Core.Operations.UpdateTeacher
         {
             UpdateTeacherResponse response = this._validator.ValidateProcess(request);
 
-            response.Data = request.Data;
-
             if (response.Success == false)
             {
                 return response;
@@ -39,7 +37,8 @@ namespace School.Core.Operations.UpdateTeacher
 
             if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == false)
             {
-                response.Data = null;
+                response.Errors.Add(new OperationError("003", "CPF not found"));
+                response.Success = false;
                 return response;
             }
 

@@ -33,3 +33,6 @@ message = Delete error message
 
 code = 012
 message = GetTeacher error message
+
+code = 013
+message = CPF already exist

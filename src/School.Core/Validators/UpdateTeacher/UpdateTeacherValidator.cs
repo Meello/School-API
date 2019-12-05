@@ -32,15 +32,22 @@ namespace School.Core.Validators.UpdateTeacher
             {
                 return response;
             }
-            //Put gender and level in upper case if they aren't
-            request.Data.Gender = validator.ValidateUpperCase(request.Data.Gender);
-            request.Data.Level = validator.ValidateUpperCase(request.Data.Level);
+            
             //Validate if parameters are null
             validator.ValidateNullOrZero(request.Data.Name, response, nameof(UpdateTeacherRequest.Data.Name));
             validator.ValidateNullOrZero(request.Data.Gender, response, nameof(UpdateTeacherRequest.Data.Gender));
             validator.ValidateNullOrZero(request.Data.Level, response, nameof(UpdateTeacherRequest.Data.Level));
             validator.ValidateNullOrZero(request.Data.Salary, response, nameof(UpdateTeacherRequest.Data.Salary));
             validator.ValidateNullOrZero(request.Data.AdmitionDate, response, nameof(UpdateTeacherRequest.Data.AdmitionDate));
+
+            if (response.Errors.Count > 0)
+            {
+                return response;
+            }
+
+            //Put gender and level in upper case if they aren't
+            request.Data.Gender = validator.ValidateUpperCase(request.Data.Gender);
+            request.Data.Level = validator.ValidateUpperCase(request.Data.Level);
             //Validate format
             validator.ValidateMaxLength(request.Data.Name, ModelConstants.Teacher.NameMaxLength, response);
             validator.ValidateGender(request.Data.Gender, response);

@@ -36,12 +36,6 @@ namespace School.Core.Operations.GetTeacher
             }
 
             Teacher teacher = this._teacherRepository.Get(request.CPF);
-            
-            if(teacher is null)
-            {
-                response.Success = false;
-                return response;
-            }
 
             response.Data = this._mappingResolver.BuildFrom(teacher);
             response.Success = true;
