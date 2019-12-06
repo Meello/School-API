@@ -1,7 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using System;
 using System.Collections.Generic;
@@ -13,13 +13,13 @@ namespace School.Core.Operations.GetTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IDataBaseValidator _idExistValidator;
+        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IDataBaseValidator idExistValidator)
+        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IDataBaseValidator dataBaseValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._idExistValidator = idExistValidator;
+            this._dataBaseValidator = dataBaseValidator;
         }
         
         public GetTeacherResponse ProcessOperation(GetTeacherRequest request)
@@ -29,7 +29,7 @@ namespace School.Core.Operations.GetTeacher
                 Success = false
             };
 
-            if (this._idExistValidator.ValidateIdExist(request.CPF) == false)
+            if (this._dataBaseValidator.ValidateIdExist(request.CPF) == false)
             {
                 response.Success = false;
                 return response;

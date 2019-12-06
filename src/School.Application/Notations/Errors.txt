@@ -17,7 +17,7 @@ code = 006
 message = Invalid Level! Choose J or P or S
 
 code = 007 
-message = Value don't accepted! Choose some value betewwn 1000 and 10000
+message = Value don't accepted! Choose a value betewwn 1000 and 10000
 
 code = 008 
 message = Admition date can't be bigger than today
@@ -42,4 +42,7 @@ message = Number of teachers exceeded the limit
 
 code = 016
 message = Values can't be find! Incorrect search local
+
+code = 017
+message = {Number} values in {ListName} list invalid 
 

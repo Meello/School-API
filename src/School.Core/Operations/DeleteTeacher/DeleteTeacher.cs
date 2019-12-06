@@ -1,7 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
 using System;
 using System.Collections.Generic;

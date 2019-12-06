@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using School.Core.Models;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
+using School.Core.Validators.Page;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using System;
@@ -13,10 +14,12 @@ namespace School.Core.Validators.GetTeachersPerPage
     public class GetTeachersPerPageValidator : IGetTeachersPerPageValidator
     {
         private readonly IDataBaseValidator _validator;
+        private readonly IPageValidator _pageValidator;
 
-        public GetTeachersPerPageValidator(IDataBaseValidator validator)
+        public GetTeachersPerPageValidator(IDataBaseValidator validator, IPageValidator pageValidator)
         {
             this._validator = validator;
+            this._pageValidator = pageValidator;
         }
         
         public GetTeachersPerPageResponse ValidateOperation(long pageNumber, long elementsPerPage)
@@ -31,6 +34,9 @@ namespace School.Core.Validators.GetTeachersPerPage
 
             long offset = elementsPerPage * (pageNumber - 1);
 
+            this._pageValidator.ValidatePage(elementsPerPage, offset, maxElements, response);
+            
+            /*
             if (elementsPerPage > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
@@ -54,7 +60,7 @@ namespace School.Core.Validators.GetTeachersPerPage
                 
                 response.Success = true;
             }
-
+            */
             return response;
         }
     }

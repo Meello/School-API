@@ -4,7 +4,7 @@ using System.Text;
 using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;

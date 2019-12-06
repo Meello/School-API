@@ -63,6 +63,16 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
         }
 
+        public bool ValidateGender(char? gender)
+        {
+            if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void ValidateLevel(char? level, OperationResponseBase response)
         {
             if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
@@ -75,7 +85,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
         {
             if (salary != null && salary != decimal.Zero && salary < minsalary || salary > maxsalary)
             {
-                response.Errors.Add(new OperationError("007", "Value don't accepted! Choose some value between 1000 and 10000"));
+                response.Errors.Add(new OperationError("007", "Value don't accepted! Choose a value between 1000 and 10000"));
             }
         }
 

@@ -21,6 +21,8 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         void ValidateGender(char? gender, OperationResponseBase response);
 
+        bool ValidateGender(char? gender);
+
         void ValidateLevel(char? level, OperationResponseBase response);
 
         void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response);

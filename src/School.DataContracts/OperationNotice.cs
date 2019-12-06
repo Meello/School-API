@@ -12,8 +12,8 @@ namespace StoneCo.Buy4.School.DataContracts
             this.Message = message;
         }
 
-        public string Code { get; set; }
+        public string Code { get; }
 
-        public string Message {get; set;}
+        public string Message {get;}
     }
 }

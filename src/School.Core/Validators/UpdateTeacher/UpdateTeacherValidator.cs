@@ -2,6 +2,8 @@
 using School.Core.Models;
 using School.Core.Mapping;
 using School.Core.ValidatorsTeacher;
+using StoneCo.Buy4.School.DataContracts;
+using System.Collections.Generic;
 
 namespace School.Core.Validators.UpdateTeacher
 {
@@ -20,7 +22,10 @@ namespace School.Core.Validators.UpdateTeacher
         {
             Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
 
-            UpdateTeacherResponse response = new UpdateTeacherResponse();
+            UpdateTeacherResponse response = new UpdateTeacherResponse
+            {
+                Errors = new List<OperationError>()
+            };
 
             if (this._teacherValidator.ValidateTeacher(teacher, response) == false)
             {

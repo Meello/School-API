@@ -5,7 +5,7 @@ using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using StoneCo.Buy4.School.DataContracts.FilterTeacher;
 
 namespace School.Core.Operations.FilterTeacher
@@ -15,14 +15,14 @@ namespace School.Core.Operations.FilterTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IInsertTeacherValidator _validator;
-        private readonly IDataBaseValidator _idExistValidator;
+        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator idExistValidator)
+        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator dataBaseValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
-            this._idExistValidator = idExistValidator;
+            this._dataBaseValidator = dataBaseValidator;
         }
 
         public SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)

@@ -2,7 +2,7 @@
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System;

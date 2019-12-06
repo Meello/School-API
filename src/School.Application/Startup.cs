@@ -14,10 +14,13 @@ using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
 using School.Core.Validators.GetTeachersPerPage;
-using School.Core.Validators.IdValidator;
+using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.UpdateTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
+using School.Core.Validators.Page;
+using School.Core.Validators.SearchTeacher;
+using School.Core.ValidatorsTeacher;
 
 namespace School.Application
 {
@@ -47,11 +50,15 @@ namespace School.Application
             services.AddScoped<IInsertTeacher, InsertTeacher>();
             services.AddScoped<ISearchTeacher, SearchTeacher>();
             services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
-            services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
-            services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
-            services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
+
+            //Validators
             services.AddScoped<IGetTeachersPerPageValidator, GetTeachersPerPageValidator>();
-            
+            services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
+            services.AddScoped<IPageValidator, PageValidator>();
+            services.AddScoped<ISearchTeacherValidator, SearchTeacherValidator>();
+            services.AddScoped<ITeacherValidator, TeacherValidator>();
+            services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
+            services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
