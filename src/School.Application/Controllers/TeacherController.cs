@@ -30,7 +30,7 @@ namespace School.Application.Controllers
         private readonly IDeleteTeacher _deleteTeacher;
         private readonly IUpdateTeacher _updateTeacher;
         private readonly IInsertTeacher _insertTeacher;
-        private readonly ISearchTeacher _filterTeacher;
+        private readonly ISearchTeacher _searchTeacher;
         private readonly IGetTeachersPerPage _getTeachersPerPage;
 
         //Criando lista, deve colocar no plural
@@ -42,7 +42,7 @@ namespace School.Application.Controllers
             IDeleteTeacher deleteTeacher,
             IUpdateTeacher updateTeacher,
             IInsertTeacher insertTeacher,
-            ISearchTeacher filterTeacher,
+            ISearchTeacher searchTeacher,
             IGetTeachersPerPage getTeachersPerPage)
         {
             this._getTeacher = getTeacher;
@@ -50,7 +50,7 @@ namespace School.Application.Controllers
             this._deleteTeacher = deleteTeacher;
             this._updateTeacher = updateTeacher;
             this._insertTeacher = insertTeacher;
-            this._filterTeacher = filterTeacher;
+            this._searchTeacher = searchTeacher;
             this._getTeachersPerPage = getTeachersPerPage;
         }
 
@@ -73,7 +73,7 @@ namespace School.Application.Controllers
         public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
         {
             SearchTeacherRequest request = new SearchTeacherRequest(requestData);
-            SearchTeacherResponse response = this._filterTeacher.ProcessOperation(request);
+            SearchTeacherResponse response = this._searchTeacher.ProcessOperation(request);
 
             if (response.Data == null)
             {

@@ -83,9 +83,20 @@ namespace School.Repositories
             }
         }
 
-        public List<Teacher> Search(SearchTeacherRequestData requestData)
+        public IEnumerable<Teacher> Search(SearchTeacherRequestData requestData)
         {
-            throw new NotImplementedException();
+            string sql = @"";
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.AddDynamicParams(requestData);
+
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                sqlConnection.Open();
+
+                return sqlConnection.Query<Teacher>(sql, parameters);
+            }
         }
 
         public IEnumerable<Teacher> ListAll()

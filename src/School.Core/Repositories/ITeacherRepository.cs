@@ -1,12 +1,6 @@
 ﻿using School.Core.Models;
-using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
 using StoneCo.Buy4.School.DataContracts.FilterTeacher;
-using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
-using StoneCo.Buy4.School.DataContracts.InsertTeacher;
-using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace School.Core.Repositories
 {

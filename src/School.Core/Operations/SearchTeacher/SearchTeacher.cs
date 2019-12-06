@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using School.Core.Mapping;
+using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators;
 using School.Core.Validators.IdValidator;
@@ -26,7 +27,16 @@ namespace School.Core.Operations.FilterTeacher
 
         public SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)
         {
-            return null;
+            SearchTeacherResponse response = new SearchTeacherResponse();
+            //SearchTeacherResponse response = this._validator.ValidateOperation(request);
+
+            IEnumerable<Teacher> teachers = this._teacherRepository.Search(request.Data);
+
+            response.Data = this._mappingResolver.BuildFrom(teachers);
+
+            response.Success = true;
+
+            return response;
         }
     }
 }
