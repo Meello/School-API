@@ -13,19 +13,19 @@ namespace School.Core.Operations.DeleteTeacher
     public class DeleteTeacher : IDeleteTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
-        private readonly IDataBaseValidator _idExistValidator;
+        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public DeleteTeacher(ITeacherRepository teacherRepository, IDataBaseValidator idExistValidator)
+        public DeleteTeacher(ITeacherRepository teacherRepository, IDataBaseValidator dataBaseValidator)
         {
             this._teacherRepository = teacherRepository;
-            this._idExistValidator = idExistValidator;
+            this._dataBaseValidator = dataBaseValidator;
         }
 
         public DeleteTeacherResponse ProcessOperation(DeleteTeacherRequest request)
         {
             DeleteTeacherResponse response = new DeleteTeacherResponse();
 
-            if (this._idExistValidator.ValidateIdExist(request.CPF) == false)
+            if (this._dataBaseValidator.ValidateIdExist(request.CPF) == false)
             {
                 response.Success = false;
                 return response;

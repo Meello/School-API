@@ -16,14 +16,14 @@ namespace School.Core.Operations.InsertTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IInsertTeacherValidator _validator;
-        private readonly IDataBaseValidator _idExistValidator;
+        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator idExistValidator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator dataBaseValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
-            this._idExistValidator = idExistValidator;
+            this._dataBaseValidator = dataBaseValidator;
         }
 
         public InsertTeacherResponse ProcessOperation(InsertTeacherRequest request)
@@ -35,7 +35,7 @@ namespace School.Core.Operations.InsertTeacher
                 return response;
             }
 
-            if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == true)
+            if(this._dataBaseValidator.ValidateIdExist(request.Data.CPF) == true)
             {
                 response.Errors.Add(new OperationError("013", "CPF already exist"));
                 response.Success = false;

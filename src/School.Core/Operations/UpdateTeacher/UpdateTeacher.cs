@@ -16,14 +16,14 @@ namespace School.Core.Operations.UpdateTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IUpdateTeacherValidator _validator;
-        private readonly IDataBaseValidator _idExistValidator;
+        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IDataBaseValidator idExistValidator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IDataBaseValidator dataBaseValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
-            this._idExistValidator = idExistValidator;
+            this._dataBaseValidator = dataBaseValidator;
         }
 
         public UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
@@ -35,7 +35,7 @@ namespace School.Core.Operations.UpdateTeacher
                 return response;
             }
 
-            if(this._idExistValidator.ValidateIdExist(request.Data.CPF) == false)
+            if(this._dataBaseValidator.ValidateIdExist(request.Data.CPF) == false)
             {
                 response.Errors.Add(new OperationError("003", "CPF not found"));
                 response.Success = false;
