@@ -28,6 +28,7 @@ namespace School.Core.Validators.GetTeachersPerPage
             };
 
             long maxElements = this._validator.NumberOfElements();
+
             long offset = elementsPerPage * (pageNumber - 1);
 
             if (elementsPerPage > ModelConstants.Teacher.MaxTeachersPerPage)

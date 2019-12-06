@@ -71,7 +71,6 @@ namespace School.Repositories
                 	FETCH NEXT @PageSize ROWS ONLY";
 
             DynamicParameters parameters = new DynamicParameters();
-            //parameters.AddDynamicParams(requestData);
             parameters.Add("@PageSize", teachersPerPage, DbType.Int64);
             parameters.Add("@Page", pageNumber, DbType.Int64);
 
