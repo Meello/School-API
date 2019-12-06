@@ -13,9 +13,9 @@ namespace School.Core.Operations.GetTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IIdExistValidator _idExistValidator;
+        private readonly IDataBaseValidator _idExistValidator;
 
-        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IIdExistValidator idExistValidator)
+        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IDataBaseValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;

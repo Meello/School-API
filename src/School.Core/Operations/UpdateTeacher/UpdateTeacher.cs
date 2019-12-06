@@ -16,9 +16,9 @@ namespace School.Core.Operations.UpdateTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IUpdateTeacherValidator _validator;
-        private readonly IIdExistValidator _idExistValidator;
+        private readonly IDataBaseValidator _idExistValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IIdExistValidator idExistValidator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IDataBaseValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;

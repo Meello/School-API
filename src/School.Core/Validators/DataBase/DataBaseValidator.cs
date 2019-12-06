@@ -8,13 +8,29 @@ using System.Text;
 
 namespace School.Core.Validators.IdValidator
 {
-    public class IdExistValidator : IIdExistValidator
+    public class DataBaseValidator : IDataBaseValidator
     {
         private readonly string _connectionString;
 
-        public IdExistValidator(string connectionString)
+        public DataBaseValidator(string connectionString)
         {
             this._connectionString = connectionString;
+        }
+
+        public long NumberOfElements()
+        {
+            string sql = @"
+                SELECT 
+                    COUNT(TeacherId)
+                FROM
+                    dbo.Teacher";
+
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                sqlConnection.Open();
+
+                return sqlConnection.QueryFirstOrDefault<long>(sql);
+            }
         }
 
         public bool ValidateIdExist(long id)

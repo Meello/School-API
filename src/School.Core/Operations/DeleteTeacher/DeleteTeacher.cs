@@ -13,9 +13,9 @@ namespace School.Core.Operations.DeleteTeacher
     public class DeleteTeacher : IDeleteTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
-        private readonly IIdExistValidator _idExistValidator;
+        private readonly IDataBaseValidator _idExistValidator;
 
-        public DeleteTeacher(ITeacherRepository teacherRepository, IIdExistValidator idExistValidator)
+        public DeleteTeacher(ITeacherRepository teacherRepository, IDataBaseValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._idExistValidator = idExistValidator;

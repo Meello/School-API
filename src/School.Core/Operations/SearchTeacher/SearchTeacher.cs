@@ -15,9 +15,9 @@ namespace School.Core.Operations.FilterTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IInsertTeacherValidator _validator;
-        private readonly IIdExistValidator _idExistValidator;
+        private readonly IDataBaseValidator _idExistValidator;
 
-        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IIdExistValidator idExistValidator)
+        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;

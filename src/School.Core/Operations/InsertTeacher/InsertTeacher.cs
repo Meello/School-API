@@ -16,9 +16,9 @@ namespace School.Core.Operations.InsertTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IInsertTeacherValidator _validator;
-        private readonly IIdExistValidator _idExistValidator;
+        private readonly IDataBaseValidator _idExistValidator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IIdExistValidator idExistValidator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator, IDataBaseValidator idExistValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;

@@ -69,7 +69,7 @@ namespace School.Application.Controllers
         }
 
         //Corrigir o HttpGet --> qual caminho dele para ir para o Search?
-        [HttpGet("{requestData}")]
+        [HttpGet("Search")]
         public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
         {
             SearchTeacherRequest request = new SearchTeacherRequest(requestData);
@@ -88,9 +88,7 @@ namespace School.Application.Controllers
             return Ok(response);
         }
 
-        //[HttpGet("{requestData}")]
-
-        [HttpGet("{page}/{pagesize}")]
+        [HttpGet("page={page}/pagesize={pagesize}")]
         public ActionResult<GetTeachersPerPageResponse> GetPerPage(long page, long pageSize)
         {
             GetTeachersPerPageRequest request = new GetTeachersPerPageRequest(page, pageSize);

@@ -36,3 +36,10 @@ message = GetTeacher error message
 
 code = 013
 message = CPF already exist
+
+code = 015
+message = Number of teachers exceeded the limit
+
+code = 016
+message = Values can't be find! Incorrect search local
+

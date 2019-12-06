@@ -4,8 +4,10 @@ using System.Text;
 
 namespace School.Core.Validators.IdValidator
 {
-    public interface IIdExistValidator
+    public interface IDataBaseValidator
     {
         bool ValidateIdExist(long id);
+
+        long NumberOfElements();
     }
 }

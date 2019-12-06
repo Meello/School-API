@@ -8,6 +8,8 @@ namespace StoneCo.Buy4.School.DataContracts
     {
         public bool Success { get; set; }
 
+        public List<OperationNotification> Notifications { get; set; }
+
         public List<OperationError> Errors { get; set; }
 
         public object Data { get; set; }

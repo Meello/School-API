@@ -35,8 +35,7 @@ namespace School.Application
         {
             // Repositories
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
-            services.AddScoped<IIdExistValidator>(provider => new IdExistValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
-            services.AddScoped<IGetTeachersPerPageValidator>(provider => new GetTeachersPerPageValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<IDataBaseValidator>(provider => new DataBaseValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             //services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             // Operations
@@ -50,7 +49,9 @@ namespace School.Application
             services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
             services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
-            services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>(); 
+            services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
+            services.AddScoped<IGetTeachersPerPageValidator, GetTeachersPerPageValidator>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

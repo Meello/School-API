@@ -23,12 +23,7 @@ namespace School.Core.Operations
 
         public GetTeachersPerPageResponse ProcessOperation(GetTeachersPerPageRequest request)
         {
-            GetTeachersPerPageResponse response = new GetTeachersPerPageResponse
-            {
-                Errors = new List<OperationError>()
-            };
-
-            this._validator.NumberOfElementsValiator(request.PageNumber, request.TeachersPerPage, response);
+            GetTeachersPerPageResponse response = this._validator.ValidateOperation(request.PageNumber, request.TeachersPerPage);
 
             if (response.Success == false)
             {

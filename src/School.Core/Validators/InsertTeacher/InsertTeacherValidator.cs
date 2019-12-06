@@ -23,8 +23,6 @@ namespace School.Core.Validators
                 return response;
             }
 
-
-
             TeacherParametersValidator validator = new TeacherParametersValidator();
             //Put gender and level in upper case if they aren't
             request.Data.Gender = validator.ValidateUpperCase(request.Data.Gender);
