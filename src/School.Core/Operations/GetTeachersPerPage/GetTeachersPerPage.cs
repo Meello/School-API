@@ -2,6 +2,7 @@
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators.GetTeachersPerPage;
+using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using System.Collections.Generic;
 
@@ -22,7 +23,10 @@ namespace School.Core.Operations
 
         public GetTeachersPerPageResponse ProcessOperation(GetTeachersPerPageRequest request)
         {
-            GetTeachersPerPageResponse response = new GetTeachersPerPageResponse();
+            GetTeachersPerPageResponse response = new GetTeachersPerPageResponse
+            {
+                Errors = new List<OperationError>()
+            };
 
             this._validator.NumberOfElementsValiator(request.PageNumber, request.TeachersPerPage, response);
 

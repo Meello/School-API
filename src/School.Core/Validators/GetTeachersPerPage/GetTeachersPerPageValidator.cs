@@ -45,7 +45,7 @@ namespace School.Core.Validators.GetTeachersPerPage
                 response.Errors.Add(new OperationError("016", "Values can't be find! Incorrect search local"));
             }
 
-            if (response.Errors == null)
+            if (response.Errors.Count == 0)
             {
                 response.Success = true;
             }

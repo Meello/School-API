@@ -79,7 +79,7 @@ namespace School.Repositories
             {
                 sqlConnection.Open();
 
-                return sqlConnection.Query<Teacher>(sql);
+                return sqlConnection.Query<Teacher>(sql, parameters);
             }
         }
 
