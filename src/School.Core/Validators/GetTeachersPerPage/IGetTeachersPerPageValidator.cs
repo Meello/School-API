@@ -7,6 +7,6 @@ namespace School.Core.Validators.GetTeachersPerPage
 {
     public interface IGetTeachersPerPageValidator
     {
-        void NumberOfElementsValiator(int pageNumber, int elementsPerPage, GetTeachersPerPageResponse response);
+        void NumberOfElementsValiator(long pageNumber, long elementsPerPage, GetTeachersPerPageResponse response);
     }
 }

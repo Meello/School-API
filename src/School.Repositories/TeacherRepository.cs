@@ -54,7 +54,7 @@ namespace School.Repositories
             }
         }
 
-        public List<Teacher> GetPerPage(GetTeachersPerPageRequestData requestData)
+        public IEnumerable<Teacher> GetPerPage(long pageNumber, long teachersPerPage)
         {
             string sql = @"
                 SELECT 
@@ -67,18 +67,19 @@ namespace School.Repositories
                 FROM 
                 	dbo.Teacher
                 ORDER BY TeacherId
-                	OFFSET (@PageNumber - 1)*@TeachersPerPage  ROWS
-                	FETCH NEXT @PageNumber ROWS ONLY";
+                	OFFSET (@Page - 1)*@PageSize ROWS 
+                	FETCH NEXT @PageSize ROWS ONLY";
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("TeachersPerPage", requestData.TeachersPerPage, DbType.Int32);
-            parameters.Add("PageNumber", requestData.PageNumber, DbType.Int32);
+            //parameters.AddDynamicParams(requestData);
+            parameters.Add("@PageSize", teachersPerPage, DbType.Int64);
+            parameters.Add("@Page", pageNumber, DbType.Int64);
 
             using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
             {
                 sqlConnection.Open();
 
-                return sqlConnection.QueryFirstOrDefault<List<Teacher>>(sql);
+                return sqlConnection.Query<Teacher>(sql);
             }
         }
 

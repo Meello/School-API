@@ -78,7 +78,7 @@ namespace School.Core.Mapping
             };
         }
 
-        public List<TeacherResponseData> BuildFrom(List<Teacher> teachers)
+        /*public List<TeacherResponseData> BuildFrom(List<Teacher> teachers)
         {
             if (teachers == null)
             {
@@ -86,6 +86,6 @@ namespace School.Core.Mapping
             }
 
             return teachers.Select(model => BuildFrom(model)).ToList(); 
-        }
+        }*/
     }
 }

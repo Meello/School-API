@@ -24,14 +24,14 @@ namespace School.Core.Operations
         {
             GetTeachersPerPageResponse response = new GetTeachersPerPageResponse();
 
-            this._validator.NumberOfElementsValiator(request.Data.PageNumber, request.Data.TeachersPerPage, response);
+            this._validator.NumberOfElementsValiator(request.PageNumber, request.TeachersPerPage, response);
 
             if (response.Success == false)
             {
                 return response;
             }
 
-            List<Teacher> teacher = _teacherRepository.GetPerPage(request.Data);
+            IEnumerable<Teacher> teacher = _teacherRepository.GetPerPage(request.PageNumber, request.TeachersPerPage);
 
             response.Data = this._mappingResolver.BuildFrom(teacher);
 

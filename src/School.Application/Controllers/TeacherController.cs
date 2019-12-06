@@ -68,18 +68,19 @@ namespace School.Application.Controllers
             return Ok(response);
         }
 
+        //Corrigir o HttpGet --> qual caminho dele para ir para o Search?
         [HttpGet("{requestData}")]
         public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
         {
             SearchTeacherRequest request = new SearchTeacherRequest(requestData);
             SearchTeacherResponse response = this._filterTeacher.ProcessOperation(request);
 
-            if(response.Data == null)
+            if (response.Data == null)
             {
                 return NotFound();
             }
 
-            if(response.Success == false)
+            if (response.Success == false)
             {
                 return BadRequest(response);
             }
@@ -89,10 +90,10 @@ namespace School.Application.Controllers
 
         //[HttpGet("{requestData}")]
 
-        [HttpGet]
-        public ActionResult<GetTeachersPerPageResponse> GetPerPage([FromBody]GetTeachersPerPageRequestData requestData)
+        [HttpGet("{page}/{pagesize}")]
+        public ActionResult<GetTeachersPerPageResponse> GetPerPage(long page, long pageSize)
         {
-            GetTeachersPerPageRequest request = new GetTeachersPerPageRequest(requestData);
+            GetTeachersPerPageRequest request = new GetTeachersPerPageRequest(page, pageSize);
             GetTeachersPerPageResponse response = this._getTeachersPerPage.ProcessOperation(request);
 
             if(response.Success == false)
@@ -103,6 +104,7 @@ namespace School.Application.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
         public ActionResult<GetTeachersResponse> Get()
         {
             GetTeachersResponse response = this._getTeachers.ProcessOperation();

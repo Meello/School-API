@@ -18,7 +18,7 @@ namespace School.Core.Validators.GetTeachersPerPage
             this._connectionString = connectionString;
         }
         
-        public void NumberOfElementsValiator(int pageNumber, int elementsPerPage, GetTeachersPerPageResponse response)
+        public void NumberOfElementsValiator(long pageNumber, long elementsPerPage, GetTeachersPerPageResponse response)
         {
             string sql = @"
                 SELECT 

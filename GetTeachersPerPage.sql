@@ -8,5 +8,5 @@
 FROM 
 	dbo.Teacher
 ORDER BY TeacherId
-	OFFSET (@TeacherPerPage - 1)*@NumberPage ROWS
-	FETCH NEXT @NumberPage ROWS ONLY;
+	OFFSET (@PageNumber - 1)*@TeachersPerPage  ROWS
+	FETCH NEXT @TeachersPerPage ROWS ONLY;

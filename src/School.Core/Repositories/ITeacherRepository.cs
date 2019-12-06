@@ -19,7 +19,7 @@ namespace School.Core.Repositories
 
         IEnumerable<Teacher> ListAll();
 
-        List<Teacher> GetPerPage(GetTeachersPerPageRequestData requestData);
+        IEnumerable<Teacher> GetPerPage(long pageNumber, long teachersPerPage);
 
         void Insert(Teacher teacher);
 

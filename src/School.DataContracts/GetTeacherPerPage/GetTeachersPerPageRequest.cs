@@ -6,11 +6,14 @@ namespace StoneCo.Buy4.School.DataContracts.GetTeacherPerPage
 {
     public class GetTeachersPerPageRequest
     {
-        public GetTeachersPerPageRequest(GetTeachersPerPageRequestData requestData)
+        public GetTeachersPerPageRequest(long pageNumber, long teachersPerPage)
         {
-            Data = requestData;
+            PageNumber = pageNumber;
+            TeachersPerPage = teachersPerPage;
         }
 
-        public GetTeachersPerPageRequestData Data { get; set; }
+        public long PageNumber { get; set; }
+
+        public long TeachersPerPage { get; set; }
     }
 }
