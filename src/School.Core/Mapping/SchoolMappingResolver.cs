@@ -77,15 +77,5 @@ namespace School.Core.Mapping
                 AdmitionDate = requestData.AdmitionDate
             };
         }
-
-        /*public List<TeacherResponseData> BuildFrom(List<Teacher> teachers)
-        {
-            if (teachers == null)
-            {
-                return null;
-            }
-
-            return teachers.Select(model => BuildFrom(model)).ToList(); 
-        }*/
     }
 }

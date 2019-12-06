@@ -10,6 +10,7 @@ namespace School.Core.Mapping
 {
     public interface ISchoolMappingResolver
     {
+
         TeacherResponseData BuildFrom(Teacher teacher);
 
         Teacher BuildFrom(TeacherRequestData requestData);

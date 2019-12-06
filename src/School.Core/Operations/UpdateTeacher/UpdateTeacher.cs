@@ -28,7 +28,7 @@ namespace School.Core.Operations.UpdateTeacher
 
         public UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = this._validator.ValidateProcess(request);
+            UpdateTeacherResponse response = this._validator.ValidateOperation(request);
 
             if (response.Success == false)
             {

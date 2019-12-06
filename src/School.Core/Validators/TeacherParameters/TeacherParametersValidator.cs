@@ -91,7 +91,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
         {
             if (char.IsUpper(c.Value) == false)
             {
-                c = char.ToUpper(c.Value);
+                return char.ToUpper(c.Value);
             }
 
             return c.Value;

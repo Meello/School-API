@@ -7,6 +7,6 @@ namespace School.Core.Validators.UpdateTeacher
 {
     public interface IUpdateTeacherValidator
     {
-        UpdateTeacherResponse ValidateProcess(UpdateTeacherRequest request);
+        UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request);
     }
 }
