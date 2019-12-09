@@ -13,11 +13,13 @@ namespace School.Core.Validators.Page
             if (elementsPerPage > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
+                response.Success = false;
             }
 
             if (offset >= maxElements)
             {
                 response.Errors.Add(new OperationError("016", "Values can't be find! Incorrect search local"));
+                response.Success = false;
             }
 
             if (response.Errors.Count == 0)

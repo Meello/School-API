@@ -31,11 +31,19 @@ namespace School.Core.Operations.SearchTeacher
         {
             SearchTeacherResponse response = this._validator.ValidateParameters(request.Data);
 
+            if (response.Success == false)
+            {
+                return response;
+            }
+
             List<Teacher> teachers = this._teacherRepository.Search(request.Data).ToList();
 
             this._validator.ValidatePage(teachers.Count, request.Data.PageSize.Value, request.Data.PageNumber.Value, response);
             
-            
+            if(response.Success == false)
+            {
+                return response;
+            }
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 

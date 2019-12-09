@@ -22,8 +22,7 @@ namespace School.Core.Validators.SearchTeacher
             this._dataBaseValidator = dataBaseValidator;
             this._pageValidator = pageValidator;
         }
-
-
+        
         public SearchTeacherResponse ValidateParameters(SearchTeacherRequestData requestData)
         {
             SearchTeacherResponse response = new SearchTeacherResponse
@@ -82,31 +81,17 @@ namespace School.Core.Validators.SearchTeacher
                 this._parameterValidator.ValidateMinMaxSalary(requestData.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
             }
 
-            //refinar começando aqui
-            //Atual --> trata o erro de buscar um dado em uma página vazia, tendo como base todos os dados
-            //Ideal --> tratar o erro de buscar um dado em uma página vazia, tendo como base a quantidade de valores encontrados
-            //Testar --> assim que achar os valores desejados, contar quantos vieram e depois fazer a verificação da página
-            long maxElements = this._dataBaseValidator.NumberOfElements();
-
-            long offset = (requestData.PageNumber.Value - 1) *(requestData.PageSize.Value);
-
-            if (requestData.PageSize > ModelConstants.Teacher.MaxTeachersPerPage)
+            if(response.Errors.Count == 0)
             {
-                response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
+                response.Success = true;
             }
 
-            if (offset >= maxElements)
-            {
-                response.Errors.Add(new OperationError("016", "Values can't be find! Incorrect search local"));
-            }
-            //terminando aqui
-
-            return null;
+            return response;
         }
         
         public void ValidatePage(long maxElements, long elementsPerPage, long pageNumber, SearchTeacherResponse response)
         {
-            this._pageValidator.ValidatePage(elementsPerPage, (pageNumber - 1)*elementsPerPage, maxElements, response);
+            this._pageValidator.ValidatePage(elementsPerPage, (pageNumber - 1) * elementsPerPage, maxElements, response);
         }
     }
 }

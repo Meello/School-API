@@ -17,6 +17,7 @@ using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System.Collections.Generic;
 using System.Linq;
 using StoneCo.Buy4.School.DataContracts;
+using System.Web.Http.OData;
 
 namespace School.Application.Controllers
 {
@@ -71,6 +72,7 @@ namespace School.Application.Controllers
 
         //Corrigir o HttpGet --> qual caminho dele para ir para o Search?
         [HttpGet("Search")]
+        [EnableQuery]
         public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
         {
             SearchTeacherRequest request = new SearchTeacherRequest(requestData);
