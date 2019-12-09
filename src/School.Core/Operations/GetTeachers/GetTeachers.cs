@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
@@ -26,7 +27,7 @@ namespace School.Core.Operations.GetTeachers
         {
             GetTeachersResponse response = new GetTeachersResponse();
 
-            IEnumerable<Teacher> teachers = this._teacherRepository.ListAll();
+            List<Teacher> teachers = this._teacherRepository.ListAll().ToList();
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 

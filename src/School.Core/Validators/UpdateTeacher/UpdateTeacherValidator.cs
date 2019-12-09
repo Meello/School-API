@@ -20,14 +20,12 @@ namespace School.Core.Validators.UpdateTeacher
 
         public UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
-            Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
-
             UpdateTeacherResponse response = new UpdateTeacherResponse
             {
                 Errors = new List<OperationError>()
             };
 
-            if (this._teacherValidator.ValidateTeacher(teacher, response) == false)
+            if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
             {
                 response.Success = false;
                 return response;

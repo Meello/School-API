@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using School.Core.ValidatorsTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
+using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 
 namespace School.Core.ValidatorsTeacher
 {
@@ -17,16 +18,16 @@ namespace School.Core.ValidatorsTeacher
             this._validator = validator;
         }
 
-        public bool ValidateTeacher(Teacher teacher, OperationResponseBase response)
+        public bool ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response)
         {
 
-            if (teacher == null)
+            if (requestData == null)
             {
                 response.Errors.Add(new OperationError("001", "Request can't be null"));
                 return false;
             }
 
-            this._validator.ValidateNullOrZero(teacher.TeacherId, response, nameof(teacher.TeacherId));
+            this._validator.ValidateNullOrZero(requestData.CPF, response, nameof(requestData.CPF));
 
             if (response.Errors.Count > 0)
             {
@@ -34,11 +35,11 @@ namespace School.Core.ValidatorsTeacher
             }
 
             //Validate if parameters are null
-            this._validator.ValidateNullOrZero(teacher.Name, response, nameof(teacher.Name));
-            this._validator.ValidateNullOrZero(teacher.Gender, response, nameof(teacher.Gender));
-            this._validator.ValidateNullOrZero(teacher.LevelId, response, nameof(teacher.LevelId));
-            this._validator.ValidateNullOrZero(teacher.Salary, response, nameof(teacher.Salary));
-            this._validator.ValidateNullOrZero(teacher.AdmitionDate, response, nameof(teacher.AdmitionDate));
+            this._validator.ValidateNullOrZero(requestData.Name, response, nameof(requestData.Name));
+            this._validator.ValidateNullOrZero(requestData.Gender, response, nameof(requestData.Gender));
+            this._validator.ValidateNullOrZero(requestData.Level, response, nameof(requestData.Level));
+            this._validator.ValidateNullOrZero(requestData.Salary, response, nameof(requestData.Salary));
+            this._validator.ValidateNullOrZero(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
 
             if (response.Errors.Count > 0)
             {
@@ -46,14 +47,14 @@ namespace School.Core.ValidatorsTeacher
             }
 
             //Put gender and level in upper case if they aren't
-            teacher.Gender = this._validator.ValidateUpperCase(teacher.Gender);
-            teacher.LevelId = this._validator.ValidateUpperCase(teacher.LevelId);
+            requestData.Gender = this._validator.ValidateUpperCase(requestData.Gender);
+            requestData.Level = this._validator.ValidateUpperCase(requestData.Level);
             //Validate format
-            this._validator.ValidateMaxLength(teacher.Name, ModelConstants.Teacher.NameMaxLength, response);
-            this._validator.ValidateGender(teacher.Gender, response);
-            this._validator.ValidateLevel(teacher.LevelId, response);
-            this._validator.ValidateMinMaxSalary(teacher.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
-            this._validator.ValidateAdmitionDate(teacher.AdmitionDate, response);
+            this._validator.ValidateMaxLength(requestData.Name, ModelConstants.Teacher.NameMaxLength, response);
+            this._validator.ValidateGender(requestData.Gender, response);
+            this._validator.ValidateLevel(requestData.Level, response);
+            this._validator.ValidateMinMaxSalary(requestData.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
+            this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response);
 
             if (response.Errors.Count > 0)
             {

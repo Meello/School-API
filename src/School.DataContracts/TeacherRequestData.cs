@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoneCo.Buy4.School.DataContracts.UpdateTeacher
+namespace StoneCo.Buy4.School.DataContracts
 {
-    public class UpdateTeacherRequestData
+    public class TeacherRequestData
     {
         public long CPF { get; set; }
 

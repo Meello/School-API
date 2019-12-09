@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using School.Core.Mapping;
 using School.Core.Operations;
 using School.Core.Operations.DeleteTeacher;
-using School.Core.Operations.FilterTeacher;
+using School.Core.Operations.SearchTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
 using School.Core.Operations.InsertTeacher;

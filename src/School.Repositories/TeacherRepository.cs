@@ -4,7 +4,7 @@ using School.Core.Models;
 using School.Core.Repositories;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
-using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;

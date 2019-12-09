@@ -1,9 +1,9 @@
-﻿using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+﻿using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace School.Core.Operations.FilterTeacher
+namespace School.Core.Operations.SearchTeacher
 {
     public interface ISearchTeacher
     {

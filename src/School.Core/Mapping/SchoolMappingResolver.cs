@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using School.Core.Models;
-using StoneCo.Buy4.School.DataContracts.GetTeacher;
-using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
-using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
 namespace School.Core.Mapping
@@ -51,24 +47,6 @@ namespace School.Core.Mapping
 
             return new Teacher
             {
-                TeacherId = requestData.CPF,
-                Name = requestData.Name,
-                Gender = requestData.Gender,
-                LevelId = requestData.Level,
-                Salary = requestData.Salary,
-                AdmitionDate = requestData.AdmitionDate
-            };
-        }
-        
-        public Teacher BuildFrom(UpdateTeacherRequestData requestData)
-        {
-            if (requestData == null)
-            {
-                return null;
-            }
-
-            return new Teacher
-            {                
                 TeacherId = requestData.CPF,
                 Name = requestData.Name,
                 Gender = requestData.Gender,

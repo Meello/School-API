@@ -2,13 +2,13 @@
 using School.Core.Models;
 using School.Core.Operations;
 using School.Core.Operations.DeleteTeacher;
-using School.Core.Operations.FilterTeacher;
+using School.Core.Operations.SearchTeacher;
 using School.Core.Operations.GetTeacher;
 using School.Core.Operations.GetTeachers;
 using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
-using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using StoneCo.Buy4.School.DataContracts.GetTeacherPerPage;
 using StoneCo.Buy4.School.DataContracts.GetTeachers;
@@ -16,6 +16,7 @@ using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System.Collections.Generic;
 using System.Linq;
+using StoneCo.Buy4.School.DataContracts;
 
 namespace School.Application.Controllers
 {
@@ -142,7 +143,7 @@ namespace School.Application.Controllers
         }
        
         [HttpPut]
-        public ActionResult<UpdateTeacherResponse> Update([FromBody]UpdateTeacherRequestData requestData)
+        public ActionResult<UpdateTeacherResponse> Update([FromBody]TeacherRequestData requestData)
         {
             UpdateTeacherRequest request = new UpdateTeacherRequest(requestData);
             UpdateTeacherResponse response = this._updateTeacher.ProcessOperation(request);

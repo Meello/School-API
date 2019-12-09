@@ -6,11 +6,11 @@ namespace StoneCo.Buy4.School.DataContracts.UpdateTeacher
 {
     public class UpdateTeacherRequest
     {       
-        public UpdateTeacherRequest(UpdateTeacherRequestData requestData)
+        public UpdateTeacherRequest(TeacherRequestData requestData)
         {
             Data = requestData;
         }
 
-        public UpdateTeacherRequestData Data { get; }
+        public TeacherRequestData Data { get; }
     }
 }

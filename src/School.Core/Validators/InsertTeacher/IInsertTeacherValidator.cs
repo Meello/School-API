@@ -1,4 +1,5 @@
-﻿using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+﻿using StoneCo.Buy4.School.DataContracts.SearchTeacher;
+using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System;
 using System.Collections.Generic;
 using System.Text;

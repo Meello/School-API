@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using School.Core.Models;
 using School.Core.Validators.DataBaseValidator;
+using School.Core.Validators.Page;
 using School.Core.Validators.ValidateTeacherParameters;
 using StoneCo.Buy4.School.DataContracts;
-using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 
 namespace School.Core.Validators.SearchTeacher
 {
@@ -13,14 +14,17 @@ namespace School.Core.Validators.SearchTeacher
     {
         private readonly ITeacherParametersValidator _parameterValidator;
         private readonly IDataBaseValidator _dataBaseValidator;
+        private readonly IPageValidator _pageValidator;
 
-        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator, IDataBaseValidator dataBaseValidator)
+        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator, IDataBaseValidator dataBaseValidator, IPageValidator pageValidator)
         {
             this._parameterValidator = parameterValidator;
             this._dataBaseValidator = dataBaseValidator;
+            this._pageValidator = pageValidator;
         }
 
-        public SearchTeacherResponse ValidateOperation(SearchTeacherRequestData requestData)
+
+        public SearchTeacherResponse ValidateParameters(SearchTeacherRequestData requestData)
         {
             SearchTeacherResponse response = new SearchTeacherResponse
             { 
@@ -98,6 +102,11 @@ namespace School.Core.Validators.SearchTeacher
             //terminando aqui
 
             return null;
+        }
+        
+        public void ValidatePage(long maxElements, long elementsPerPage, long pageNumber, SearchTeacherResponse response)
+        {
+            this._pageValidator.ValidatePage(elementsPerPage, (pageNumber - 1)*elementsPerPage, maxElements, response);
         }
     }
 }

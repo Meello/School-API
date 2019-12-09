@@ -1,5 +1,5 @@
 ﻿using School.Core.Models;
-using StoneCo.Buy4.School.DataContracts.FilterTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using System.Collections.Generic;
 
 namespace School.Core.Repositories
