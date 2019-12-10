@@ -82,13 +82,41 @@ namespace School.Repositories
             }
         }
 
-        public IEnumerable<Teacher> Search(SearchTeacherRequestData requestData)
+        public IEnumerable<Teacher> Search(SearchTeacherRequest request)
         {
-            string sql = @"";
+            string sql = @"
+                SELECT 
+	                TeacherId,
+	                Name,
+	                Gender,
+	                LevelId,
+	                Salary,
+	                AdmitionDate
+                FROM 
+	                dbo.Teacher
+                ";
+
+            if (request.Data != null)
+            {
+                sql += @"
+                    WHERE
+                    ";
+
+                if(request.Data.NameInitial != null)
+                {
+                    sql += @"
+                        LEFT(Name,1) = @NameInitial
+                        ";
+                }
+            }
+
+            sql += @"
+                ORDER BY TeacherId
+	                OFFSET (@PageNumber - 1)*@TeachersPerPage  ROWS
+	                FETCH NEXT @TeachersPerPage ROWS ONLY";
 
             DynamicParameters parameters = new DynamicParameters();
-
-            parameters.AddDynamicParams(requestData);
+            parameters.AddDynamicParams(request);
 
             using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
             {

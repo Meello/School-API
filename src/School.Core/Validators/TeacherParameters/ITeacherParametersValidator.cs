@@ -17,18 +17,22 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         void ValidateNullOrZero(DateTime? value, OperationResponseBase response, string fieldName);
 
-        void ValidateMaxLength(string name, int maxlength, OperationResponseBase response);
+        void ValidateMaxLength(string value, int maxlength, OperationResponseBase response, string fieldname);
 
-        void ValidateGender(char? gender, OperationResponseBase response);
+        void ValidateGender(char? gender, OperationResponseBase response, string fieldname);
 
         bool ValidateGender(char? gender);
 
-        void ValidateLevel(char? level, OperationResponseBase response);
+        void ValidateLevel(char? level, OperationResponseBase response, string fieldname);
 
-        void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response);
+        bool ValidateLevel(char? level);
 
-        void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response);
+        void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response, string fieldname);
 
-        char ValidateUpperCase(char? c);
+        void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response, string fieldname);
+
+        bool ValidateUpperCase(char? c, OperationResponseBase response, string fieldname);
+
+        bool ValidateUpperCase(char? c);
     }
 }

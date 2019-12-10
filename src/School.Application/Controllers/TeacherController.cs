@@ -17,7 +17,6 @@ using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System.Collections.Generic;
 using System.Linq;
 using StoneCo.Buy4.School.DataContracts;
-using System.Web.Http.OData;
 
 namespace School.Application.Controllers
 {
@@ -70,17 +69,15 @@ namespace School.Application.Controllers
             return Ok(response);
         }
 
-        //Corrigir o HttpGet --> qual caminho dele para ir para o Search?
+        //Consigo passar dois parâmetros no search a partir do FromBody?
         [HttpGet("Search")]
-        [EnableQuery]
-        public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData)
+        public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequest request)
         {
-            SearchTeacherRequest request = new SearchTeacherRequest(requestData);
             SearchTeacherResponse response = this._searchTeacher.ProcessOperation(request);
 
             if (response.Data == null)
             {
-                return NotFound();
+                return NotFound(response);
             }
 
             if (response.Success == false)

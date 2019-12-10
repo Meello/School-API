@@ -6,12 +6,6 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 {
     public class SearchTeacherRequestData
     {
-        public long? PageNumber { get; set; }
-
-        public long? PageSize { get; set; }
-
-        //public long? CPF { get; set; }
-
         public string NameInitial { get; set; }
 
         public List<char?> Gender { get; set; }

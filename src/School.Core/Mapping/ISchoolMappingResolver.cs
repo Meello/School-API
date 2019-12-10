@@ -2,6 +2,7 @@
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using System;
 using System.Collections.Generic;

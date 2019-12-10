@@ -1,4 +1,5 @@
 ﻿using School.Core.Models;
+using School.Core.Validators.ValidateTeacherParameters;
 using StoneCo.Buy4.School.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ namespace School.Core.Validators.Page
 {
     public class PageValidator : IPageValidator
     {
-        public void ValidatePage(long elementsPerPage, long offset, long maxElements, OperationResponseBase response)
+        public void ValidatePage(long elementsPerPage, long pageNumber, long maxElements, OperationResponseBase response)
         {
+            long offset = (pageNumber - 1) * elementsPerPage;
+
             if (elementsPerPage > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));

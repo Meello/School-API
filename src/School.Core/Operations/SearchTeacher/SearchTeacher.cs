@@ -9,6 +9,7 @@ using School.Core.Validators;
 using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
+using StoneCo.Buy4.School.DataContracts;
 
 namespace School.Core.Operations.SearchTeacher
 {
@@ -29,17 +30,15 @@ namespace School.Core.Operations.SearchTeacher
 
         public SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)
         {
-            SearchTeacherResponse response = this._validator.ValidateParameters(request.Data);
+            SearchTeacherResponse response = this._validator.ValidateParameters(request);
 
             if (response.Success == false)
             {
                 return response;
             }
 
-            List<Teacher> teachers = this._teacherRepository.Search(request.Data).ToList();
+            List<Teacher> teachers = this._teacherRepository.Search(request).ToList();
 
-            this._validator.ValidatePage(teachers.Count, request.Data.PageSize.Value, request.Data.PageNumber.Value, response);
-            
             if(response.Success == false)
             {
                 return response;

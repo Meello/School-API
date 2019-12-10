@@ -32,9 +32,9 @@ namespace School.Core.Validators.GetTeachersPerPage
 
             long maxElements = this._validator.NumberOfElements();
 
-            long offset = elementsPerPage * (pageNumber - 1);
+            //long offset = elementsPerPage * (pageNumber - 1);
 
-            this._pageValidator.ValidatePage(elementsPerPage, offset, maxElements, response);
+            this._pageValidator.ValidatePage(elementsPerPage, pageNumber, maxElements, response);
             
             return response;
         }

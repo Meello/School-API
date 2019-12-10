@@ -38,20 +38,20 @@ namespace School.Application
         {
             // Repositories
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
-            services.AddScoped<IDataBaseValidator>(provider => new DataBaseValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             //services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             // Operations
             services.AddScoped<ISchoolMappingResolver, SchoolMappingResolver>();
+            services.AddScoped<IDeleteTeacher, DeleteTeacher>();
             services.AddScoped<IGetTeacher, GetTeacher>();
             services.AddScoped<IGetTeachers, GetTeachers>();
-            services.AddScoped<IDeleteTeacher, DeleteTeacher>();
-            services.AddScoped<IUpdateTeacher, UpdateTeacher>();
+            services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
             services.AddScoped<IInsertTeacher, InsertTeacher>();
             services.AddScoped<ISearchTeacher, SearchTeacher>();
-            services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
+            services.AddScoped<IUpdateTeacher, UpdateTeacher>();
 
             //Validators
+            services.AddScoped<IDataBaseValidator>(provider => new DataBaseValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<IGetTeachersPerPageValidator, GetTeachersPerPageValidator>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
             services.AddScoped<IPageValidator, PageValidator>();

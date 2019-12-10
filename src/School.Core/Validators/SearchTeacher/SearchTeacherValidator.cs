@@ -13,17 +13,15 @@ namespace School.Core.Validators.SearchTeacher
     public class SearchTeacherValidator : ISearchTeacherValidator
     {
         private readonly ITeacherParametersValidator _parameterValidator;
-        private readonly IDataBaseValidator _dataBaseValidator;
         private readonly IPageValidator _pageValidator;
 
-        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator, IDataBaseValidator dataBaseValidator, IPageValidator pageValidator)
+        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator, IPageValidator pageValidator)
         {
             this._parameterValidator = parameterValidator;
-            this._dataBaseValidator = dataBaseValidator;
             this._pageValidator = pageValidator;
         }
         
-        public SearchTeacherResponse ValidateParameters(SearchTeacherRequestData requestData)
+        public SearchTeacherResponse ValidateParameters(SearchTeacherRequest request)
         {
             SearchTeacherResponse response = new SearchTeacherResponse
             { 
@@ -33,9 +31,16 @@ namespace School.Core.Validators.SearchTeacher
 
             int count = 0;
 
-            foreach(char? gender in requestData.Gender)
+            foreach(char? gender in request.Data.Gender)
             {
-                if(this._parameterValidator.ValidateGender(gender) == false)
+                if(this._parameterValidator.ValidateUpperCase(gender) == true)
+                {
+                    if(this._parameterValidator.ValidateGender(gender) == false)
+                    {
+                        count += 1;
+                    }
+                }
+                else
                 {
                     count += 1;
                 }
@@ -43,13 +48,20 @@ namespace School.Core.Validators.SearchTeacher
 
             if(count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(requestData.Gender)} list invalid "));
+                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Gender)} list invalid "));
                 count = 0;
             }
 
-            foreach (char? level in requestData.Level)
+            foreach (char? level in request.Data.Level)
             {
-                if (this._parameterValidator.ValidateGender(level) == false)
+                if(this._parameterValidator.ValidateUpperCase(level) == true)
+                {
+                    if (this._parameterValidator.ValidateLevel(level) == false)
+                    {
+                        count += 1;
+                    }
+                }
+                else
                 {
                     count += 1;
                 }
@@ -57,31 +69,34 @@ namespace School.Core.Validators.SearchTeacher
                         
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(requestData.Level)} list invalid "));
-                count = 0;
+                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Level)} list invalid "));
             }
 
-            if (requestData.MinAdmitionDate != null)
+            if (request.Data.MinAdmitionDate != null)
             {
-                this._parameterValidator.ValidateAdmitionDate(requestData.MinAdmitionDate, response);
+                this._parameterValidator.ValidateAdmitionDate(request.Data.MinAdmitionDate, response, nameof(request.Data.MinAdmitionDate));
             }
 
-            if (requestData.MaxAdmitionDate != null)
+            if (request.Data.MaxAdmitionDate != null)
             {
-                this._parameterValidator.ValidateAdmitionDate(requestData.MaxAdmitionDate, response);
+                this._parameterValidator.ValidateAdmitionDate(request.Data.MaxAdmitionDate, response, nameof(request.Data.MaxAdmitionDate));
             }
 
-            if (requestData.MaxSalary != null) 
+            if (request.Data.MaxSalary != null) 
             { 
-                this._parameterValidator.ValidateMinMaxSalary(requestData.MaxSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
+                this._parameterValidator.ValidateMinMaxSalary(request.Data.MaxSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MaxSalary));
             }
 
-            if (requestData.MinSalary != null)
+            if (request.Data.MinSalary != null)
             {
-                this._parameterValidator.ValidateMinMaxSalary(requestData.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
+                this._parameterValidator.ValidateMinMaxSalary(request.Data.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MinSalary));
             }
 
-            if(response.Errors.Count == 0)
+            this._parameterValidator.ValidateNullOrZero(request.PageSize, response, nameof(request.PageSize));
+
+            this._parameterValidator.ValidateNullOrZero(request.PageNumber, response, nameof(request.PageNumber));
+
+            if (response.Errors.Count == 0)
             {
                 response.Success = true;
             }
@@ -89,9 +104,9 @@ namespace School.Core.Validators.SearchTeacher
             return response;
         }
         
-        public void ValidatePage(long maxElements, long elementsPerPage, long pageNumber, SearchTeacherResponse response)
+        public void ValidatePage(long maxElements, long? pageSize, long? pageNumber, SearchTeacherResponse response)
         {
-            this._pageValidator.ValidatePage(elementsPerPage, (pageNumber - 1) * elementsPerPage, maxElements, response);
+            this._pageValidator.ValidatePage(pageSize.Value, (pageNumber.Value - 1) * pageSize.Value, maxElements, response);
         }
     }
 }

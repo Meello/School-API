@@ -46,16 +46,21 @@ namespace School.Core.ValidatorsTeacher
                 return false;
             }
 
-            //Put gender and level in upper case if they aren't
-            requestData.Gender = this._validator.ValidateUpperCase(requestData.Gender);
-            requestData.Level = this._validator.ValidateUpperCase(requestData.Level);
             //Validate format
-            this._validator.ValidateMaxLength(requestData.Name, ModelConstants.Teacher.NameMaxLength, response);
-            this._validator.ValidateGender(requestData.Gender, response);
-            this._validator.ValidateLevel(requestData.Level, response);
-            this._validator.ValidateMinMaxSalary(requestData.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response);
-            this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response);
-
+            this._validator.ValidateMaxLength(requestData.Name, ModelConstants.Teacher.NameMaxLength, response, nameof(requestData.Name));
+            this._validator.ValidateMinMaxSalary(requestData.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(requestData.Salary));
+            this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
+            
+            if(this._validator.ValidateUpperCase(requestData.Gender, response, nameof(requestData.Gender)) == true)
+            {
+                this._validator.ValidateGender(requestData.Gender, response, nameof(requestData.Gender));
+            }
+            
+            if(this._validator.ValidateUpperCase(requestData.Level, response, nameof(requestData.Level)) == true)
+            {
+                this._validator.ValidateLevel(requestData.Level, response, nameof(requestData.Level));
+            }
+            
             if (response.Errors.Count > 0)
             {
                 return false;

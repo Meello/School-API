@@ -47,19 +47,20 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
         }
 
-        public void ValidateMaxLength(string value, int maxlength, OperationResponseBase response)
+        public void ValidateMaxLength(string value, int maxlength, OperationResponseBase response, string fieldname)
         {
             if (value != null && value.Length > maxlength)
             {
-                response.Errors.Add(new OperationError("004", "Name lenght don't supported! Limit: 32 caracters"));
+                response.Errors.Add(new OperationError("004", $"{fieldname} lenght don't supported! Limit: {maxlength} caracters"));
             }
         }
 
-        public void ValidateGender(char? gender, OperationResponseBase response)
+        //Tentar usar foreach para comparar gender com uma lista de gender aceitos
+        public void ValidateGender(char? gender, OperationResponseBase response, string fieldname)
         {
             if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
             {
-                response.Errors.Add(new OperationError("005", "Invalid Gender! Choose M or F"));
+                response.Errors.Add(new OperationError("005", $"Invalid {fieldname}! Choose M or F"));
             }
         }
 
@@ -73,38 +74,62 @@ namespace School.Core.Validators.ValidateTeacherParameters
             return true;
         }
 
-        public void ValidateLevel(char? level, OperationResponseBase response)
+
+        //Tentar usar foreach para comparar level com uma lista de level aceitos
+        public void ValidateLevel(char? level, OperationResponseBase response, string fieldname)
         {
             if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
             {
-                response.Errors.Add(new OperationError("006", "Invalid Level! Choose J or P or S"));
+                response.Errors.Add(new OperationError("006", $"Invalid {fieldname}! Choose J or P or S"));
             }
         }
 
-        public void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response)
+        public bool ValidateLevel(char? level)
+        {
+            if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response, string fieldname)
         {
             if (salary != null && salary != decimal.Zero && salary < minsalary || salary > maxsalary)
             {
-                response.Errors.Add(new OperationError("007", "Value don't accepted! Choose a value between 1000 and 10000"));
+                response.Errors.Add(new OperationError("007", $"Value of {fieldname} don't accepted! Choose a value between {minsalary} and {maxsalary}"));
             }
         }
 
-        public void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response)
+        public void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response, string fieldname)
         {
             if (admitionDate != null && admitionDate != DateTime.MinValue && admitionDate > DateTime.Today)
             {
-                response.Errors.Add(new OperationError("008", "Admition date can't be bigger than today"));
+                response.Errors.Add(new OperationError("008", $"{fieldname} can't be bigger than today"));
             }
         }
 
-        public char ValidateUpperCase(char? c)
+        public bool ValidateUpperCase(char? c, OperationResponseBase response, string fieldname)
         {
             if (char.IsUpper(c.Value) == false)
             {
-                return char.ToUpper(c.Value);
+                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
+                
+                return false;
             }
 
-            return c.Value;
+            return true;
+        }
+
+        public bool ValidateUpperCase(char? c)
+        {
+            if (char.IsUpper(c.Value) == false)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

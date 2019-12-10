@@ -2,6 +2,7 @@
 using System.Linq;
 using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
 namespace School.Core.Mapping

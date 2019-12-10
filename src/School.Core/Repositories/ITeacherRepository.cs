@@ -9,7 +9,7 @@ namespace School.Core.Repositories
         //Interface define o contrato
         Teacher Get(long cpf);
 
-        IEnumerable<Teacher> Search(SearchTeacherRequestData requestData);
+        IEnumerable<Teacher> Search(SearchTeacherRequest request);
 
         IEnumerable<Teacher> ListAll();
 
