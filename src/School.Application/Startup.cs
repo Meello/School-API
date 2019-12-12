@@ -21,6 +21,8 @@ using School.Repositories;
 using School.Core.Validators.Page;
 using School.Core.Validators.SearchTeacher;
 using School.Core.ValidatorsTeacher;
+using School.Core.Querys.SearchConditions;
+using School.Core.Querys.SearchConditions.SearchConditionsPerParameter;
 
 namespace School.Application
 {
@@ -59,6 +61,10 @@ namespace School.Application
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
             services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
+
+            //Querys
+            services.AddScoped<ISearchConditions, SearchConditions>();
+            services.AddScoped<ISearchConditionsPerParameter, SearchConditionsPerParameter>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

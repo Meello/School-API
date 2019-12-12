@@ -86,12 +86,20 @@ namespace School.Core.Validators.SearchTeacher
             this._parameterValidator.ValidateNullOrZero(request.PageSize, response, nameof(request.PageSize));
             this._parameterValidator.ValidateNullOrZero(request.PageNumber, response, nameof(request.PageNumber));
 
+            if(request.Data.MaxSalary < request.Data.MinSalary)
+            {
+                response.Errors.Add(new OperationError("",$"{nameof(request.Data.MaxSalary)} can't be bigger than {nameof(request.Data.MinSalary)}"));
+            }
+
+            if (request.Data.MaxAdmitionDate < request.Data.MinAdmitionDate)
+            {
+                response.Errors.Add(new OperationError("", $"{nameof(request.Data.MaxAdmitionDate)} can't be bigger than {nameof(request.Data.MinAdmitionDate)}"));
+            }
+
             if (response.Errors.Count == 0)
             {
                 response.Success = true;
             }
-
-            //string.Join(",", request.Data.Gender.ToArray()); => passar lista inteira para string para poder printar
 
             return response;
         }

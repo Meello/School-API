@@ -10,6 +10,7 @@ using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts;
+using School.Core.Querys.SearchConditions;
 
 namespace School.Core.Operations.SearchTeacher
 {
@@ -18,12 +19,14 @@ namespace School.Core.Operations.SearchTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly ISearchTeacherValidator _validator;
+        private readonly ISearchConditions _searchConditions;
 
-        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ISearchTeacherValidator validator)
+        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ISearchTeacherValidator validator, ISearchConditions searchConditions)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
+            this._searchConditions = searchConditions;
         }
 
         public SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)
@@ -35,7 +38,7 @@ namespace School.Core.Operations.SearchTeacher
                 return response;
             }
 
-            IEnumerable<Teacher> teachers = this._teacherRepository.Search(request);
+            IEnumerable<Teacher> teachers = this._teacherRepository.Search(request, this._searchConditions.SqlStringSearchConditions(request.Data));
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 

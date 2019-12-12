@@ -14,6 +14,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using School.Core.Querys.SearchConditions;
 
 namespace School.Repositories
 {
@@ -82,7 +83,7 @@ namespace School.Repositories
             }
         }
 
-        public IEnumerable<Teacher> Search(SearchTeacherRequest request)
+        public IEnumerable<Teacher> Search(SearchTeacherRequest request, string sqlWhereConditions)
         {
             string sql = @"
                 SELECT 
@@ -96,125 +97,7 @@ namespace School.Repositories
                     dbo.Teacher
                 ";
 
-            if (request.Data != null)
-            {
-                sql += @"WHERE
-                    ";
-
-                long lengthSql = sql.Length;
-
-                if (request.Data.NameInitial != null)
-                {
-                    sql += @"LEFT(Name,1) = @NameInitial
-                        ";
-                }
-
-                if(request.Data.Gender != null)
-                {
-                    if(lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-                        
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"{nameof(request.Data.Gender)} IN('{string.Join("' , '", request.Data.Gender.ToArray())}')
-                        ";
-                }
-
-                if (request.Data.LevelId != null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-                        
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"{nameof(request.Data.LevelId)} IN('{string.Join("' , '", request.Data.LevelId.ToArray())}')
-                        ";
-                }
-
-                if(request.Data.MinSalary != null && request.Data.MaxSalary == null)
-                {
-                    if(lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"Salary > @MinSalary
-                        ";
-                }
-
-                if (request.Data.MaxSalary != null && request.Data.MinSalary == null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"Salary < @MaxSalary
-                        ";
-                }
-
-
-                if (request.Data.MaxSalary != null && request.Data.MinSalary != null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"Salary < @MaxSalary AND Salary > @MinSalary
-                        ";
-                }
-
-                if (request.Data.MinAdmitionDate != null && request.Data.MaxAdmitionDate == null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"AdmitionDate > @MinAdmitionDate
-                        ";
-                }
-
-                if (request.Data.MaxAdmitionDate != null && request.Data.MinAdmitionDate == null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"AdmitionDate < @MaxAdmitionDate
-                        ";
-                }
-
-
-                if (request.Data.MaxAdmitionDate != null && request.Data.MinAdmitionDate != null)
-                {
-                    if (lengthSql < sql.Length)
-                    {
-                        sql += @" AND ";
-
-                        lengthSql = sql.Length;
-                    }
-
-                    sql += $@"AdmitionDate < @MaxAdmitionDate AND AdmitionDate > @MinAdmitionDate
-                        ";
-                }
-            }
+            sql += sqlWhereConditions;
 
             sql += @"ORDER BY TeacherId
                     OFFSET (@PageNumber - 1)*@PageSize  ROWS
