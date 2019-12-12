@@ -31,7 +31,7 @@ namespace School.Core.Mapping
             //sobrecarga de método --> capacidade de um método ter o mesmo nome com assinaturas diferentes
             //variando o tipo e a quantidade de variáveis
         {
-            if(teachers == null)
+            if(teachers.Count<Teacher>() == 0)
             {
                 return null;
             }

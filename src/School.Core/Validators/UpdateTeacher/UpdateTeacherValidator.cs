@@ -10,12 +10,10 @@ namespace School.Core.Validators.UpdateTeacher
     public class UpdateTeacherValidator : IUpdateTeacherValidator
     {
         private readonly ITeacherValidator _teacherValidator;
-        private readonly ISchoolMappingResolver _mappingResolver;
 
-        public UpdateTeacherValidator(ITeacherValidator teacherValidator, ISchoolMappingResolver mappingResolver)
+        public UpdateTeacherValidator(ITeacherValidator teacherValidator)
         {
             this._teacherValidator = teacherValidator;
-            this._mappingResolver = mappingResolver;
         }
 
         public UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)

@@ -20,86 +20,78 @@ namespace School.Core.Validators.SearchTeacher
             this._parameterValidator = parameterValidator;
             this._pageValidator = pageValidator;
         }
-        
+
         public SearchTeacherResponse ValidateParameters(SearchTeacherRequest request)
         {
             SearchTeacherResponse response = new SearchTeacherResponse
-            { 
+            {
                 Notifications = new List<OperationNotification>(),
                 Errors = new List<OperationError>()
             };
 
             int count = 0;
 
-            foreach(char? gender in request.Data.Gender)
+            if (request.Data.Gender != null)
             {
-                if(this._parameterValidator.ValidateUpperCase(gender) == true)
+                //quando a lista é nula, foreach não funciona
+                foreach (char? gender in request.Data.Gender)
                 {
-                    if(this._parameterValidator.ValidateGender(gender) == false)
+                    if (this._parameterValidator.ValidateUpperCase(gender) == true)
+                    {
+                        if (this._parameterValidator.ValidateGender(gender) == false)
+                        {
+                            count += 1;
+                        }
+                    }
+                    else
                     {
                         count += 1;
                     }
                 }
-                else
-                {
-                    count += 1;
-                }
             }
 
-            if(count > 0)
+            if (count > 0)
             {
                 response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Gender)} list invalid "));
                 count = 0;
             }
 
-            foreach (char? level in request.Data.Level)
+            if(request.Data.LevelId != null)
             {
-                if(this._parameterValidator.ValidateUpperCase(level) == true)
+                foreach (char? level in request.Data.LevelId)
                 {
-                    if (this._parameterValidator.ValidateLevel(level) == false)
+                    if (this._parameterValidator.ValidateUpperCase(level) == true)
+                    {
+                        if (this._parameterValidator.ValidateLevel(level) == false)
+                        {
+                            count += 1;
+                        }
+                    }
+                    else
                     {
                         count += 1;
                     }
-                }
-                else
-                {
-                    count += 1;
                 }
             }
                         
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Level)} list invalid "));
+                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.LevelId)} list invalid "));
             }
 
-            if (request.Data.MinAdmitionDate != null)
-            {
-                this._parameterValidator.ValidateAdmitionDate(request.Data.MinAdmitionDate, response, nameof(request.Data.MinAdmitionDate));
-            }
-
-            if (request.Data.MaxAdmitionDate != null)
-            {
-                this._parameterValidator.ValidateAdmitionDate(request.Data.MaxAdmitionDate, response, nameof(request.Data.MaxAdmitionDate));
-            }
-
-            if (request.Data.MaxSalary != null) 
-            { 
-                this._parameterValidator.ValidateMinMaxSalary(request.Data.MaxSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MaxSalary));
-            }
-
-            if (request.Data.MinSalary != null)
-            {
-                this._parameterValidator.ValidateMinMaxSalary(request.Data.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MinSalary));
-            }
-
+            this._parameterValidator.ValidateAdmitionDate(request.Data.MinAdmitionDate, response, nameof(request.Data.MinAdmitionDate));
+            this._parameterValidator.ValidateAdmitionDate(request.Data.MaxAdmitionDate, response, nameof(request.Data.MaxAdmitionDate));
+            this._parameterValidator.ValidateMinMaxSalary(request.Data.MaxSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MaxSalary));
+            this._parameterValidator.ValidateMinMaxSalary(request.Data.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(request.Data.MinSalary));
             this._parameterValidator.ValidateNullOrZero(request.PageSize, response, nameof(request.PageSize));
-
             this._parameterValidator.ValidateNullOrZero(request.PageNumber, response, nameof(request.PageNumber));
 
             if (response.Errors.Count == 0)
             {
                 response.Success = true;
             }
+
+            //string.Join(",", request.Data.Gender.ToArray()); => passar lista inteira para string para poder printar
 
             return response;
         }

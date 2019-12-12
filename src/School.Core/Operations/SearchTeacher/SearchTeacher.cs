@@ -18,14 +18,12 @@ namespace School.Core.Operations.SearchTeacher
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly ISearchTeacherValidator _validator;
-        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ISearchTeacherValidator validator, IDataBaseValidator dataBaseValidator)
+        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ISearchTeacherValidator validator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
-            this._dataBaseValidator = dataBaseValidator;
         }
 
         public SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)
@@ -37,12 +35,7 @@ namespace School.Core.Operations.SearchTeacher
                 return response;
             }
 
-            List<Teacher> teachers = this._teacherRepository.Search(request).ToList();
-
-            if(response.Success == false)
-            {
-                return response;
-            }
+            IEnumerable<Teacher> teachers = this._teacherRepository.Search(request);
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 

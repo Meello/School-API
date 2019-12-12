@@ -10,7 +10,7 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 
         public List<char?> Gender { get; set; }
 
-        public List<char?> Level { get; set; }
+        public List<char?> LevelId { get; set; }
 
         public decimal? MinSalary { get; set; }
 
@@ -19,5 +19,9 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
         public DateTime? MinAdmitionDate { get; set; }
 
         public DateTime? MaxAdmitionDate { get; set; }
+
+        //public long PageSize { get; set; }
+
+        //public long PageNumber { get; set; }
     }
 }

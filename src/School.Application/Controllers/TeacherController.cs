@@ -70,9 +70,10 @@ namespace School.Application.Controllers
         }
 
         //Consigo passar dois parâmetros no search a partir do FromBody?
-        [HttpGet("Search")]
-        public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequest request)
+        [HttpGet("Search/page={pageNumber}/pagesize={pageSize}")]
+        public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData, long pageNumber, long pageSize)
         {
+            SearchTeacherRequest request = new SearchTeacherRequest(requestData, pageNumber, pageSize);
             SearchTeacherResponse response = this._searchTeacher.ProcessOperation(request);
 
             if (response.Data == null)
