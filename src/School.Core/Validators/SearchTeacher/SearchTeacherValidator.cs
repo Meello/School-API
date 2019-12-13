@@ -88,12 +88,12 @@ namespace School.Core.Validators.SearchTeacher
 
             if(request.Data.MaxSalary < request.Data.MinSalary)
             {
-                response.Errors.Add(new OperationError("",$"{nameof(request.Data.MaxSalary)} can't be bigger than {nameof(request.Data.MinSalary)}"));
+                response.Errors.Add(new OperationError("019",$"{nameof(request.Data.MaxSalary)} can't be bigger than {nameof(request.Data.MinSalary)}"));
             }
 
             if (request.Data.MaxAdmitionDate < request.Data.MinAdmitionDate)
             {
-                response.Errors.Add(new OperationError("", $"{nameof(request.Data.MaxAdmitionDate)} can't be bigger than {nameof(request.Data.MinAdmitionDate)}"));
+                response.Errors.Add(new OperationError("019", $"{nameof(request.Data.MaxAdmitionDate)} can't be bigger than {nameof(request.Data.MinAdmitionDate)}"));
             }
 
             if (response.Errors.Count == 0)
@@ -102,11 +102,6 @@ namespace School.Core.Validators.SearchTeacher
             }
 
             return response;
-        }
-        
-        public void ValidatePage(long maxElements, long? pageSize, long? pageNumber, SearchTeacherResponse response)
-        {
-            this._pageValidator.ValidatePage(pageSize.Value, (pageNumber.Value - 1) * pageSize.Value, maxElements, response);
         }
     }
 }

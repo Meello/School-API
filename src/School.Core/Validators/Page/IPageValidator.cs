@@ -7,6 +7,6 @@ namespace School.Core.Validators.Page
 {
     public interface IPageValidator
     {
-        void ValidatePage(long elementsPerPage, long pageNumber, long maxElements, OperationResponseBase response);
+        void ValidatePage(long pageSize, long pageNumber, long maxElements, OperationResponseBase response);
     }
 }

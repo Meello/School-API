@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+//NÃO ESTÁ SENDO USADA
 namespace School.Core.Querys.SearchConditions.SearchConditionsPerParameter
 {
     public class SearchConditionsPerParameter : ISearchConditionsPerParameter
@@ -55,42 +56,14 @@ namespace School.Core.Querys.SearchConditions.SearchConditionsPerParameter
             return null;
         }
 
-        public string SqlStringSearchConditionsName(string name, string fieldName, string sqlString, long sqlStringLength)
-        {
-            if (sqlStringLength < sqlString.Length && name != null)
-            {
-                return $@"AND LEFT(Name,1) = @{fieldName}
-                    ";
-            }
-
-            if(sqlStringLength == sqlString.Length && name != null)
-            {
-                return $@"LEFT(Name,1) = @{fieldName}
-                    ";
-            }
-
-            return null;
-        }
-
-        
-        public long SqlStringLength(string sqlString, long sqlStringLength)
+        public string SqlStringLength(string sqlString, long sqlStringLength)
         {
             if (sqlStringLength < sqlString.Length)
             {
-                sqlString += @" AND ";
+                return @" AND ";
             }
             
-            return sqlString.Length;
-        }
-
-        public string SqlStringSearchConditionsList(List<char?> charList, string fieldname, string sqlString, long sqlStringLength)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string SqlStringSearchConditionsInterval(object min, string minName, object max, string maxName, string fieldToSearch, string sqlString, long sqlStringLength)
-        {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

@@ -6,26 +6,6 @@
 		@MinAdmitionDate Date = '2019-01-01',
 		@MaxAdmitionDate Date = '2019-12-10';
 
-		
-                SELECT 
-                    TeacherId,
-                    Name,
-                    Gender,
-                    LevelId,
-                    Salary,
-                    AdmitionDate
-                FROM 
-                    dbo.Teacher
-                WHERE
-                    LEFT(Name,1) = @NameInitial
-                         AND Gender IN('M' , 'F')
-                         AND LevelId IN('P' , 'S')
-                         AND Salary < @MaxSalary AND Salary > @MinSalary
-                         AND AdmitionDate < @MaxAdmitionDate AND AdmitionDate > @MinAdmitionDate
-                        ORDER BY TeacherId
-                    OFFSET (@PageNumber - 1)*@PageSize  ROWS
-                    FETCH NEXT @PageSize ROWS ONLY
-
 SELECT 
     TeacherId,
     Name,
@@ -36,11 +16,11 @@ SELECT
 FROM 
     dbo.Teacher
 WHERE
-	LEFT(Name,1) = @NameInitial
-    AND Gender IN('M' , 'F')
-    AND LevelId IN('S','P')
+    LEFT(Name,1) = @NameInitial
+    AND Gender IN('M')
+    AND LevelId IN('P','S')
     AND Salary < @MaxSalary AND Salary > @MinSalary
-    AND AdmitionDate < @MaxAdmitionDate AND AdmitionDate > @MinAdmitionDate
+    AND AdmitionDate BETWEEN @MinAdmitionDate AND @MaxAdmitionDate
 ORDER BY TeacherId
 OFFSET (@PageNumber - 1)*@PageSize  ROWS
 FETCH NEXT @PageSize ROWS ONLY

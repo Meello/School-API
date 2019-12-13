@@ -9,11 +9,11 @@ namespace School.Core.Validators.Page
 {
     public class PageValidator : IPageValidator
     {
-        public void ValidatePage(long elementsPerPage, long pageNumber, long maxElements, OperationResponseBase response)
+        public void ValidatePage(long pageSize, long pageNumber, long maxElements, OperationResponseBase response)
         {
-            long offset = (pageNumber - 1) * elementsPerPage;
+            long offset = (pageNumber - 1) * pageSize;
 
-            if (elementsPerPage > ModelConstants.Teacher.MaxTeachersPerPage)
+            if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
                 response.Success = false;
@@ -27,13 +27,13 @@ namespace School.Core.Validators.Page
 
             if (response.Errors.Count == 0)
             {
-                if (elementsPerPage > maxElements - offset)
+                if (pageSize > maxElements - offset)
                 {
                     response.Notifications.Add(new OperationNotification(
                         "001",
                         "The number of elements requested can't be found. " +
                         $"Number of elements found: {maxElements - offset}. " +
-                        $"Number of elements requested: {elementsPerPage}"));
+                        $"Number of elements requested: {pageSize}"));
                 }
 
                 response.Success = true;

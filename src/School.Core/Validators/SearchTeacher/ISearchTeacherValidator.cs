@@ -8,7 +8,5 @@ namespace School.Core.Validators.SearchTeacher
     public interface ISearchTeacherValidator
     {
         SearchTeacherResponse ValidateParameters(SearchTeacherRequest request);
-
-        void ValidatePage(long maxElements, long? pageSize, long? pageNumber, SearchTeacherResponse response);
     }
 }

@@ -16,6 +16,5 @@ namespace School.Core.Models
 
             public const int MaxTeachersPerPage = 100;
         }
-
     }
 }
