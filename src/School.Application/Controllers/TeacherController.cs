@@ -70,7 +70,11 @@ namespace School.Application.Controllers
         }
 
         //Consigo passar dois parâmetros no search a partir do FromBody?
-        [HttpGet("Search/page={pageNumber}/pagesize={pageSize}")]
+        //FromBody somente com put ou post
+        [HttpGet("search")]
+        //passar paginação direto do query parameters
+        //Tirar tudo e botar só search
+        //Renomear searchteacherrequestdata para requestfilter
         public ActionResult<SearchTeacherResponse> Search([FromBody]SearchTeacherRequestData requestData, long pageNumber, long pageSize)
         {
             SearchTeacherRequest request = new SearchTeacherRequest(requestData, pageNumber, pageSize);

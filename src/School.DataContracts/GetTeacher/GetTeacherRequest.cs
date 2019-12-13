@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.GetTeacher
 {
-    public class GetTeacherRequest
+    public class GetTeacherRequest : OperationRequestBase
     {
         public GetTeacherRequest(long cpf)
         {

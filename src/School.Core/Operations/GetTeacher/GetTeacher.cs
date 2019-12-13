@@ -9,7 +9,7 @@ using System.Text;
 
 namespace School.Core.Operations.GetTeacher
 {
-    public class GetTeacher : IGetTeacher
+    public class GetTeacher : OperationBase<GetTeacherRequest, GetTeacherResponse>, IGetTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
@@ -22,23 +22,25 @@ namespace School.Core.Operations.GetTeacher
             this._dataBaseValidator = dataBaseValidator;
         }
         
-        public GetTeacherResponse ProcessOperation(GetTeacherRequest request)
+        protected override GetTeacherResponse ProcessOperation(GetTeacherRequest request)
         {
-            GetTeacherResponse response = new GetTeacherResponse
-            {
-                Success = false
-            };
-
-            if (this._dataBaseValidator.ValidateIdExist(request.CPF) == false)
-            {
-                response.Success = false;
-                return response;
-            }
+            GetTeacherResponse response = new GetTeacherResponse();
 
             Teacher teacher = this._teacherRepository.Get(request.CPF);
 
             response.Data = this._mappingResolver.BuildFrom(teacher);
-            response.Success = true;
+
+            return response;
+        }
+
+        protected override GetTeacherResponse ValidateOperation(GetTeacherRequest request)
+        {
+            GetTeacherResponse response = new GetTeacherResponse();
+
+            if (this._dataBaseValidator.ValidateIdExist(request.CPF) == false)
+            {
+                response.AddError("","");
+            }
 
             return response;
         }

@@ -4,6 +4,6 @@ namespace School.Core.Operations.GetTeacher
 {
     public interface IGetTeacher
     {
-        GetTeacherResponse ProcessOperation(GetTeacherRequest request);
+        GetTeacherResponse Process(GetTeacherRequest request);
     }
 }

@@ -1,0 +1,28 @@
+* [33m9e70833[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/clr-API-SQL[m[33m)[m Last changes by Bruno SearchTeacher
+* [33m60c29d2[m[33m ([m[1;31morigin/feature/clr-API-SQL[m[33m)[m Creating SearchQuery out of Repository
+* [33m2ab4a53[m Fixing SearchTeacher
+* [33mc86cc31[m Fixing SearchTeacher
+* [33ma25a514[m Adding OData
+* [33m801a4bb[m Fixing SearchTeacher
+* [33ma4011d3[m Fixing Insert, Update and Search Teacher
+* [33md056f85[m Fixing methods and adding SearchTeacherValidator
+* [33m8bc9fb6[m Fixing InsertTeacher/UpdateTeacher and adding TeacherValidator
+* [33mde7f28e[m Renaming _idExistValidator to _dataBaseValidator
+* [33mc862221[m Last changes in GetTeachersPerPage
+* [33m92ab00b[m Fixing GetTeachersPerPage
+* [33m492e663[m Fixing GetTeachersPerPage and SearchTeacher
+* [33mec6fb3a[m Adding SearchTeacher
+* [33mb95cdf4[m Fixing GetTeachersPerPage
+* [33m085a612[m Get Teacher per page
+* [33mdb9392a[m Fixing methods
+* [33mf9759da[m Fixing validators and including lower case in Gender and LevelId
+* [33mf59f96d[m Fixing validations and what operations return
+* [33mf0f6284[m Validate if CPF exist
+* [33m73d8a8f[m Corrections in validators
+* [33m2d47d71[m Added Validators
+* [33m587b41a[m Get e ListAll
+* [33mb453acd[m Tentativa_2
+* [33m0d8b762[m Tentativa_1
+* [33m3d796d4[m[33m ([m[1;31morigin/feature/clr-API[m[33m, [m[1;32mfeature/clr-API[m[33m)[m Alterações_sugeridas_Rolim
+* [33m61556a0[m Validations
+* [33m666858d[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Exercises_Teacher_API

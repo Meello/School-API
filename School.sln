@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Core", "src\School.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Repositories", "src\School.Repositories\School.Repositories.csproj", "{7118A38F-F15C-4756-9B5D-5E41C86E7094}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{9E5B6C86-4624-49F8-B150-29723DA7F1A4}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "School.Database", "database\School.Database\School.Database.sqlproj", "{5AFDE469-CE91-4E8A-B450-14AFB1E73914}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,12 @@ Global
 		{7118A38F-F15C-4756-9B5D-5E41C86E7094}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7118A38F-F15C-4756-9B5D-5E41C86E7094}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7118A38F-F15C-4756-9B5D-5E41C86E7094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +59,7 @@ Global
 		{7A144714-C3F5-45D6-9470-30528B22D2E3} = {2CA86FF3-A0B4-4596-BAC8-B77C0DB0B242}
 		{1CCA5334-64FF-4A51-8F4F-3F5A649431C8} = {2CA86FF3-A0B4-4596-BAC8-B77C0DB0B242}
 		{7118A38F-F15C-4756-9B5D-5E41C86E7094} = {2CA86FF3-A0B4-4596-BAC8-B77C0DB0B242}
+		{5AFDE469-CE91-4E8A-B450-14AFB1E73914} = {9E5B6C86-4624-49F8-B150-29723DA7F1A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDF5BF3C-261B-4A58-BAEF-A3B8FCDC1BA8}

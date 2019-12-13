@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
+namespace School.Core.Filters
 {
-    public class SearchTeacherRequestData
+    public class TeacherFilter
     {
         public string Name { get; set; }
 
-        public List<char?> Gender { get; set; }
+        public List<char?> Genders { get; set; }
 
-        public List<char?> LevelId { get; set; }
+        public List<char?> LevelIds { get; set; }
 
         public decimal? MinSalary { get; set; }
 
@@ -19,9 +19,5 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
         public DateTime? MinAdmitionDate { get; set; }
 
         public DateTime? MaxAdmitionDate { get; set; }
-
-        //public long PageSize { get; set; }
-
-        //public long PageNumber { get; set; }
     }
 }
