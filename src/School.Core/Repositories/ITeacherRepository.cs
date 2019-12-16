@@ -1,4 +1,5 @@
-﻿using School.Core.Models;
+﻿using School.Core.Filters;
+using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using System.Collections.Generic;
 
@@ -9,16 +10,16 @@ namespace School.Core.Repositories
         //Interface define o contrato
         Teacher Get(long cpf);
 
-        IEnumerable<Teacher> Search(SearchTeacherRequest request, string sqlWhereConditions);
+        PagedResult<Teacher> ListPagedByFilter(TeacherFilter filter, int pageNumber, int pageSize);
 
         IEnumerable<Teacher> ListAll();
-
-        IEnumerable<Teacher> GetPerPage(long pageNumber, long teachersPerPage);
 
         void Insert(Teacher teacher);
 
         void Update(Teacher teacher);
 
         void Delete(long cpf);
+
+        bool ExistByTeacherId(long teacherId);
     }
 }

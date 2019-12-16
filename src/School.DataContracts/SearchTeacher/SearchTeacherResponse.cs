@@ -6,5 +6,6 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 {
     public class SearchTeacherResponse: OperationResponseBase
     {
+        public SearchTeacherResponse() { }
     }
 }

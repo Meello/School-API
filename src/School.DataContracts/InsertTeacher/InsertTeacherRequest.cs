@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.InsertTeacher
 {
-    public class InsertTeacherRequest
+    public class InsertTeacherRequest : OperationRequestBase
     {      
         public InsertTeacherRequest(TeacherRequestData requestData)
         {

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using School.Core.Mapping;
-using School.Core.Operations;
 using School.Core.Operations.DeleteTeacher;
 using School.Core.Operations.SearchTeacher;
 using School.Core.Operations.GetTeacher;
@@ -14,15 +13,12 @@ using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
 using School.Core.Validators.GetTeachersPerPage;
-using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.UpdateTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
 using School.Core.Validators.Page;
 using School.Core.Validators.SearchTeacher;
 using School.Core.ValidatorsTeacher;
-using School.Core.Querys.SearchConditions;
-using School.Core.Querys.SearchConditions.SearchConditionsPerParameter;
 
 namespace School.Application
 {
@@ -47,13 +43,11 @@ namespace School.Application
             services.AddScoped<IDeleteTeacher, DeleteTeacher>();
             services.AddScoped<IGetTeacher, GetTeacher>();
             services.AddScoped<IGetTeachers, GetTeachers>();
-            services.AddScoped<IGetTeachersPerPage, GetTeachersPerPage>();
             services.AddScoped<IInsertTeacher, InsertTeacher>();
             services.AddScoped<ISearchTeacher, SearchTeacher>();
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
 
             //Validators
-            services.AddScoped<IDataBaseValidator>(provider => new DataBaseValidator(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<IGetTeachersPerPageValidator, GetTeachersPerPageValidator>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
             services.AddScoped<IPageValidator, PageValidator>();
@@ -61,10 +55,6 @@ namespace School.Application
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
             services.AddScoped<IUpdateTeacherValidator, UpdateTeacherValidator>();
-
-            //Querys
-            services.AddScoped<ISearchConditions, SearchConditions>();
-            services.AddScoped<ISearchConditionsPerParameter, SearchConditionsPerParameter>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

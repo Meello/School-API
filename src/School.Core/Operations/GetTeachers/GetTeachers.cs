@@ -23,7 +23,7 @@ namespace School.Core.Operations.GetTeachers
             this._mappingResolver = mappingResolver;
         }
         
-        public GetTeachersResponse ProcessOperation()
+        public GetTeachersResponse Process()
         {
             GetTeachersResponse response = new GetTeachersResponse();
 
@@ -31,10 +31,7 @@ namespace School.Core.Operations.GetTeachers
 
             response.Data = this._mappingResolver.BuildFrom(teachers);
 
-            response.Success = true;
-
             return response;
         }
-
     }
 }

@@ -8,6 +8,6 @@ namespace School.Core.Operations.SearchTeacher
 {
     public interface ISearchTeacher
     {
-        SearchTeacherResponse ProcessOperation(SearchTeacherRequest request);
+        SearchTeacherResponse Process(SearchTeacherRequest request);
     }
 }

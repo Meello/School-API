@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using School.Core.Models;
-using School.Core.Validators.DataBaseValidator;
-using School.Core.Validators.Page;
+﻿using School.Core.Models;
 using School.Core.Validators.ValidateTeacherParameters;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
@@ -13,27 +8,20 @@ namespace School.Core.Validators.SearchTeacher
     public class SearchTeacherValidator : ISearchTeacherValidator
     {
         private readonly ITeacherParametersValidator _parameterValidator;
-        private readonly IPageValidator _pageValidator;
 
-        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator, IPageValidator pageValidator)
+        public SearchTeacherValidator(ITeacherParametersValidator parameterValidator)
         {
             this._parameterValidator = parameterValidator;
-            this._pageValidator = pageValidator;
         }
 
         public SearchTeacherResponse ValidateParameters(SearchTeacherRequest request)
         {
-            SearchTeacherResponse response = new SearchTeacherResponse
-            {
-                Notifications = new List<OperationNotification>(),
-                Errors = new List<OperationError>()
-            };
+            SearchTeacherResponse response = new SearchTeacherResponse();
 
             int count = 0;
 
             if (request.Data.Gender != null)
             {
-                //quando a lista é nula, foreach não funciona
                 foreach (char? gender in request.Data.Gender)
                 {
                     if (this._parameterValidator.ValidateUpperCase(gender) == true)
@@ -96,10 +84,7 @@ namespace School.Core.Validators.SearchTeacher
                 response.Errors.Add(new OperationError("019", $"{nameof(request.Data.MaxAdmitionDate)} can't be bigger than {nameof(request.Data.MinAdmitionDate)}"));
             }
 
-            if (response.Errors.Count == 0)
-            {
-                response.Success = true;
-            }
+            this._parameterValidator.ValidatePage(request.PageSize, response);
 
             return response;
         }

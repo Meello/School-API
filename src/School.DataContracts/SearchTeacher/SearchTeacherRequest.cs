@@ -4,9 +4,9 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 {
-    public class SearchTeacherRequest
+    public class SearchTeacherRequest : OperationRequestBase
     {
-        public SearchTeacherRequest(SearchTeacherRequestData requestData, long pageNumber, long pageSize)
+        public SearchTeacherRequest(RequestFilter requestData, long pageNumber, long pageSize)
         {
             Data = requestData;
             PageNumber = pageNumber;
@@ -17,6 +17,6 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 
         public long PageSize { get; set; }
 
-        public SearchTeacherRequestData Data { get; }
+        public RequestFilter Data { get; }
     }
 }

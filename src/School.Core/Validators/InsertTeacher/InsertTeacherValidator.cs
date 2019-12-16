@@ -20,18 +20,13 @@ namespace School.Core.Validators
 
         public InsertTeacherResponse ValidateOperation(InsertTeacherRequest request)
         {
-            InsertTeacherResponse response = new InsertTeacherResponse
-            {
-                Errors = new List<OperationError>()
-            };
+            InsertTeacherResponse response = new InsertTeacherResponse();
 
             if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
             {
-                response.Success = false;
                 return response;
             }
 
-            response.Success = true;
             return response;
         }
     }

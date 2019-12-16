@@ -1,7 +1,6 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.DataBaseValidator;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using System;
 using System.Collections.Generic;
@@ -13,20 +12,18 @@ namespace School.Core.Operations.GetTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IDataBaseValidator dataBaseValidator)
+        public GetTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._dataBaseValidator = dataBaseValidator;
         }
         
         protected override GetTeacherResponse ProcessOperation(GetTeacherRequest request)
         {
             GetTeacherResponse response = new GetTeacherResponse();
 
-            Teacher teacher = this._teacherRepository.Get(request.CPF);
+            Teacher teacher = this._teacherRepository.Get(request.TeacherId);
 
             response.Data = this._mappingResolver.BuildFrom(teacher);
 
@@ -37,9 +34,9 @@ namespace School.Core.Operations.GetTeacher
         {
             GetTeacherResponse response = new GetTeacherResponse();
 
-            if (this._dataBaseValidator.ValidateIdExist(request.CPF) == false)
+            if (this._teacherRepository.ExistByTeacherId(request.TeacherId) == false)
             {
-                response.AddError("","");
+                response.AddError("003","TeacerId not found");
             }
 
             return response;

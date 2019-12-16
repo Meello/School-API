@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 {
-    public class SearchTeacherRequestData
+    public class RequestFilter
     {
         public string Name { get; set; }
 
@@ -19,9 +19,5 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
         public DateTime? MinAdmitionDate { get; set; }
 
         public DateTime? MaxAdmitionDate { get; set; }
-
-        //public long PageSize { get; set; }
-
-        //public long PageNumber { get; set; }
     }
 }

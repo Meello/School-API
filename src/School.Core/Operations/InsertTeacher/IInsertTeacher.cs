@@ -7,6 +7,6 @@ namespace School.Core.Operations.InsertTeacher
 {
     public interface IInsertTeacher
     {
-        InsertTeacherResponse ProcessOperation(InsertTeacherRequest request);
+        InsertTeacherResponse Process(InsertTeacherRequest request);
     }
 }

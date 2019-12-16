@@ -4,13 +4,13 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.DeleteTeacher
 {
-    public class DeleteTeacherRequest
+    public class DeleteTeacherRequest : OperationRequestBase
     {
-        public DeleteTeacherRequest(long cpf)
+        public DeleteTeacherRequest(long teacherId)
         {
-            this.CPF = cpf;
+            this.TeacherId = teacherId;
         }
 
-        public long CPF { get; }
+        public long TeacherId { get; }
     }
 }

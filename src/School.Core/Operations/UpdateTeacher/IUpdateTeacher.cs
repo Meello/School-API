@@ -7,6 +7,6 @@ namespace School.Core.Operations.UpdateTeacher
 {
     public interface IUpdateTeacher
     {
-        UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request);
+        UpdateTeacherResponse Process(UpdateTeacherRequest request);
     }
 }

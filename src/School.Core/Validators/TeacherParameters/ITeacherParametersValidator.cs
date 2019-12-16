@@ -34,5 +34,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
         bool ValidateUpperCase(char? c, OperationResponseBase response, string fieldname);
 
         bool ValidateUpperCase(char? c);
+
+        void ValidatePage(long pageSize, OperationResponseBase response);
     }
 }

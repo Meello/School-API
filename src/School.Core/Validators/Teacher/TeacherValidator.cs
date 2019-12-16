@@ -27,7 +27,7 @@ namespace School.Core.ValidatorsTeacher
                 return false;
             }
 
-            this._validator.ValidateNullOrZero(requestData.CPF, response, nameof(requestData.CPF));
+            this._validator.ValidateNullOrZero(requestData.TeacherId, response, nameof(requestData.TeacherId));
 
             if (response.Errors.Count > 0)
             {

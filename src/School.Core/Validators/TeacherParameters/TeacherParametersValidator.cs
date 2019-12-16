@@ -1,4 +1,5 @@
-﻿using StoneCo.Buy4.School.DataContracts;
+﻿using School.Core.Models;
+using StoneCo.Buy4.School.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -115,7 +116,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
             if (char.IsUpper(c.Value) == false)
             {
                 response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
-                
+
                 return false;
             }
 
@@ -130,6 +131,14 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
 
             return true;
+        }
+
+        public void ValidatePage(long pageSize, OperationResponseBase response)
+        {
+            if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
+            {
+                response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
+            }
         }
     }
 }

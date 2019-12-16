@@ -6,5 +6,6 @@ namespace StoneCo.Buy4.School.DataContracts.DeleteTeacher
 {
     public class DeleteTeacherResponse : OperationResponseBase
     {
+        public DeleteTeacherResponse() { }
     }
 }

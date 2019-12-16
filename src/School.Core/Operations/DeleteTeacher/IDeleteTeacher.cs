@@ -7,6 +7,6 @@ namespace School.Core.Operations.DeleteTeacher
 {
     public interface IDeleteTeacher
     {
-        DeleteTeacherResponse ProcessOperation(DeleteTeacherRequest request);
+        DeleteTeacherResponse Process(DeleteTeacherRequest request);
     }
 }

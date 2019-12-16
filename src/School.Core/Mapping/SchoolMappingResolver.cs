@@ -48,7 +48,7 @@ namespace School.Core.Mapping
 
             return new Teacher
             {
-                TeacherId = requestData.CPF,
+                TeacherId = requestData.TeacherId,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
                 LevelId = requestData.Level,

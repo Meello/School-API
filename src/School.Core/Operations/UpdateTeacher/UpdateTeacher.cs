@@ -4,49 +4,44 @@ using System.Text;
 using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.DataBaseValidator;
 using School.Core.Validators.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
 namespace School.Core.Operations.UpdateTeacher
 {
-    public class UpdateTeacher : IUpdateTeacher
+    public class UpdateTeacher : OperationBase<UpdateTeacherRequest, UpdateTeacherResponse>, IUpdateTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
         private readonly IUpdateTeacherValidator _validator;
-        private readonly IDataBaseValidator _dataBaseValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator, IDataBaseValidator dataBaseValidator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
             this._validator = validator;
-            this._dataBaseValidator = dataBaseValidator;
         }
 
-        public UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
+        protected override UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = this._validator.ValidateOperation(request);
-
-            if (response.Success == false)
-            {
-                return response;
-            }
-
-            if(this._dataBaseValidator.ValidateIdExist(request.Data.CPF) == false)
-            {
-                response.Errors.Add(new OperationError("003", "CPF not found"));
-                response.Success = false;
-                return response;
-            }
+            UpdateTeacherResponse response = new UpdateTeacherResponse();
 
             Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
 
             this._teacherRepository.Update(teacher);
 
-            response.Success = true;
+            return response;
+        }
+
+        protected override UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
+        {
+            UpdateTeacherResponse response = this._validator.ValidateOperation(request);
+
+            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == false)
+            {
+                response.Errors.Add(new OperationError("003", "CPF not found"));
+            }
 
             return response;
         }
