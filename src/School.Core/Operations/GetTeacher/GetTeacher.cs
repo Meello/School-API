@@ -36,7 +36,7 @@ namespace School.Core.Operations.GetTeacher
 
             if (this._teacherRepository.ExistByTeacherId(request.TeacherId) == false)
             {
-                response.AddError("003","TeacerId not found");
+                response.AddError("003", $"{nameof(request.TeacherId)} not found");
             }
 
             return response;

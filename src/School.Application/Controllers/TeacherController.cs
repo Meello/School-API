@@ -86,9 +86,6 @@ namespace School.Application.Controllers
             GetTeachersResponse response = this._getTeachers.Process();
 
             return Ok(response);
-            //Aparece o status 200 e retorna o dado
-            //Não precisa do return notfound quando não tem dados, porque a lista pode estar vazia
-            //salvo exceções, exemplo erro 500, internal error
         }
 
         [HttpDelete("{cpf}")]

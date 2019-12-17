@@ -33,7 +33,7 @@ namespace School.Core.Operations.DeleteTeacher
 
             if (this._teacherRepository.ExistByTeacherId(request.TeacherId) == false)
             {
-                response.AddError("003","TeacherId not found");
+                response.AddError("003", $"{nameof(request.TeacherId)} not found");
             }
 
             return response;

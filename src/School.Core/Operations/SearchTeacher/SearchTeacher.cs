@@ -3,9 +3,10 @@ using School.Core.Mapping;
 using School.Core.Models;
 using System.Linq;
 using School.Core.Repositories;
-using School.Core.Validators.SearchTeacher;
+using School.Core.Validators.TeacherFilter;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 using System.Collections.Generic;
+using School.Core.Validators.ValidateTeacherParameters;
 
 namespace School.Core.Operations.SearchTeacher
 {
@@ -13,13 +14,15 @@ namespace School.Core.Operations.SearchTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly ISearchTeacherValidator _validator;
+        private readonly IFilterValidator _filterValidator;
+        private readonly ITeacherParametersValidator _parameterValidator;
 
-        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ISearchTeacherValidator validator)
+        public SearchTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IFilterValidator filterValidator, ITeacherParametersValidator parameterValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._validator = validator;
+            this._filterValidator = filterValidator;
+            this._parameterValidator = parameterValidator;
         }
 
         protected override SearchTeacherResponse ProcessOperation(SearchTeacherRequest request)
@@ -37,8 +40,17 @@ namespace School.Core.Operations.SearchTeacher
 
         protected override SearchTeacherResponse ValidateOperation(SearchTeacherRequest request)
         {
-            SearchTeacherResponse response = this._validator.ValidateParameters(request);
-            
+            SearchTeacherResponse response = new SearchTeacherResponse();
+
+            this._parameterValidator.ValidatePage(request.PageNumber, request.PageSize, response);
+
+            if(!response.Success)
+            {
+                return response;
+            }
+
+            response = this._filterValidator.ValidateParameters(request.Data);
+
             return response;
         }
     }

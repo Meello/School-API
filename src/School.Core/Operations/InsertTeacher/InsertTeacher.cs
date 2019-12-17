@@ -39,6 +39,13 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
+            if(request.Data == null)
+            {
+                response.AddError("001", "Request can't be null");
+
+                return response;
+            }
+
             if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == true)
             {
                 response.AddError("013", $"{nameof(request.Data.TeacherId)} already exist");

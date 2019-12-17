@@ -20,13 +20,6 @@ namespace School.Core.ValidatorsTeacher
 
         public bool ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response)
         {
-
-            if (requestData == null)
-            {
-                response.Errors.Add(new OperationError("001", "Request can't be null"));
-                return false;
-            }
-
             this._validator.ValidateNullOrZero(requestData.TeacherId, response, nameof(requestData.TeacherId));
 
             if (response.Errors.Count > 0)

@@ -61,10 +61,7 @@ namespace School.Repositories
                 COUNT(TeacherId)
             FROM 
                 dbo.Teacher
-            @DynamicFilter");
-
-            //Tentar chamar ApplyFilter antes e depois da query para retornar os dados paginados
-            ApplyFilter(queryCount, filter, parameters);
+            ");
 
             StringBuilder sqlString = new StringBuilder(@"
                 SELECT 
@@ -76,10 +73,16 @@ namespace School.Repositories
                     AdmitionDate
                 FROM 
                     dbo.Teacher
-                @DynamicFilter
                 ");
 
-            ApplyFilter(sqlString, filter, parameters);
+            if(filter != null)
+            {
+                queryCount.Append("@DynamicFilter");
+                ApplyFilter(queryCount, filter, parameters);
+                
+                sqlString.Append("@DynamicFilter");
+                ApplyFilter(sqlString, filter, parameters);
+            }
 
             sqlString.Append(@"ORDER BY TeacherId
                     OFFSET (@PageNumber - 1)*@PageSize  ROWS

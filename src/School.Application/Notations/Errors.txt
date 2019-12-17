@@ -2,10 +2,10 @@
 message = Request can't be null 
 
 code = 002
-message = CPF can't be null
+message = TeacherId can't be null
 
 code = 003 
-message = CPF not found
+message = TeacherId not found
 
 code = 004 
 message = Name lenght don't supported! Limit: 32 caracters
@@ -35,7 +35,7 @@ code = 012
 message = GetTeacher error message
 
 code = 013
-message = CPF already exist
+message = TeacherId already exist
 
 code = 015
 message = Number of teachers exceeded the limit

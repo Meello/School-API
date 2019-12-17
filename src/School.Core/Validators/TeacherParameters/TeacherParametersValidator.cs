@@ -18,7 +18,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         public void ValidateNullOrZero(string value, OperationResponseBase response, string fieldName)
         {
-            if (value == null)
+            if (!string.IsNullOrWhiteSpace(value))
             {
                 response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
             }
@@ -133,8 +133,11 @@ namespace School.Core.Validators.ValidateTeacherParameters
             return true;
         }
 
-        public void ValidatePage(long pageSize, OperationResponseBase response)
+        public void ValidatePage(int pageNumber, int pageSize, OperationResponseBase response)
         {
+            this.ValidateNullOrZero(pageSize, response, nameof(pageSize));
+            this.ValidateNullOrZero(pageNumber, response, nameof(pageNumber));
+
             if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));

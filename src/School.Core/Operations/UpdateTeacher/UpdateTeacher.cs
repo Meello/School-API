@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using School.Core.Mapping;
+﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.UpdateTeacher;
+using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 
@@ -14,13 +11,13 @@ namespace School.Core.Operations.UpdateTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IUpdateTeacherValidator _validator;
+        private readonly ITeacherValidator _teacherValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IUpdateTeacherValidator validator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator validator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._validator = validator;
+            this._teacherValidator = validator;
         }
 
         protected override UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
@@ -36,11 +33,25 @@ namespace School.Core.Operations.UpdateTeacher
 
         protected override UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = this._validator.ValidateOperation(request);
+            UpdateTeacherResponse response = new UpdateTeacherResponse();
+
+            if(request.Data == null)
+            {
+                response.AddError("001", "Request can't be null");
+
+                return response;
+            }
 
             if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == false)
             {
-                response.Errors.Add(new OperationError("003", "CPF not found"));
+                response.Errors.Add(new OperationError("003", $"{nameof(request.Data.TeacherId)} not found"));
+
+                return response;
+            }
+
+            if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
+            {
+                return response;
             }
 
             return response;

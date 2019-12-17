@@ -1,2 +1,0 @@
-﻿code = 001
-message = The number of elements requested can't be found
