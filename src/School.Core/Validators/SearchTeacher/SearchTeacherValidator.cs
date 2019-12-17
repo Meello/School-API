@@ -20,9 +20,9 @@ namespace School.Core.Validators.SearchTeacher
 
             int count = 0;
 
-            if (request.Data.Gender != null)
+            if (request.Data.Genders != null)
             {
-                foreach (char? gender in request.Data.Gender)
+                foreach (char? gender in request.Data.Genders)
                 {
                     if (this._parameterValidator.ValidateUpperCase(gender) == true)
                     {
@@ -40,13 +40,13 @@ namespace School.Core.Validators.SearchTeacher
 
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Gender)} list invalid "));
+                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.Genders)} list invalid "));
                 count = 0;
             }
 
-            if(request.Data.LevelId != null)
+            if(request.Data.LevelIds != null)
             {
-                foreach (char? level in request.Data.LevelId)
+                foreach (char? level in request.Data.LevelIds)
                 {
                     if (this._parameterValidator.ValidateUpperCase(level) == true)
                     {
@@ -64,7 +64,7 @@ namespace School.Core.Validators.SearchTeacher
                         
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.LevelId)} list invalid "));
+                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(request.Data.LevelIds)} list invalid "));
             }
 
             this._parameterValidator.ValidateAdmitionDate(request.Data.MinAdmitionDate, response, nameof(request.Data.MinAdmitionDate));

@@ -18,18 +18,13 @@ namespace School.Core.Validators.UpdateTeacher
 
         public UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = new UpdateTeacherResponse
-            {
-                Errors = new List<OperationError>()
-            };
+            UpdateTeacherResponse response = new UpdateTeacherResponse();
 
             if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
             {
-                response.Success = false;
                 return response;
             }
 
-            response.Success = true;
             return response;
         }
     }

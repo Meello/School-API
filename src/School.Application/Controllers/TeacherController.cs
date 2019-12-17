@@ -62,9 +62,9 @@ namespace School.Application.Controllers
         }
 
         [HttpPost("search")]
-        public ActionResult<SearchTeacherResponse> Search([FromBody]RequestFilter requestData, long pageNumber, long pageSize)
+        public ActionResult<SearchTeacherResponse> Search([FromBody]RequestFilter requestFilter, int pageNumber, int pageSize)
         {
-            SearchTeacherRequest request = new SearchTeacherRequest(requestData, pageNumber, pageSize);
+            SearchTeacherRequest request = new SearchTeacherRequest(requestFilter, pageNumber, pageSize);
             SearchTeacherResponse response = this._searchTeacher.Process(request);
 
             if (response.Data == null)

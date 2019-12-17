@@ -6,16 +6,16 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
 {
     public class SearchTeacherRequest : OperationRequestBase
     {
-        public SearchTeacherRequest(RequestFilter requestData, long pageNumber, long pageSize)
+        public SearchTeacherRequest(RequestFilter requestData, int pageNumber, int pageSize)
         {
             Data = requestData;
             PageNumber = pageNumber;
             PageSize = pageSize;
         }
 
-        public long PageNumber {get; set; }
+        public int PageNumber {get; set; }
 
-        public long PageSize { get; set; }
+        public int PageSize { get; set; }
 
         public RequestFilter Data { get; }
     }

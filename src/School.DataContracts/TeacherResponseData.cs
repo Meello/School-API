@@ -6,7 +6,7 @@ namespace StoneCo.Buy4.School.DataContracts
 {
     public class TeacherResponseData
     {
-        public long CPF { get; set; }
+        public long TeacherId { get; set; }
         
         public string Name { get; set; }
         

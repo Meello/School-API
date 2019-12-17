@@ -79,17 +79,16 @@ namespace School.Repositories
                 @DynamicFilter
                 ");
 
+            ApplyFilter(sqlString, filter, parameters);
+
             sqlString.Append(@"ORDER BY TeacherId
                     OFFSET (@PageNumber - 1)*@PageSize  ROWS
                     FETCH NEXT @PageSize ROWS ONLY");
 
-            using (SqlConnection sqlConnection = GetSqlConnection())
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
             {
-                sqlConnection.QueryMultiple(queryCount.ToString(), parameters);
-                sqlConnection.QueryMultiple(sqlString.ToString(), parameters);
+                return PagedResult<Teacher>.Create(sqlConnection.QueryMultiple(sqlString.ToString(), parameters).Read<Teacher>(), sqlConnection.QueryMultiple(queryCount.ToString(), parameters).ReadFirst<long>());
             }
-
-            return null;
         }
 
         public IEnumerable<Teacher> ListAll()
@@ -189,7 +188,7 @@ namespace School.Repositories
             if (!string.IsNullOrWhiteSpace(filter.Name))
             {
                 //Vai dar ruim, só pesquisar
-                conditions.Add("Name LIKE @Name%");
+                conditions.Add("Name LIKE @Name + '%'");
                 parameters.Add("Name", filter.Name, DbType.String);
             }
 
@@ -230,20 +229,20 @@ namespace School.Repositories
             if (filter.MinAdmitionDate.HasValue && filter.MaxAdmitionDate.HasValue)
             {
                 conditions.Add("AdmitionDate BETWEEN @MinAdmitionDate AND @MaxAdmitionDate");
-                parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.Decimal);
-                parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.Decimal);
+                parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime);
+                parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime);
             }
             else if (filter.MinAdmitionDate.HasValue ^ filter.MaxAdmitionDate.HasValue)
             {
                 if (filter.MinAdmitionDate.HasValue)
                 {
                     conditions.Add("AdmitionDate >= @MinAdmitionDate");
-                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.Decimal);
+                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime);
                 }
                 else
                 {
                     conditions.Add("AdmitionDate <= @MaxAdmitionDate");
-                    parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.Decimal);
+                    parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime);
                 }
             }
 
@@ -270,6 +269,7 @@ namespace School.Repositories
             }
         }
 
+        /*
         private SqlConnection GetSqlConnection()
         {
             //COLOCAR TODA A LÓGICA DO SQLCONNECTION AQUI
@@ -277,5 +277,6 @@ namespace School.Repositories
             //Não precisa abrir a conexão se estiver usando o dapper
             return new SqlConnection(this._connectionString);
         }
+        */
     }
 }

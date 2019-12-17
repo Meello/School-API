@@ -1,7 +1,11 @@
-﻿using School.Core.Mapping;
+﻿using School.Core.Filters;
+using School.Core.Mapping;
+using School.Core.Models;
+using System.Linq;
 using School.Core.Repositories;
 using School.Core.Validators.SearchTeacher;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
+using System.Collections.Generic;
 
 namespace School.Core.Operations.SearchTeacher
 {
@@ -22,11 +26,11 @@ namespace School.Core.Operations.SearchTeacher
         {
             SearchTeacherResponse response = new SearchTeacherResponse();
 
+            TeacherFilter teacherFilter = this._mappingResolver.BuildFrom(request.Data);
 
+            PagedResult<Teacher> teachers = this._teacherRepository.ListPagedByFilter(teacherFilter, request.PageNumber, request.PageSize);
 
-            //IEnumerable<Teacher> teachers = this._teacherRepository.ListPagedByFilter();
-
-            //response.Data = this._mappingResolver.BuildFrom(teachers);
+            response.Data = this._mappingResolver.BuildFrom(teachers.Results);
 
             return response;
         }

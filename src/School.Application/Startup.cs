@@ -12,11 +12,9 @@ using School.Core.Operations.InsertTeacher;
 using School.Core.Operations.UpdateTeacher;
 using School.Core.Repositories;
 using School.Core.Validators;
-using School.Core.Validators.GetTeachersPerPage;
 using School.Core.Validators.UpdateTeacher;
 using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
-using School.Core.Validators.Page;
 using School.Core.Validators.SearchTeacher;
 using School.Core.ValidatorsTeacher;
 
@@ -48,9 +46,7 @@ namespace School.Application
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
 
             //Validators
-            services.AddScoped<IGetTeachersPerPageValidator, GetTeachersPerPageValidator>();
             services.AddScoped<IInsertTeacherValidator, InsertTeacherValidator>();
-            services.AddScoped<IPageValidator, PageValidator>();
             services.AddScoped<ISearchTeacherValidator, SearchTeacherValidator>();
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();

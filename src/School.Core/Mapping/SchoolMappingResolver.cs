@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using School.Core.Filters;
 using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
@@ -18,7 +19,7 @@ namespace School.Core.Mapping
 
             return new TeacherResponseData
             {
-                CPF = teacher.TeacherId,
+                TeacherId = teacher.TeacherId,
                 Name = teacher.Name,
                 Gender = teacher.Gender,
                 Level = teacher.LevelId,
@@ -54,6 +55,25 @@ namespace School.Core.Mapping
                 LevelId = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
+            };
+        }
+
+        public TeacherFilter BuildFrom(RequestFilter requestFilter)
+        {
+            if(requestFilter == null)
+            {
+                return null;
+            }
+
+            return new TeacherFilter
+            {
+                Genders = requestFilter.Genders,
+                LevelIds = requestFilter.LevelIds,
+                MaxAdmitionDate = requestFilter.MaxAdmitionDate,
+                MinAdmitionDate = requestFilter.MinAdmitionDate,
+                MaxSalary = requestFilter.MaxSalary,
+                MinSalary = requestFilter.MinSalary,
+                Name = requestFilter.Name
             };
         }
     }

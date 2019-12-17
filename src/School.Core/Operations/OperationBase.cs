@@ -29,7 +29,7 @@ namespace School.Core.Operations
             catch (Exception ex)
             {
                 response = new TResponse();
-                response.AddError("000", $"{ex.ToString()}");
+                response.AddError("000", $"{ex.Message}");
             }
 
             return response;

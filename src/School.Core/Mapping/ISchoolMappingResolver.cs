@@ -1,4 +1,5 @@
-﻿using School.Core.Models;
+﻿using School.Core.Filters;
+using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.GetTeacher;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
@@ -17,5 +18,9 @@ namespace School.Core.Mapping
         Teacher BuildFrom(TeacherRequestData requestData);
 
         List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teacher);
+
+        TeacherFilter BuildFrom(RequestFilter requestFilter);
+
+        //TeacherResponseData BuildFrom(PagedResult<Teacher> teachers);
     }
 }

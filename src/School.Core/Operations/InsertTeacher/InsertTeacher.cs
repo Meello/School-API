@@ -2,6 +2,7 @@
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.Validators;
+using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System;
@@ -14,13 +15,13 @@ namespace School.Core.Operations.InsertTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IInsertTeacherValidator _validator;
+        private readonly ITeacherValidator _teacherValidator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertTeacherValidator validator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator teacherValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._validator = validator;
+            this._teacherValidator = teacherValidator;
         }
 
         protected override InsertTeacherResponse ProcessOperation(InsertTeacherRequest request)
@@ -36,11 +37,18 @@ namespace School.Core.Operations.InsertTeacher
 
         protected override InsertTeacherResponse ValidateOperation(InsertTeacherRequest request)
         {
-            InsertTeacherResponse response = this._validator.ValidateOperation(request);
+            InsertTeacherResponse response = new InsertTeacherResponse();
 
             if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == true)
             {
-                response.Errors.Add(new OperationError("013", "CPF already exist"));
+                response.AddError("013", $"{nameof(request.Data.TeacherId)} already exist");
+
+                return response;
+            }
+
+            if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
+            {
+                return response;
             }
 
             return response;

@@ -26,6 +26,6 @@ namespace School.Core.Models
         /// <summary>
         /// Create instance of PagedResult.
         /// </summary>
-        public static PagedResult<T> Create(IEnumerable<T> data, int totalRecords) => new PagedResult<T>(data, totalRecords);
+        public static PagedResult<T> Create(IEnumerable<T> data, long totalRecords) => new PagedResult<T>(data, totalRecords);
     }
 }
