@@ -29,14 +29,7 @@ namespace School.Core.Validators.TeacherFilter
             {
                 foreach (char? gender in requestFilter.Genders)
                 {
-                    if (this._parameterValidator.ValidateUpperCase(gender) == true)
-                    {
-                        if (this._parameterValidator.ValidateGender(gender) == false)
-                        {
-                            count += 1;
-                        }
-                    }
-                    else
+                    if (this._parameterValidator.ValidateGender(gender) == true)
                     {
                         count += 1;
                     }
@@ -45,7 +38,7 @@ namespace School.Core.Validators.TeacherFilter
 
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(requestFilter.Genders)} list invalid "));
+                response.AddError("017", $"{count} values in {nameof(requestFilter.Genders)} list invalid ");
                 count = 0;
             }
 
@@ -53,14 +46,7 @@ namespace School.Core.Validators.TeacherFilter
             {
                 foreach (char? level in requestFilter.LevelIds)
                 {
-                    if (this._parameterValidator.ValidateUpperCase(level) == true)
-                    {
-                        if (this._parameterValidator.ValidateLevel(level) == false)
-                        {
-                            count += 1;
-                        }
-                    }
-                    else
+                    if (this._parameterValidator.ValidateLevel(level) == false)
                     {
                         count += 1;
                     }
@@ -69,23 +55,23 @@ namespace School.Core.Validators.TeacherFilter
                         
             if (count > 0)
             {
-                response.Errors.Add(new OperationError("017", $"{count} values in {nameof(requestFilter.LevelIds)} list invalid "));
+                response.AddError("017", $"{count} values in {nameof(requestFilter.LevelIds)} list invalid ");
             }
 
             this._parameterValidator.ValidateAdmitionDate(requestFilter.MinAdmitionDate, response, nameof(requestFilter.MinAdmitionDate));
             this._parameterValidator.ValidateAdmitionDate(requestFilter.MaxAdmitionDate, response, nameof(requestFilter.MaxAdmitionDate));
-            this._parameterValidator.ValidateMinMaxSalary(requestFilter.MaxSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(requestFilter.MaxSalary));
-            this._parameterValidator.ValidateMinMaxSalary(requestFilter.MinSalary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(requestFilter.MinSalary));
+            this._parameterValidator.ValidateSalary(requestFilter.MaxSalary, response, nameof(requestFilter.MaxSalary));
+            this._parameterValidator.ValidateSalary(requestFilter.MinSalary, response, nameof(requestFilter.MinSalary));
             
 
             if(requestFilter.MaxSalary < requestFilter.MinSalary)
             {
-                response.Errors.Add(new OperationError("019",$"{nameof(requestFilter.MaxSalary)} can't be bigger than {nameof(requestFilter.MinSalary)}"));
+                response.AddError("019",$"{nameof(requestFilter.MaxSalary)} can't be bigger than {nameof(requestFilter.MinSalary)}");
             }
 
             if (requestFilter.MaxAdmitionDate < requestFilter.MinAdmitionDate)
             {
-                response.Errors.Add(new OperationError("019", $"{nameof(requestFilter.MaxAdmitionDate)} can't be bigger than {nameof(requestFilter.MinAdmitionDate)}"));
+                response.AddError("019", $"{nameof(requestFilter.MaxAdmitionDate)} can't be bigger than {nameof(requestFilter.MinAdmitionDate)}");
             }
 
             return response;

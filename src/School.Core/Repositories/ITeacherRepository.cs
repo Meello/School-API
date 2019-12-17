@@ -21,5 +21,9 @@ namespace School.Core.Repositories
         void Delete(long cpf);
 
         bool ExistByTeacherId(long teacherId);
+
+        bool ExistByLevelId(char levelId);
+
+        IEnumerable<char> ValidLevelIds();
     }
 }

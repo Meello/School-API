@@ -42,9 +42,10 @@ namespace School.Core.Operations.SearchTeacher
         {
             SearchTeacherResponse response = new SearchTeacherResponse();
 
-            this._parameterValidator.ValidatePage(request.PageNumber, request.PageSize, response);
-
-            if(!response.Success)
+            this._parameterValidator.ValidatePageNumber(request.PageNumber, response);
+            this._parameterValidator.ValidatePageSize(request.PageSize, response);
+            
+            if (!response.Success)
             {
                 return response;
             }

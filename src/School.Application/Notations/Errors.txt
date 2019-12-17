@@ -47,7 +47,10 @@ code = 017
 message = {Number} values in {ListName} list invalid 
 
 code = 018
-message = "{Fieldname} must be in upper case
+message = "{fieldname} must be in upper case
 
 code = 019
 message = "{MinFieldname} can't be bigger than {MaxFieldname}"
+
+code = 020
+message = "{fieldname} can't be specials characters"

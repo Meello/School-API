@@ -1,67 +1,96 @@
 ﻿using School.Core.Models;
 using StoneCo.Buy4.School.DataContracts;
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Text;
+using School.Core.Repositories;
 
 namespace School.Core.Validators.ValidateTeacherParameters
 {
     public class TeacherParametersValidator : ITeacherParametersValidator
     {
-        public void ValidateNullOrZero(long? value, OperationResponseBase response, string fieldName)
+        private readonly ITeacherRepository _teacherRepository;
+
+        public TeacherParametersValidator(ITeacherRepository teacherRepository)
+        {
+            this._teacherRepository = teacherRepository;
+        }
+
+        public void ValidateTeacherId(long? value, OperationResponseBase response, string fieldname)
         {
             if (value == null || value == 0)
             {
-                response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
             }
         }
 
-        public void ValidateNullOrZero(string value, OperationResponseBase response, string fieldName)
+        public void ValidateName(string name, OperationResponseBase response, string fieldname)
         {
-            if (!string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrEmpty(name))
             {
-                response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
+            }
+            else if (name.Length > ModelConstants.Teacher.NameMaxLength)
+            {
+                response.AddError("004", $"{fieldname} lenght don't supported! Limit: {ModelConstants.Teacher.NameMaxLength} caracters");
+            }
+            else if (Regex.IsMatch(name, @"[^a-zA-Z]"))
+            {
+                response.AddError("020",$"{fieldname} can't be specials characters");
             }
         }
 
-        public void ValidateNullOrZero(DateTime? value, OperationResponseBase response, string fieldName)
-        {
-            if (value == null || value == DateTime.MinValue)
-            {
-                response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
-            }
-        }
-
-        public void ValidateNullOrZero(char? value, OperationResponseBase response, string fieldName)
-        {
-            if (value == null || value == '\u0000')
-            {
-                response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
-            }
-        }
-
-        public void ValidateNullOrZero(decimal? value, OperationResponseBase response, string fieldName)
-        {
-            if (value == null || value == decimal.Zero)
-            {
-                response.Errors.Add(new OperationError("002", $"Field {fieldName} can't be null or zero"));
-            }
-        }
-
-        public void ValidateMaxLength(string value, int maxlength, OperationResponseBase response, string fieldname)
-        {
-            if (value != null && value.Length > maxlength)
-            {
-                response.Errors.Add(new OperationError("004", $"{fieldname} lenght don't supported! Limit: {maxlength} caracters"));
-            }
-        }
-
-        //Tentar usar foreach para comparar gender com uma lista de gender aceitos
         public void ValidateGender(char? gender, OperationResponseBase response, string fieldname)
         {
-            if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
+            if(gender == null || gender == '\u0000')
             {
-                response.Errors.Add(new OperationError("005", $"Invalid {fieldname}! Choose M or F"));
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
+            }
+            else if(!char.IsUpper(gender.Value))
+            {
+                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
+            }
+            else if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
+            {
+                response.AddError("005", $"Invalid {fieldname}! Choose M or F");
+            }
+        }
+
+        public void ValidateLevel(char? level, OperationResponseBase response, string fieldname)
+        {
+            if (level == null || level == '\u0000')
+            {
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
+            }
+            else if (!this._teacherRepository.ExistByLevelId(level.Value))
+            {
+                //Tentar passar os valores possíveis sem escrever na mão
+                response.AddError("005", $"Invalid {fieldname}! Choose {this._teacherRepository.ValidLevelIds().ToString()} J or P or S");
+            }
+        }
+
+        public void ValidateSalary(decimal? salary, OperationResponseBase response, string fieldname)
+        {
+            if(salary == null || salary == decimal.MinValue)
+            {
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
+            }
+            else if(salary > ModelConstants.Teacher.MaxSalary || salary < ModelConstants.Teacher.MinSalary)
+            {
+                response.AddError("007", $"Value of {fieldname} don't accepted! Choose a value between {ModelConstants.Teacher.MinSalary} and {ModelConstants.Teacher.MaxSalary}");
+            }
+        }
+
+        public void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response, string fieldname)
+        {
+            if(admitionDate == null || admitionDate == DateTime.MinValue)
+            {
+                response.AddError("002", $"Field {fieldname} can't be null or zero");
+            }
+            else if (admitionDate > DateTime.MinValue && admitionDate > DateTime.Today)
+            {
+                response.AddError("008", $"{fieldname} can't be bigger than today");
             }
         }
 
@@ -75,16 +104,6 @@ namespace School.Core.Validators.ValidateTeacherParameters
             return true;
         }
 
-
-        //Tentar usar foreach para comparar level com uma lista de level aceitos
-        public void ValidateLevel(char? level, OperationResponseBase response, string fieldname)
-        {
-            if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
-            {
-                response.Errors.Add(new OperationError("006", $"Invalid {fieldname}! Choose J or P or S"));
-            }
-        }
-
         public bool ValidateLevel(char? level)
         {
             if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
@@ -95,52 +114,23 @@ namespace School.Core.Validators.ValidateTeacherParameters
             return true;
         }
 
-        public void ValidateMinMaxSalary(decimal? salary, decimal minsalary, decimal maxsalary, OperationResponseBase response, string fieldname)
+        public void ValidatePageSize(int pageSize, OperationResponseBase response)
         {
-            if (salary != null && salary != decimal.Zero && salary < minsalary || salary > maxsalary)
+            if(pageSize <= 0)
             {
-                response.Errors.Add(new OperationError("007", $"Value of {fieldname} don't accepted! Choose a value between {minsalary} and {maxsalary}"));
+                response.AddError("002", $"Field {pageSize} can't be null or zero");
             }
-        }
-
-        public void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response, string fieldname)
-        {
-            if (admitionDate != null && admitionDate != DateTime.MinValue && admitionDate > DateTime.Today)
-            {
-                response.Errors.Add(new OperationError("008", $"{fieldname} can't be bigger than today"));
-            }
-        }
-
-        public bool ValidateUpperCase(char? c, OperationResponseBase response, string fieldname)
-        {
-            if (char.IsUpper(c.Value) == false)
-            {
-                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
-
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool ValidateUpperCase(char? c)
-        {
-            if (char.IsUpper(c.Value) == false)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public void ValidatePage(int pageNumber, int pageSize, OperationResponseBase response)
-        {
-            this.ValidateNullOrZero(pageSize, response, nameof(pageSize));
-            this.ValidateNullOrZero(pageNumber, response, nameof(pageNumber));
-
-            if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
+            else if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
             {
                 response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
+            }
+        }
+
+        public void PageNumberValidator(int pageNumber, OperationResponseBase response)
+        {
+            if (pageNumber <= 0)
+            {
+                response.AddError("002", $"Field {pageNumber} can't be null or zero");
             }
         }
     }

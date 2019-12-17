@@ -20,40 +20,13 @@ namespace School.Core.ValidatorsTeacher
 
         public bool ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response)
         {
-            this._validator.ValidateNullOrZero(requestData.TeacherId, response, nameof(requestData.TeacherId));
-
-            if (response.Errors.Count > 0)
-            {
-                return false;
-            }
-
-            //Validate if parameters are null
-            this._validator.ValidateNullOrZero(requestData.Name, response, nameof(requestData.Name));
-            this._validator.ValidateNullOrZero(requestData.Gender, response, nameof(requestData.Gender));
-            this._validator.ValidateNullOrZero(requestData.Level, response, nameof(requestData.Level));
-            this._validator.ValidateNullOrZero(requestData.Salary, response, nameof(requestData.Salary));
-            this._validator.ValidateNullOrZero(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
-
-            if (response.Errors.Count > 0)
-            {
-                return false;
-            }
-
-            //Validate format
-            this._validator.ValidateMaxLength(requestData.Name, ModelConstants.Teacher.NameMaxLength, response, nameof(requestData.Name));
-            this._validator.ValidateMinMaxSalary(requestData.Salary, ModelConstants.Teacher.MinSalary, ModelConstants.Teacher.MaxSalary, response, nameof(requestData.Salary));
+            this._validator.ValidateTeacherId(requestData.TeacherId, response, nameof(requestData.TeacherId));
+            this._validator.ValidateName(requestData.Name, response, nameof(requestData.Name));
+            this._validator.ValidateGender(requestData.Gender, response, nameof(requestData.Gender));
+            this._validator.ValidateLevel(requestData.Level, response, nameof(requestData.Level));
+            this._validator.ValidateSalary(requestData.Salary, response, nameof(requestData.Salary));
             this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
-            
-            if(this._validator.ValidateUpperCase(requestData.Gender, response, nameof(requestData.Gender)) == true)
-            {
-                this._validator.ValidateGender(requestData.Gender, response, nameof(requestData.Gender));
-            }
-            
-            if(this._validator.ValidateUpperCase(requestData.Level, response, nameof(requestData.Level)) == true)
-            {
-                this._validator.ValidateLevel(requestData.Level, response, nameof(requestData.Level));
-            }
-            
+
             if (response.Errors.Count > 0)
             {
                 return false;

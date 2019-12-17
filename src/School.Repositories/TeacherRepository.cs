@@ -28,7 +28,7 @@ namespace School.Repositories
 
         public Teacher Get(long cpf)
         {
-            string sql = @"
+            const string sql = @"
                 SELECT 
 	                TeacherId,
 	                Name,
@@ -44,7 +44,7 @@ namespace School.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Cpf", cpf, DbType.Int64);
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString)) 
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 return sqlConnection.QuerySingleOrDefault<Teacher>(sql, parameters);
             }
@@ -88,7 +88,7 @@ namespace School.Repositories
                     OFFSET (@PageNumber - 1)*@PageSize  ROWS
                     FETCH NEXT @PageSize ROWS ONLY");
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 return PagedResult<Teacher>.Create(sqlConnection.QueryMultiple(sqlString.ToString(), parameters).Read<Teacher>(), sqlConnection.QueryMultiple(queryCount.ToString(), parameters).ReadFirst<long>());
             }
@@ -96,7 +96,7 @@ namespace School.Repositories
 
         public IEnumerable<Teacher> ListAll()
         {
-            string sql = @"
+            const string sql = @"
                 SELECT 
 	                TeacherId,
 	                Name,
@@ -107,7 +107,7 @@ namespace School.Repositories
                 FROM 
 	                dbo.Teacher";
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 return sqlConnection.Query<Teacher>(sql);
             }
@@ -115,7 +115,7 @@ namespace School.Repositories
 
         public void Delete(long cpf)
         {
-            string sqlDelete = @"
+            const string sqlDelete = @"
                 DELETE
                 FROM 
                 	dbo.Teacher
@@ -125,7 +125,7 @@ namespace School.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Cpf", cpf, DbType.Int64);
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 sqlConnection.Execute(sqlDelete, parameters);
             }
@@ -133,7 +133,7 @@ namespace School.Repositories
 
         public void Insert(Teacher teacherToInsert)
         {
-            string sql = @"
+            const string sql = @"
                 INSERT INTO dbo.Teacher
                 (
                 	TeacherId,
@@ -155,10 +155,17 @@ namespace School.Repositories
             ";
             
             DynamicParameters parameters = new DynamicParameters();
-
-            parameters.AddDynamicParams(teacherToInsert);
+            parameters.AddDynamicParams(new
+            {
+                TeacherId = teacherToInsert.TeacherId,
+                Name = teacherToInsert.Name,
+                Gender = teacherToInsert.Gender,
+                LevelId = teacherToInsert.LevelId,
+                Salary = teacherToInsert.Salary,
+                AdmitionDate = teacherToInsert.AdmitionDate
+            });
             
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString)) 
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 sqlConnection.Execute(sql, parameters);
             }
@@ -166,7 +173,7 @@ namespace School.Repositories
         
         public void Update(Teacher requestData)
         {
-            string sqlUpdate = @"
+            const string sqlUpdate = @"
                 UPDATE dbo.Teacher
                 SET Name = @Name,
                     Gender = @Gender,
@@ -176,9 +183,17 @@ namespace School.Repositories
                 WHERE TeacherId = @TeacherId";
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.AddDynamicParams(requestData);
+            parameters.AddDynamicParams(new
+            {
+                TeacherId = requestData.TeacherId,
+                Name = requestData.Name,
+                Gender = requestData.Gender,
+                LevelId = requestData.LevelId,
+                Salary = requestData.Salary,
+                AdmitionDate = requestData.AdmitionDate
+            });
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 sqlConnection.Execute(sqlUpdate, parameters);
             }
@@ -191,8 +206,8 @@ namespace School.Repositories
             if (!string.IsNullOrWhiteSpace(filter.Name))
             {
                 //Vai dar ruim, só pesquisar
-                conditions.Add("Name LIKE @Name + '%'");
-                parameters.Add("Name", filter.Name, DbType.String);
+                conditions.Add("Name LIKE @Name");
+                parameters.Add("Name", filter.Name + "%", DbType.String);
             }
 
             if(filter.Genders?.Any() == true)
@@ -232,20 +247,20 @@ namespace School.Repositories
             if (filter.MinAdmitionDate.HasValue && filter.MaxAdmitionDate.HasValue)
             {
                 conditions.Add("AdmitionDate BETWEEN @MinAdmitionDate AND @MaxAdmitionDate");
-                parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime);
-                parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime);
+                parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
+                parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime2);
             }
             else if (filter.MinAdmitionDate.HasValue ^ filter.MaxAdmitionDate.HasValue)
             {
                 if (filter.MinAdmitionDate.HasValue)
                 {
                     conditions.Add("AdmitionDate >= @MinAdmitionDate");
-                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime);
+                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
                 }
                 else
                 {
                     conditions.Add("AdmitionDate <= @MaxAdmitionDate");
-                    parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime);
+                    parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime2);
                 }
             }
 
@@ -256,7 +271,7 @@ namespace School.Repositories
 
         public bool ExistByTeacherId(long teacherId)
         {
-            string sql = @"SELECT
+            const string sql = @"SELECT
                 1
             FROM
                 dbo.Teacher
@@ -266,20 +281,45 @@ namespace School.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("teacherId", teacherId, DbType.Int64);
 
-            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 return sqlConnection.ExecuteScalar<bool>(sql, parameters);
             }
         }
 
-        /*
+        public bool ExistByLevelId(char levelId)
+        {
+            const string sql = @"SELECT 
+                1
+            FROM
+                dbo.Level
+            WHERE
+                LevelId = @levelId";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("levelId", levelId, DbType.String);
+
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                return sqlConnection.ExecuteScalar<bool>(sql, parameters);
+            }
+        }
+
+        public IEnumerable<char> ValidLevelIds()
+        {
+            const string sql = @"SELECT 
+                LevelId
+            FROM
+                dbo.Level";
+            
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                return sqlConnection.Query<char>(sql);
+            }
+        }
         private SqlConnection GetSqlConnection()
         {
-            //COLOCAR TODA A LÓGICA DO SQLCONNECTION AQUI
-            //Tentar extrair um método se tiver repetições
-            //Não precisa abrir a conexão se estiver usando o dapper
             return new SqlConnection(this._connectionString);
         }
-        */
     }
 }
