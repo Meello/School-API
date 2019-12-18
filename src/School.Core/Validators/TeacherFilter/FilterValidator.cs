@@ -58,22 +58,51 @@ namespace School.Core.Validators.TeacherFilter
                 response.AddError("017", $"{count} values in {nameof(requestFilter.LevelIds)} list invalid ");
             }
 
-            this._parameterValidator.ValidateAdmitionDate(requestFilter.MinAdmitionDate, response, nameof(requestFilter.MinAdmitionDate));
-            this._parameterValidator.ValidateAdmitionDate(requestFilter.MaxAdmitionDate, response, nameof(requestFilter.MaxAdmitionDate));
-            this._parameterValidator.ValidateSalary(requestFilter.MaxSalary, response, nameof(requestFilter.MaxSalary));
-            this._parameterValidator.ValidateSalary(requestFilter.MinSalary, response, nameof(requestFilter.MinSalary));
+            if(requestFilter.MinAdmitionDate != null && requestFilter.MaxAdmitionDate != null)
+            {
+                if (requestFilter.MaxAdmitionDate < requestFilter.MinAdmitionDate)
+                {
+                    response.AddError("019", $"{nameof(requestFilter.MaxAdmitionDate)} can't be bigger than {nameof(requestFilter.MinAdmitionDate)}");
+                }
+
+                this._parameterValidator.ValidateAdmitionDate(requestFilter.MinAdmitionDate, response, nameof(requestFilter.MinAdmitionDate));
+                this._parameterValidator.ValidateAdmitionDate(requestFilter.MaxAdmitionDate, response, nameof(requestFilter.MaxAdmitionDate));
+            }
+            else if(requestFilter.MinAdmitionDate != null ^ requestFilter.MaxAdmitionDate != null)
+            {
+                if (requestFilter.MinAdmitionDate != null)
+                {
+                    this._parameterValidator.ValidateAdmitionDate(requestFilter.MinAdmitionDate, response, nameof(requestFilter.MinAdmitionDate));
+                }
+                else if(requestFilter.MaxAdmitionDate != null)
+                {
+                    this._parameterValidator.ValidateAdmitionDate(requestFilter.MaxAdmitionDate, response, nameof(requestFilter.MaxAdmitionDate));
+                }
+            }
+
+            if(requestFilter.MinSalary != null && requestFilter.MaxSalary != null)
+            {
+                if(requestFilter.MaxSalary < requestFilter.MinSalary)
+                {
+                    response.AddError("019",$"{nameof(requestFilter.MaxSalary)} can't be bigger than {nameof(requestFilter.MinSalary)}");
+                }
+
+                this._parameterValidator.ValidateSalary(requestFilter.MinSalary, response, nameof(requestFilter.MinSalary));
+                this._parameterValidator.ValidateSalary(requestFilter.MaxSalary, response, nameof(requestFilter.MaxSalary));
+            }
+            else if(requestFilter.MinSalary != null ^ requestFilter.MaxSalary != null)
+            {
+                if (requestFilter.MaxSalary != null)
+                {
+                    this._parameterValidator.ValidateSalary(requestFilter.MinSalary, response, nameof(requestFilter.MinSalary));
+                }
+
+                if (requestFilter.MaxSalary != null)
+                {
+                    this._parameterValidator.ValidateSalary(requestFilter.MaxSalary, response, nameof(requestFilter.MaxSalary));
+                }
+            }
             
-
-            if(requestFilter.MaxSalary < requestFilter.MinSalary)
-            {
-                response.AddError("019",$"{nameof(requestFilter.MaxSalary)} can't be bigger than {nameof(requestFilter.MinSalary)}");
-            }
-
-            if (requestFilter.MaxAdmitionDate < requestFilter.MinAdmitionDate)
-            {
-                response.AddError("019", $"{nameof(requestFilter.MaxAdmitionDate)} can't be bigger than {nameof(requestFilter.MinAdmitionDate)}");
-            }
-
             return response;
         }
     }

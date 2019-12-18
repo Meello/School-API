@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Text;
 using School.Core.Repositories;
+using System.Linq;
 
 namespace School.Core.Validators.ValidateTeacherParameters
 {
@@ -57,16 +58,20 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
         }
 
+        //Tem que consertar --> como escrever todos os valores possíveis?
         public void ValidateLevel(char? level, OperationResponseBase response, string fieldname)
         {
             if (level == null || level == '\u0000')
             {
                 response.AddError("002", $"Field {fieldname} can't be null or zero");
             }
+            else if (!char.IsUpper(level.Value))
+            {
+                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
+            }
             else if (!this._teacherRepository.ExistByLevelId(level.Value))
             {
-                //Tentar passar os valores possíveis sem escrever na mão
-                response.AddError("005", $"Invalid {fieldname}! Choose {this._teacherRepository.ValidLevelIds().ToString()} J or P or S");
+                response.AddError("005", $"Invalid {fieldname}! Choose J or P or S");
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.InsertAndUpdate;
 using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
@@ -12,13 +11,13 @@ namespace School.Core.Operations.UpdateTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IInsertAndUpdateValidator<UpdateTeacherResponse> _validator;
+        private readonly ITeacherValidator _teacherValidator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertAndUpdateValidator<UpdateTeacherResponse> validator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator teacherValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._validator = validator;
+            this._teacherValidator = teacherValidator;
         }
 
         protected override UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
@@ -34,7 +33,21 @@ namespace School.Core.Operations.UpdateTeacher
 
         protected override UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = this._validator.ValidateInsertAndUpdate(request.Data);
+            UpdateTeacherResponse response = new UpdateTeacherResponse();
+            
+            this._teacherValidator.ValidateTeacher(request.Data, response);
+
+            if(!response.Success)
+            {
+                return response;
+            }
+
+            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == false)
+            {
+                response.Errors.Add(new OperationError("003", $"{nameof(request.Data.TeacherId)} not found"));
+
+                return response;
+            }
 
             return response;
         }

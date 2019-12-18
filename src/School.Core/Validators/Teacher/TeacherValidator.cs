@@ -18,21 +18,21 @@ namespace School.Core.ValidatorsTeacher
             this._validator = validator;
         }
 
-        public bool ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response)
+        public void ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response)
         {
-            this._validator.ValidateTeacherId(requestData.TeacherId, response, nameof(requestData.TeacherId));
-            this._validator.ValidateName(requestData.Name, response, nameof(requestData.Name));
-            this._validator.ValidateGender(requestData.Gender, response, nameof(requestData.Gender));
-            this._validator.ValidateLevel(requestData.Level, response, nameof(requestData.Level));
-            this._validator.ValidateSalary(requestData.Salary, response, nameof(requestData.Salary));
-            this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
-
-            if (response.Errors.Count > 0)
+            if(requestData == null)
             {
-                return false;
+                response.AddError("001", "Request can't be null");
             }
-
-            return true;
+            else
+            {
+                this._validator.ValidateTeacherId(requestData.TeacherId, response, nameof(requestData.TeacherId));
+                this._validator.ValidateName(requestData.Name, response, nameof(requestData.Name));
+                this._validator.ValidateGender(requestData.Gender, response, nameof(requestData.Gender));
+                this._validator.ValidateLevel(requestData.Level, response, nameof(requestData.Level));
+                this._validator.ValidateSalary(requestData.Salary, response, nameof(requestData.Salary));
+                this._validator.ValidateAdmitionDate(requestData.AdmitionDate, response, nameof(requestData.AdmitionDate));
+            }
         }
     }
 }

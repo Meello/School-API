@@ -59,9 +59,6 @@
     <Folder Include="Data" />
     <Folder Include="Tables" />
     <Folder Include="Tables\dbo" />
-    <Folder Include="Programmability" />
-    <Folder Include="Trigger" />
-    <Folder Include="Execises" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo\Profile.sql" />
@@ -73,37 +70,9 @@
     <Build Include="Tables\dbo\Course.sql" />
     <Build Include="Tables\dbo\Class.sql" />
     <Build Include="Tables\dbo\Subscription.sql" />
-    <Build Include="Programmability\Procedure_BirthDate.sql" />
-    <Build Include="Programmability\Procedure_BirthDate2.sql" />
-    <Build Include="Programmability\Procedure_ChangeHistory.sql" />
-    <Build Include="Programmability\Procedure_ChangeHistoryDetail.sql" />
-    <Build Include="Programmability\Procedure_Verifying_Class.sql" />
-    <Build Include="Programmability\Procedure_VerifyingTime.sql" />
-    <Build Include="Programmability\Procedure_Workday_Class.sql" />
     <Build Include="Tables\dbo\TrackedEntity.sql" />
     <Build Include="Tables\dbo\ChangeHistory.sql" />
     <Build Include="Tables\dbo\ChangeHistoryDetail.sql" />
-    <Build Include="Trigger\Trigger_Teacher.sql" />
-    <Build Include="Trigger\Teste_Trigger_Teacher.sql" />
-    <Build Include="Execises\Exercicio1.sql" />
-    <Build Include="Execises\Exercicio10.sql" />
-    <Build Include="Execises\Exercicio11_e_11b.sql" />
-    <Build Include="Execises\Exercicio12.sql" />
-    <Build Include="Execises\Exercicio13.sql" />
-    <Build Include="Execises\Exercicio14.sql" />
-    <Build Include="Execises\Exercicio15.sql" />
-    <Build Include="Execises\Exercicio16.sql" />
-    <Build Include="Execises\Exercicio17.sql" />
-    <Build Include="Execises\Exercicio18.sql" />
-    <Build Include="Execises\Exercicio2.sql" />
-    <Build Include="Execises\Exercicio3.sql" />
-    <Build Include="Execises\Exercicio4.sql" />
-    <Build Include="Execises\Exercicio5.sql" />
-    <Build Include="Execises\Exercicio6.sql" />
-    <Build Include="Execises\Exercicio7.sql" />
-    <Build Include="Execises\Exercicio8.sql" />
-    <Build Include="Execises\Exercicio9.sql" />
-    <Build Include="Execises\Exercicios.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Data\00-Load-Domains.sql" />

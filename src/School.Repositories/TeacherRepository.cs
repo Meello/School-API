@@ -88,9 +88,12 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                using (var multi = sqlConnection.QueryMultiple(sqlString.ToString(), parameters))
+                using ( var multi = sqlConnection.QueryMultiple(sqlString.ToString(), parameters))
                 {
-                    PagedResult<Teacher> pagedTeachers = PagedResult<Teacher>.Create(multi.Read<Teacher>(), multi.ReadFirst<long>());
+                    var queryMultipleCount = multi.Read<long>().First();
+                    var queryMultipleFilter = multi.Read<Teacher>();
+                    
+                    PagedResult<Teacher> pagedTeachers = PagedResult<Teacher>.Create(queryMultipleFilter, queryMultipleCount);
                     
                     return pagedTeachers;
                 }

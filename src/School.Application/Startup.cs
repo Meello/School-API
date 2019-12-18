@@ -15,6 +15,13 @@ using School.Core.Validators.ValidateTeacherParameters;
 using School.Repositories;
 using School.Core.Validators.TeacherFilter;
 using School.Core.ValidatorsTeacher;
+using School.Core.Operations;
+using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
+using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
+using StoneCo.Buy4.School.DataContracts.GetTeachers;
+using StoneCo.Buy4.School.DataContracts.GetTeacher;
+using StoneCo.Buy4.School.DataContracts.SearchTeacher;
 
 namespace School.Application
 {
@@ -40,12 +47,19 @@ namespace School.Application
             services.AddScoped<IGetTeacher, GetTeacher>();
             services.AddScoped<IGetTeachers, GetTeachers>();
             services.AddScoped<IInsertTeacher, InsertTeacher>();
-            services.AddScoped<Core.Operations.SearchTeacher.ISearchTeacher, Core.Operations.SearchTeacher.SearchTeacher>();
+            services.AddScoped<ISearchTeacher, SearchTeacher>();
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
+            // Operation Base
+            services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
+            services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();
+            services.AddScoped<IOperationBase<GetTeachersRequest, GetTeachersResponse>, GetTeachers>();
+            services.AddScoped<IOperationBase<InsertTeacherRequest, InsertTeacherResponse>, InsertTeacher>();
+            services.AddScoped<IOperationBase<SearchTeacherRequest, SearchTeacherResponse>, SearchTeacher>();
+            services.AddScoped<IOperationBase<UpdateTeacherRequest, UpdateTeacherResponse>, UpdateTeacher>();
 
-            //Validators
-            services.AddScoped<Core.Validators.TeacherFilter.IFilterValidator, Core.Validators.TeacherFilter.FilterValidator>();
+            // Validators
             services.AddScoped<ITeacherValidator, TeacherValidator>();
+            services.AddScoped<IFilterValidator, FilterValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

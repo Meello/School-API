@@ -1,7 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators.InsertAndUpdate;
+using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 
 namespace School.Core.Operations.InsertTeacher
@@ -10,13 +10,13 @@ namespace School.Core.Operations.InsertTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly IInsertAndUpdateValidator<InsertTeacherResponse> _validator;
+        private readonly ITeacherValidator _teacherValidator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertAndUpdateValidator<InsertTeacherResponse> validator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator teacherValidator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._validator = validator;
+            this._teacherValidator = teacherValidator;
         }
 
         protected override InsertTeacherResponse ProcessOperation(InsertTeacherRequest request)
@@ -32,7 +32,21 @@ namespace School.Core.Operations.InsertTeacher
 
         protected override InsertTeacherResponse ValidateOperation(InsertTeacherRequest request)
         {
-            InsertTeacherResponse response = this._validator.ValidateInsertAndUpdate(request.Data);
+            InsertTeacherResponse response = new InsertTeacherResponse();
+
+            this._teacherValidator.ValidateTeacher(request.Data, response);
+
+            if (!response.Success)
+            {
+                return response;
+            }
+
+            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == true)
+            {
+                response.AddError("013", $"{nameof(request.Data.TeacherId)} already exist");
+
+                return response;
+            }
 
             return response;
         }

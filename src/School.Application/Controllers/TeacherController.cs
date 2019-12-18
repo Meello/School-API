@@ -83,7 +83,8 @@ namespace School.Application.Controllers
         [HttpGet]
         public ActionResult<GetTeachersResponse> Get()
         {
-            GetTeachersResponse response = this._getTeachers.Process();
+            GetTeachersRequest request = new GetTeachersRequest();
+            GetTeachersResponse response = this._getTeachers.Process(request);
 
             return Ok(response);
         }
