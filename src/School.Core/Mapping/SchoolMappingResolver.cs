@@ -58,6 +58,16 @@ namespace School.Core.Mapping
             };
         }
 
+        public List<Teacher> BuildFrom(IEnumerable<TeacherRequestData> requestDatas)
+        {
+            if(requestDatas.Count()== 0)
+            {
+                return null;
+            }
+
+            return requestDatas.Select(model => BuildFrom(model)).ToList();
+        }
+
         public TeacherFilter BuildFrom(RequestFilter requestFilter)
         {
             if(requestFilter == null)

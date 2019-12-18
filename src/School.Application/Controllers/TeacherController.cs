@@ -104,9 +104,9 @@ namespace School.Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult<InsertTeacherResponse> Insert([FromBody]TeacherRequestData requestData)
+        public ActionResult<InsertTeacherResponse> Insert([FromBody] TeacherRequestDatas requestDatas)
         { 
-            InsertTeacherRequest request = new InsertTeacherRequest(requestData);
+            InsertTeacherRequest request = new InsertTeacherRequest(requestDatas);
             InsertTeacherResponse response = this._insertTeacher.Process(request);
 
             if(response.Success == false)

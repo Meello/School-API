@@ -6,11 +6,11 @@ namespace StoneCo.Buy4.School.DataContracts.InsertTeacher
 {
     public class InsertTeacherRequest : OperationRequestBase
     {      
-        public InsertTeacherRequest(TeacherRequestData requestData)
+        public InsertTeacherRequest(TeacherRequestDatas requestDatas)
         {
-            Data = requestData;
+            Datas = requestDatas;
         }
 
-        public TeacherRequestData Data { get; }
+        public TeacherRequestDatas Datas { get; }
     }
 }

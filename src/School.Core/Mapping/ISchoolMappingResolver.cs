@@ -17,10 +17,10 @@ namespace School.Core.Mapping
 
         Teacher BuildFrom(TeacherRequestData requestData);
 
+        List<Teacher> BuildFrom(IEnumerable<TeacherRequestData> requestDatas);
+
         List<TeacherResponseData> BuildFrom(IEnumerable<Teacher> teacher);
 
         TeacherFilter BuildFrom(RequestFilter requestFilter);
-
-        //TeacherResponseData BuildFrom(PagedResult<Teacher> teachers);
     }
 }

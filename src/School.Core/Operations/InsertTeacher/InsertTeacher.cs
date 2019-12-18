@@ -3,6 +3,7 @@ using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
+using System.Collections.Generic;
 
 namespace School.Core.Operations.InsertTeacher
 {
@@ -23,9 +24,10 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
-            Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
+            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas.RequestDatas);
 
-            this._teacherRepository.Insert(teacher);
+            //Falta passar a lista dentro do insert
+            this._teacherRepository.Insert(teachers);
 
             return response;
         }
@@ -34,16 +36,16 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
-            this._teacherValidator.ValidateTeacher(request.Data, response);
+            this._teacherValidator.ValidateTeacher(request.Datas, response);
 
             if (!response.Success)
             {
                 return response;
             }
 
-            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == true)
+            if (this._teacherRepository.ExistByTeacherId(request.Datas.RequestDatas) == true)
             {
-                response.AddError("013", $"{nameof(request.Data.TeacherId)} already exist");
+                response.AddError("013", $"{nameof(request.Datas.TeacherId)} already exist");
 
                 return response;
             }
