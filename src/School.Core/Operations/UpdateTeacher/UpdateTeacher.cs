@@ -1,6 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
+using School.Core.Validators.InsertAndUpdate;
 using School.Core.ValidatorsTeacher;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
@@ -11,13 +12,13 @@ namespace School.Core.Operations.UpdateTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly ITeacherValidator _teacherValidator;
+        private readonly IInsertAndUpdateValidator<UpdateTeacherResponse> _validator;
 
-        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator validator)
+        public UpdateTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertAndUpdateValidator<UpdateTeacherResponse> validator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._teacherValidator = validator;
+            this._validator = validator;
         }
 
         protected override UpdateTeacherResponse ProcessOperation(UpdateTeacherRequest request)
@@ -33,26 +34,7 @@ namespace School.Core.Operations.UpdateTeacher
 
         protected override UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
-            UpdateTeacherResponse response = new UpdateTeacherResponse();
-
-            if(request.Data == null)
-            {
-                response.AddError("001", "Request can't be null");
-
-                return response;
-            }
-
-            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == false)
-            {
-                response.Errors.Add(new OperationError("003", $"{nameof(request.Data.TeacherId)} not found"));
-
-                return response;
-            }
-
-            if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
-            {
-                return response;
-            }
+            UpdateTeacherResponse response = this._validator.ValidateInsertAndUpdate(request.Data);
 
             return response;
         }

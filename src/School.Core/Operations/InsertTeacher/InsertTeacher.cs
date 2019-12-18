@@ -1,13 +1,8 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
-using School.Core.Validators;
-using School.Core.ValidatorsTeacher;
-using StoneCo.Buy4.School.DataContracts;
+using School.Core.Validators.InsertAndUpdate;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace School.Core.Operations.InsertTeacher
 {
@@ -15,13 +10,13 @@ namespace School.Core.Operations.InsertTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
-        private readonly ITeacherValidator _teacherValidator;
+        private readonly IInsertAndUpdateValidator<InsertTeacherResponse> _validator;
 
-        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, ITeacherValidator teacherValidator)
+        public InsertTeacher(ITeacherRepository teacherRepository, ISchoolMappingResolver mappingResolver, IInsertAndUpdateValidator<InsertTeacherResponse> validator)
         {
             this._teacherRepository = teacherRepository;
             this._mappingResolver = mappingResolver;
-            this._teacherValidator = teacherValidator;
+            this._validator = validator;
         }
 
         protected override InsertTeacherResponse ProcessOperation(InsertTeacherRequest request)
@@ -37,26 +32,7 @@ namespace School.Core.Operations.InsertTeacher
 
         protected override InsertTeacherResponse ValidateOperation(InsertTeacherRequest request)
         {
-            InsertTeacherResponse response = new InsertTeacherResponse();
-
-            if(request.Data == null)
-            {
-                response.AddError("001", "Request can't be null");
-
-                return response;
-            }
-
-            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == true)
-            {
-                response.AddError("013", $"{nameof(request.Data.TeacherId)} already exist");
-
-                return response;
-            }
-
-            if (this._teacherValidator.ValidateTeacher(request.Data, response) == false)
-            {
-                return response;
-            }
+            InsertTeacherResponse response = this._validator.ValidateInsertAndUpdate(request.Data);
 
             return response;
         }
