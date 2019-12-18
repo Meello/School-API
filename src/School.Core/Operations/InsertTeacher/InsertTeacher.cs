@@ -24,7 +24,7 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
-            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas.RequestDatas);
+            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas);
 
             //Falta passar a lista dentro do insert
             this._teacherRepository.Insert(teachers);
@@ -36,13 +36,20 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
-            this._teacherValidator.ValidateTeacher(request.Datas, response);
+            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas.RequestDatas);
+
+            foreach(Teacher teacher in teachers)
+            {
+                this._teacherValidator.ValidateTeacher(teacher, response);
+            }
+
 
             if (!response.Success)
             {
                 return response;
             }
 
+            //Como validar os TeacherIds se não consigo pegar ele
             if (this._teacherRepository.ExistByTeacherId(request.Datas.RequestDatas) == true)
             {
                 response.AddError("013", $"{nameof(request.Datas.TeacherId)} already exist");

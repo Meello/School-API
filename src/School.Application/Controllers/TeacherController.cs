@@ -12,6 +12,7 @@ using StoneCo.Buy4.School.DataContracts.GetTeachers;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
 using StoneCo.Buy4.School.DataContracts;
+using System.Collections.Generic;
 
 namespace School.Application.Controllers
 {
@@ -104,7 +105,7 @@ namespace School.Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult<InsertTeacherResponse> Insert([FromBody] TeacherRequestDatas requestDatas)
+        public ActionResult<InsertTeacherResponse> Insert([FromBody] IEnumerable<TeacherRequestData> requestDatas)
         { 
             InsertTeacherRequest request = new InsertTeacherRequest(requestDatas);
             InsertTeacherResponse response = this._insertTeacher.Process(request);

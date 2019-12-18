@@ -137,7 +137,7 @@ namespace School.Repositories
             }
         }
 
-        public void Insert(Teacher teacherToInsert)
+        public void Insert(List<Teacher> teachersToInsert)
         {
             const string sql = @"
                 INSERT INTO dbo.Teacher
@@ -150,27 +150,37 @@ namespace School.Repositories
                 	AdmitionDate
                 )
                 VALUES
-                (
-                	@TeacherId,
-                	@Name,
-                	@Gender,
-                	@LevelId,
-                	@Salary,
-                	@AdmitionDate
-                )
-            ";
+                    @DynamicValues;";
             
+            //dapper permite passar uma lista
             DynamicParameters parameters = new DynamicParameters();
-            parameters.AddDynamicParams(new
-            {
-                TeacherId = teacherToInsert.TeacherId,
-                Name = teacherToInsert.Name,
-                Gender = teacherToInsert.Gender,
-                LevelId = teacherToInsert.LevelId,
-                Salary = teacherToInsert.Salary,
-                AdmitionDate = teacherToInsert.AdmitionDate
-            });
             
+            var values = new List<string>();
+
+            foreach (Teacher teacher in teachersToInsert)
+            {
+                parameters.AddDynamicParams(new
+                {
+                    TeacherId = teacher.TeacherId,
+                    Name = teacher.Name,
+                    Gender = teacher.Gender,
+                    LevelId = teacher.LevelId,
+                    Salary = teacher.Salary,
+                    AdmitionDate = teacher.AdmitionDate
+                });
+
+                values.Add(@"(
+                    @TeacherId,
+                    @Name,
+                    @Gender,
+                    @LevelId,
+                    @Salary,
+                    @AdmitionDate)"
+                );
+            }
+
+            string dynamicValues = values.Any() ? $"{string.Join(", ", values)}" : "";
+
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 sqlConnection.Execute(sql, parameters);
