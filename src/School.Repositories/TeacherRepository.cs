@@ -57,13 +57,14 @@ namespace School.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.AddDynamicParams(new { Filter = filter, PageNumber = pageNumber, PageSize = pageSize });
 
-            StringBuilder queryCount = new StringBuilder(@"Select 
+            const string queryCount = @"Select 
                 COUNT(TeacherId)
             FROM 
                 dbo.Teacher
-            ");
+            @DynamicFilter;
+            ";
 
-            StringBuilder sqlString = new StringBuilder(@"
+            const string queryFilter = @"
                 SELECT 
                     TeacherId,
                     Name,
@@ -73,24 +74,26 @@ namespace School.Repositories
                     AdmitionDate
                 FROM 
                     dbo.Teacher
-                ");
+                @DynamicFilter
+                ";
 
-            if(filter != null)
-            {
-                queryCount.Append("@DynamicFilter");
-                ApplyFilter(queryCount, filter, parameters);
-                
-                sqlString.Append("@DynamicFilter");
-                ApplyFilter(sqlString, filter, parameters);
-            }
+            StringBuilder sqlString = new StringBuilder(queryCount);
+            sqlString.Append(queryFilter);
+
+            ApplyFilter(sqlString, filter, parameters);
 
             sqlString.Append(@"ORDER BY TeacherId
                     OFFSET (@PageNumber - 1)*@PageSize  ROWS
-                    FETCH NEXT @PageSize ROWS ONLY");
+                    FETCH NEXT @PageSize ROWS ONLY;");
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return PagedResult<Teacher>.Create(sqlConnection.QueryMultiple(sqlString.ToString(), parameters).Read<Teacher>(), sqlConnection.QueryMultiple(queryCount.ToString(), parameters).ReadFirst<long>());
+                using (var multi = sqlConnection.QueryMultiple(sqlString.ToString(), parameters))
+                {
+                    PagedResult<Teacher> pagedTeachers = PagedResult<Teacher>.Create(multi.Read<Teacher>(), multi.ReadFirst<long>());
+                    
+                    return pagedTeachers;
+                }
             }
         }
 
@@ -203,70 +206,77 @@ namespace School.Repositories
         {
             var conditions = new List<string>();
 
-            if (!string.IsNullOrWhiteSpace(filter.Name))
+            if(filter == null)
             {
-                //Vai dar ruim, só pesquisar
-                conditions.Add("Name LIKE @Name");
-                parameters.Add("Name", filter.Name + "%", DbType.String);
+                sql.Replace("@DynamicFilter", "");
             }
-
-            if(filter.Genders?.Any() == true)
+            else
             {
-                //Pode passar direto o parâmetro, dapper já ajusta dentro do parênteses
-                conditions.Add("Gender IN @Genders");
-                parameters.Add("Genders", filter.Genders);
-            }
-
-            if (filter.LevelIds?.Any() == true)
-            {
-                conditions.Add("LevelId IN @LevelIds");
-                parameters.Add("LevelIds", filter.LevelIds);
-            }
-
-            if (filter.MinSalary.HasValue && filter.MaxSalary.HasValue)
-            {
-                conditions.Add("Salary BETWEEN @MinSalary AND @MaxSalary");
-                parameters.Add("MinSalary", filter.MinSalary, DbType.Decimal);
-                parameters.Add("MaxSalary", filter.MaxSalary, DbType.Decimal);
-            }
-            //XOR --> apenas um é verdadeiro (^)
-            else if (filter.MinSalary.HasValue ^ filter.MaxSalary.HasValue)
-            {
-                if(filter.MinSalary.HasValue)
+                if (!string.IsNullOrWhiteSpace(filter.Name))
                 {
-                    conditions.Add("Salary >= @MinSalary");
-                    parameters.Add("MinSalary", filter.MinSalary, DbType.Decimal);
+                    //Vai dar ruim, só pesquisar
+                    conditions.Add("Name LIKE @Name");
+                    parameters.Add("Name", filter.Name + "%", DbType.String);
                 }
-                else
+
+                if(filter.Genders?.Any() == true)
                 {
-                    conditions.Add("Salary <= @MaxSalary");
+                    //Pode passar direto o parâmetro, dapper já ajusta dentro do parênteses
+                    conditions.Add("Gender IN @Genders");
+                    parameters.Add("Genders", filter.Genders);
+                }
+
+                if (filter.LevelIds?.Any() == true)
+                {
+                    conditions.Add("LevelId IN @LevelIds");
+                    parameters.Add("LevelIds", filter.LevelIds);
+                }
+
+                if (filter.MinSalary.HasValue && filter.MaxSalary.HasValue)
+                {
+                    conditions.Add("Salary BETWEEN @MinSalary AND @MaxSalary");
+                    parameters.Add("MinSalary", filter.MinSalary, DbType.Decimal);
                     parameters.Add("MaxSalary", filter.MaxSalary, DbType.Decimal);
                 }
-            }
-
-            if (filter.MinAdmitionDate.HasValue && filter.MaxAdmitionDate.HasValue)
-            {
-                conditions.Add("AdmitionDate BETWEEN @MinAdmitionDate AND @MaxAdmitionDate");
-                parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
-                parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime2);
-            }
-            else if (filter.MinAdmitionDate.HasValue ^ filter.MaxAdmitionDate.HasValue)
-            {
-                if (filter.MinAdmitionDate.HasValue)
+                //XOR --> apenas um é verdadeiro (^)
+                else if (filter.MinSalary.HasValue ^ filter.MaxSalary.HasValue)
                 {
-                    conditions.Add("AdmitionDate >= @MinAdmitionDate");
-                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
+                    if(filter.MinSalary.HasValue)
+                    {
+                        conditions.Add("Salary >= @MinSalary");
+                        parameters.Add("MinSalary", filter.MinSalary, DbType.Decimal);
+                    }
+                    else
+                    {
+                        conditions.Add("Salary <= @MaxSalary");
+                        parameters.Add("MaxSalary", filter.MaxSalary, DbType.Decimal);
+                    }
                 }
-                else
+
+                if (filter.MinAdmitionDate.HasValue && filter.MaxAdmitionDate.HasValue)
                 {
-                    conditions.Add("AdmitionDate <= @MaxAdmitionDate");
+                    conditions.Add("AdmitionDate BETWEEN @MinAdmitionDate AND @MaxAdmitionDate");
+                    parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
                     parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime2);
                 }
+                else if (filter.MinAdmitionDate.HasValue ^ filter.MaxAdmitionDate.HasValue)
+                {
+                    if (filter.MinAdmitionDate.HasValue)
+                    {
+                        conditions.Add("AdmitionDate >= @MinAdmitionDate");
+                        parameters.Add("MinAdmitionDate", filter.MinAdmitionDate, DbType.DateTime2);
+                    }
+                    else
+                    {
+                        conditions.Add("AdmitionDate <= @MaxAdmitionDate");
+                        parameters.Add("MaxAdmitionDate", filter.MaxAdmitionDate, DbType.DateTime2);
+                    }
+                }
+
+                string dynamicFilter = conditions.Any() ? $"WHERE {string.Join(" AND ", conditions)}" : "";
+
+                sql.Replace("@DynamicFilter", dynamicFilter);
             }
-
-            string dynamicFilter = conditions.Any() ? $"WHERE {string.Join(" AND ", conditions)}" : "";
-
-            sql.Replace("@DynamicFilter", dynamicFilter);
         }
 
         public bool ExistByTeacherId(long teacherId)
