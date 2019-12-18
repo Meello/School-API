@@ -66,16 +66,14 @@ VALUES
 (79952245750,20),
 (79952245750,30);
 
--- Ver a tabela
-SELECT * FROM [Class];
---Deletar os dados da tabela
-DELETE [Class];
-
-DROP PROCEDURE Exists_BirthDate2
-
--- Procedures
-EXEC Exists_BirthDate;
-EXEC Exists_BirthDate2;
-EXEC Workday_Class;			--Não funciona
-EXEC Verifying_Times;
-EXEC Verifying_Class;
+INSERT INTO
+	[TrackedEntity]
+	(
+		TrackedEntityId,
+		Name
+	)
+VALUES
+(1,'Course'),
+(2,'Teacher'),
+(3,'Student'),
+(4,'Class');

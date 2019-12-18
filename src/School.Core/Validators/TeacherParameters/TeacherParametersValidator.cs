@@ -126,7 +126,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
         }
 
-        public void PageNumberValidator(int pageNumber, OperationResponseBase response)
+        public void ValidatePageNumber(int pageNumber, OperationResponseBase response)
         {
             if (pageNumber <= 0)
             {

@@ -2,5 +2,7 @@
 
 SELECT 
 	TeacherId INTO MaleTeacher
-FROM dbo.Teacher
-WHERE Gender = 'M';
+FROM
+	dbo.Teacher
+WHERE
+	Gender = 'M'

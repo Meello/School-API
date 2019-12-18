@@ -1,6 +1,3 @@
-USE school;  
-GO  
-DROP PROCEDURE IF EXISTS Procedure_ChangeHistory
 GO  
 CREATE PROCEDURE Procedure_ChangeHistory  
 @ChangeOperationType char, 
@@ -18,7 +15,7 @@ AS
 	AND @TrackedEntityRecordId IS NOT NULL
 	AND @Description IS NOT NULL
 	BEGIN
-		INSERT 	INTO [ChangeHistory]
+		INSERT INTO dbo.ChangeHistory
 		(
 			ChangeHistoryId,
 			ChangeOperationType,
