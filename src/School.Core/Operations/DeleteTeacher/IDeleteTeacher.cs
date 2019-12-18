@@ -5,8 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations.DeleteTeacher
 {
-    public interface IDeleteTeacher
+    public interface IDeleteTeacher : IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>
     {
-        DeleteTeacherResponse Process(DeleteTeacherRequest request);
     }
 }

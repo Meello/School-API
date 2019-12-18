@@ -5,8 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations.InsertTeacher
 {
-    public interface IInsertTeacher
+    public interface IInsertTeacher : IOperationBase<InsertTeacherRequest, InsertTeacherResponse>
     {
-        InsertTeacherResponse Process(InsertTeacherRequest request);
     }
 }

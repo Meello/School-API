@@ -5,7 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations
 {
-    public abstract class OperationBase<TRequest, TResponse>
+    public abstract class OperationBase<TRequest, TResponse> : IOperationBase<TRequest, TResponse>
         where TRequest: OperationRequestBase
         where TResponse: OperationResponseBase, new() 
         //faz com que só permita usar uma classe que tenha um construtor padrão

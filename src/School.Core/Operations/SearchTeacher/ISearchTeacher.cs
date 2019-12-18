@@ -6,8 +6,7 @@ using System.Text;
 
 namespace School.Core.Operations.SearchTeacher
 {
-    public interface ISearchTeacher
+    public interface ISearchTeacher : IOperationBase<SearchTeacherRequest, SearchTeacherResponse>
     {
-        SearchTeacherResponse Process(SearchTeacherRequest request);
     }
 }

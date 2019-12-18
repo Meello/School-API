@@ -5,8 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations.UpdateTeacher
 {
-    public interface IUpdateTeacher
+    public interface IUpdateTeacher : IOperationBase<UpdateTeacherRequest, UpdateTeacherResponse>
     {
-        UpdateTeacherResponse Process(UpdateTeacherRequest request);
     }
 }

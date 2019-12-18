@@ -12,7 +12,7 @@ using StoneCo.Buy4.School.DataContracts.GetTeachers;
 
 namespace School.Core.Operations.GetTeachers
 {
-    public class GetTeachers : IGetTeachers
+    public class GetTeachers : OperationBase<GetTeachersRequest, GetTeachersResponse>, IGetTeachers
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISchoolMappingResolver _mappingResolver;
@@ -23,7 +23,7 @@ namespace School.Core.Operations.GetTeachers
             this._mappingResolver = mappingResolver;
         }
         
-        public GetTeachersResponse Process()
+        protected override GetTeachersResponse ProcessOperation(GetTeachersRequest request)
         {
             GetTeachersResponse response = new GetTeachersResponse();
 
@@ -32,6 +32,11 @@ namespace School.Core.Operations.GetTeachers
             response.Data = this._mappingResolver.BuildFrom(teachers);
 
             return response;
+        }
+
+        protected override GetTeachersResponse ValidateOperation(GetTeachersRequest request)
+        {
+            return new GetTeachersResponse();
         }
     }
 }

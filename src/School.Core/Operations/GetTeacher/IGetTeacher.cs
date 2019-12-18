@@ -2,8 +2,7 @@
 
 namespace School.Core.Operations.GetTeacher
 {
-    public interface IGetTeacher
+    public interface IGetTeacher : IOperationBase<GetTeacherRequest, GetTeacherResponse>
     {
-        GetTeacherResponse Process(GetTeacherRequest request);
     }
 }

@@ -5,8 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations.GetTeachers
 {
-    public interface IGetTeachers
+    public interface IGetTeachers : IOperationBase<GetTeachersRequest, GetTeachersResponse>
     {
-        GetTeachersResponse Process();
     }
 }
