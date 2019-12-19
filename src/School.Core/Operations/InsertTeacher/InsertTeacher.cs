@@ -2,8 +2,10 @@
 using School.Core.Models;
 using School.Core.Repositories;
 using School.Core.ValidatorsTeacher;
+using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.InsertTeacher;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace School.Core.Operations.InsertTeacher
 {
@@ -26,7 +28,6 @@ namespace School.Core.Operations.InsertTeacher
 
             List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas);
 
-            //Falta passar a lista dentro do insert
             this._teacherRepository.Insert(teachers);
 
             return response;
@@ -36,25 +37,29 @@ namespace School.Core.Operations.InsertTeacher
         {
             InsertTeacherResponse response = new InsertTeacherResponse();
 
-            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas.RequestDatas);
+            foreach (TeacherRequestData teacher in request.Datas)
+            {
+                this._teacherValidator.ValidateTeacher(teacher, response);
+
+                if(!response.Success)
+                {
+                    int index = request.Datas.ToList().IndexOf(teacher);
+                    response.AddError("000",$"Error in teacher number {index+1}");
+                    return response;
+                }
+            }
+
+            List<Teacher> teachers = this._mappingResolver.BuildFrom(request.Datas);
 
             foreach(Teacher teacher in teachers)
             {
-                this._teacherValidator.ValidateTeacher(teacher, response);
-            }
-
-
-            if (!response.Success)
-            {
-                return response;
-            }
-
-            //Como validar os TeacherIds se não consigo pegar ele
-            if (this._teacherRepository.ExistByTeacherId(request.Datas.RequestDatas) == true)
-            {
-                response.AddError("013", $"{nameof(request.Datas.TeacherId)} already exist");
-
-                return response;
+                if (this._teacherRepository.ExistByTeacherId(teacher.TeacherId) == true)
+                {
+                    int index = teachers.IndexOf(teacher);
+                    response.AddError("013", $"{nameof(teacher.TeacherId)} already exist");
+                    response.AddError("000", $"Error in teacher number {index+1}");
+                    return response;
+                }
             }
 
             return response;

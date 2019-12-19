@@ -150,40 +150,30 @@ namespace School.Repositories
                 	AdmitionDate
                 )
                 VALUES
-                    @DynamicValues;";
-            
-            //dapper permite passar uma lista
+                (
+                    TeacherId,
+                	Name,
+                	Gender,
+                	LevelId,
+                	Salary,
+                	AdmitionDate
+                )";
+            /*
             DynamicParameters parameters = new DynamicParameters();
-            
-            var values = new List<string>();
 
-            foreach (Teacher teacher in teachersToInsert)
+            parameters.AddDynamicParams();
             {
-                parameters.AddDynamicParams(new
-                {
-                    TeacherId = teacher.TeacherId,
+                    TeacherId = teachersToInsert.TeacherId,
                     Name = teacher.Name,
                     Gender = teacher.Gender,
                     LevelId = teacher.LevelId,
                     Salary = teacher.Salary,
                     AdmitionDate = teacher.AdmitionDate
-                });
-
-                values.Add(@"(
-                    @TeacherId,
-                    @Name,
-                    @Gender,
-                    @LevelId,
-                    @Salary,
-                    @AdmitionDate)"
-                );
-            }
-
-            string dynamicValues = values.Any() ? $"{string.Join(", ", values)}" : "";
-
+            });
+*/            
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                sqlConnection.Execute(sql, parameters);
+                sqlConnection.Execute(sql, teachersToInsert);
             }
         }
         

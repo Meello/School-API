@@ -14,7 +14,7 @@ namespace School.Core.Repositories
 
         IEnumerable<Teacher> ListAll();
 
-        void Insert(Teacher teacher);
+        void Insert(List<Teacher> teacher);
 
         void Update(Teacher teacher);
 
