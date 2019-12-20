@@ -151,12 +151,12 @@ namespace School.Repositories
                 )
                 VALUES
                 (
-                    TeacherId,
-                	Name,
-                	Gender,
-                	LevelId,
-                	Salary,
-                	AdmitionDate
+                    @TeacherId,
+                	@Name,
+                	@Gender,
+                	@Level,
+                	@Salary,
+                	@AdmitionDate
                 )";
             /*
             DynamicParameters parameters = new DynamicParameters();
@@ -194,7 +194,7 @@ namespace School.Repositories
                 TeacherId = requestData.TeacherId,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                LevelId = requestData.Level,
+                LevelId = requestData.LevelId,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             });

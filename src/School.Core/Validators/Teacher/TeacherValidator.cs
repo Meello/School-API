@@ -29,7 +29,7 @@ namespace School.Core.ValidatorsTeacher
                 this._validator.ValidateTeacherId(teacher.TeacherId, response, nameof(teacher.TeacherId));
                 this._validator.ValidateName(teacher.Name, response, nameof(teacher.Name));
                 this._validator.ValidateGender(teacher.Gender, response, nameof(teacher.Gender));
-                this._validator.ValidateLevel(teacher.Level, response, nameof(teacher.Level));
+                this._validator.ValidateLevel(teacher.LevelId, response, nameof(teacher.LevelId));
                 this._validator.ValidateSalary(teacher.Salary, response, nameof(teacher.Salary));
                 this._validator.ValidateAdmitionDate(teacher.AdmitionDate, response, nameof(teacher.AdmitionDate));
             }

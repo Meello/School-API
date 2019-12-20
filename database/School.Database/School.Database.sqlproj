@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{5afde469-ce91-4e8a-b450-14afb1e73914}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -22,6 +22,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>False</GenerateCreateScript>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -59,6 +60,10 @@
     <Folder Include="Data" />
     <Folder Include="Tables" />
     <Folder Include="Tables\dbo" />
+    <Folder Include="View" />
+    <Folder Include="Exercises" />
+    <Folder Include="Programmability" />
+    <Folder Include="Trigger" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo\Profile.sql" />
@@ -73,6 +78,36 @@
     <Build Include="Tables\dbo\TrackedEntity.sql" />
     <Build Include="Tables\dbo\ChangeHistory.sql" />
     <Build Include="Tables\dbo\ChangeHistoryDetail.sql" />
+    <Build Include="View\Exercicio18.sql" />
+    <Build Include="Exercises\Exercicio1.sql" />
+    <Build Include="Exercises\Exercicio2.sql" />
+    <Build Include="Exercises\Exercicio3.sql" />
+    <Build Include="Exercises\Exercicio4.sql" />
+    <Build Include="Exercises\Exercicio5.sql" />
+    <Build Include="Exercises\Exercicio6.sql" />
+    <Build Include="Exercises\Exercicio7.sql" />
+    <Build Include="Exercises\Exercicio8.sql" />
+    <Build Include="Exercises\Exercicio9.sql" />
+    <Build Include="Exercises\Exercicio10.sql" />
+    <Build Include="Exercises\Exercicio11a.sql" />
+    <Build Include="Exercises\Exercicio12.sql">
+      <QuotedIdentifier>ProjectDefault</QuotedIdentifier>
+    </Build>
+    <Build Include="Exercises\Exercicio13.sql" />
+    <Build Include="Exercises\Exercicio14.sql" />
+    <Build Include="Exercises\Exercicio15.sql" />
+    <Build Include="Exercises\Exercicio16.sql" />
+    <Build Include="Exercises\Exercicio17.sql" />
+    <Build Include="Exercises\Exercicios.sql" />
+    <Build Include="Programmability\Procedure_BirthDate.sql" />
+    <Build Include="Programmability\Procedure_BirthDate2.sql" />
+    <Build Include="Programmability\Procedure_ChangeHistory.sql" />
+    <Build Include="Programmability\Procedure_ChangeHistoryDetail.sql" />
+    <Build Include="Programmability\Procedure_Verifying_Class.sql" />
+    <Build Include="Programmability\Procedure_VerifyingTime.sql" />
+    <Build Include="Programmability\Procedure_Workday_Class.sql" />
+    <Build Include="Trigger\Teste_Trigger_Teacher.sql" />
+    <Build Include="Trigger\Trigger_Teacher.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Data\00-Load-Domains.sql" />

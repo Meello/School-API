@@ -22,7 +22,7 @@ namespace School.Core.Mapping
                 TeacherId = teacher.TeacherId,
                 Name = teacher.Name,
                 Gender = teacher.Gender,
-                Level = teacher.Level,
+                Level = teacher.LevelId,
                 Salary = teacher.Salary,
                 AdmitionDate = teacher.AdmitionDate
             };
@@ -52,7 +52,7 @@ namespace School.Core.Mapping
                 TeacherId = requestData.TeacherId,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                Level = requestData.Level,
+                LevelId = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             };

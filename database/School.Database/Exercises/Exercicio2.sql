@@ -1,0 +1,10 @@
+--2. SELECIONAR TODOS OS CAMPOS NOME, SEXO E CIDADE DOS ALUNOS ATIVOS
+
+SELECT
+	Name,
+	Gender,
+	City 
+FROM
+	dbo.[Student]
+WHERE
+	Active = 1;
