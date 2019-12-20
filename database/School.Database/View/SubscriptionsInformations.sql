@@ -1,8 +1,11 @@
 --17. LISTE TODOS ALUNOS E EXIBA OS CAMPOS NOME DO ALUNO, NOME DO CURSO, AREA DO CONHECIMENTO, UNIDADE(CASO NÃO EXISTA, INFORMAR A MENSAGEM 'Não informado'),
 -- DATA DE INICIO (DD/MM/YY), HORA DE INICIO, 'HH:MM', NOME E PERFIL DO PROFESSOR, ID DA TURMA DOS CURSOS QUE COMEÇAM COM A LETRA 'A'.
+
+CREATE VIEW SubscriptionsInformations
+AS
 SELECT
-	[Course].Name,
 	[Student].Name,
+	[Course].Name,
 	[InformationArea].Name,
 	ISNULL([Class].Local,'Não Informado') AS 'Local',	
 	FORMAT([Class].StartDate,'dd/MM/yy') AS 'Start Date',
@@ -22,4 +25,4 @@ FROM
 WHERE 
 	[Course].Name LIKE 'A%'
 ORDER BY
-	[Course].Name;
+	[Student].Name;

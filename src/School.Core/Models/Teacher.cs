@@ -17,6 +17,5 @@ namespace School.Core.Models
         public decimal Salary { get; set; }
         
         public DateTime AdmitionDate { get; set; }
-
     }
 }

@@ -1,4 +1,4 @@
-DROP PROCEDURE IF EXISTS Procedure_ChangeHistoryDetail
+--DROP PROCEDURE IF EXISTS Procedure_ChangeHistoryDetail
 GO
 CREATE PROCEDURE Procedure_ChangeHistoryDetail
 @ChangeHistoryId varchar(max),

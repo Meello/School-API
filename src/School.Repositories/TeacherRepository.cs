@@ -28,25 +28,16 @@ namespace School.Repositories
 
         public Teacher Get(long cpf)
         {
-            const string sql = @"
-                SELECT 
-	                TeacherId,
-	                Name,
-	                Gender,
-	                LevelId,
-	                Salary,
-	                AdmitionDate
-                FROM 
-	                dbo.Teacher
-                WHERE
-	                TeacherId = @Cpf";
+            //sql --> nome da procedure
+            const string sql = "Procedure_GetTeacherById";
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("Cpf", cpf, DbType.Int64);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.QuerySingleOrDefault<Teacher>(sql, parameters);
+                //Não estpa encontrando a procedure --> procedure não consta no banco de dados, como consertar?
+                return sqlConnection.QuerySingleOrDefault<Teacher>(sql, parameters, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -173,7 +164,7 @@ namespace School.Repositories
 */            
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                sqlConnection.Execute(sql, teachersToInsert);
+                sqlConnection.Execute(sql, teachersToInsert, commandType: CommandType.StoredProcedure);
             }
         }
         

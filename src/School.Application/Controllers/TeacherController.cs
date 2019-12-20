@@ -56,7 +56,7 @@ namespace School.Application.Controllers
 
             if (response.Data == null)
             {
-                return NotFound();
+                return NotFound(response);
             }
 
             return Ok(response);
