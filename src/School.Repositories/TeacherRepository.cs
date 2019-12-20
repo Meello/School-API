@@ -194,7 +194,7 @@ namespace School.Repositories
                 TeacherId = requestData.TeacherId,
                 Name = requestData.Name,
                 Gender = requestData.Gender,
-                LevelId = requestData.LevelId,
+                LevelId = requestData.Level,
                 Salary = requestData.Salary,
                 AdmitionDate = requestData.AdmitionDate
             });

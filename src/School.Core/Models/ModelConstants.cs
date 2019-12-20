@@ -15,6 +15,8 @@ namespace School.Core.Models
             public const decimal MaxSalary = 10000;
 
             public const int MaxTeachersPerPage = 100;
+
+            public const int MaxTeachersInList = 10;
         }
     }
 }

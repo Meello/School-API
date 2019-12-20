@@ -9,6 +9,6 @@ namespace School.Core.ValidatorsTeacher
 {
     public interface ITeacherValidator
     {
-        void ValidateTeacher(TeacherRequestData requestData, OperationResponseBase response);
+        void ValidateTeacher(Teacher teacher, OperationResponseBase response);
     }
 }

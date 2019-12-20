@@ -34,17 +34,19 @@ namespace School.Core.Operations.UpdateTeacher
         protected override UpdateTeacherResponse ValidateOperation(UpdateTeacherRequest request)
         {
             UpdateTeacherResponse response = new UpdateTeacherResponse();
-            
-            this._teacherValidator.ValidateTeacher(request.Data, response);
+
+            Teacher teacher = this._mappingResolver.BuildFrom(request.Data);
+
+            this._teacherValidator.ValidateTeacher(teacher, response);
 
             if(!response.Success)
             {
                 return response;
             }
 
-            if (this._teacherRepository.ExistByTeacherId(request.Data.TeacherId) == false)
+            if (this._teacherRepository.ExistByTeacherId(teacher.TeacherId) == false)
             {
-                response.Errors.Add(new OperationError("003", $"{nameof(request.Data.TeacherId)} not found"));
+                response.Errors.Add(new OperationError("003", $"{nameof(teacher.TeacherId)} not found"));
 
                 return response;
             }

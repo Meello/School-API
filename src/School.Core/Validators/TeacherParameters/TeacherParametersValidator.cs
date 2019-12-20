@@ -28,7 +28,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         public void ValidateName(string name, OperationResponseBase response, string fieldname)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 response.AddError("002", $"Field {fieldname} can't be null or zero");
             }
@@ -38,7 +38,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
             else if (Regex.IsMatch(name, @"[^a-zA-Z]"))
             {
-                response.AddError("020",$"{fieldname} can't be specials characters");
+                response.AddError("020",$"{fieldname} can't have specials characters");
             }
         }
 
@@ -127,7 +127,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
             }
             else if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
             {
-                response.Errors.Add(new OperationError("015", "Number of teachers exceeded the limit"));
+                response.Errors.Add(new OperationError("015", "Number of teachers per page exceeded the limit"));
             }
         }
 

@@ -12,7 +12,7 @@ namespace School.Core.Models
         
         public char Gender { get; set; }
         
-        public char LevelId { get; set; }
+        public char Level { get; set; }
         
         public decimal Salary { get; set; }
         
