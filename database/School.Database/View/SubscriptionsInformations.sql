@@ -4,15 +4,15 @@
 CREATE VIEW SubscriptionsInformations
 AS
 SELECT
-	[Student].Name,
-	[Course].Name,
-	[InformationArea].Name,
+	[Student].Name AS 'Student',
+	[Course].Name AS 'Course',
+	[InformationArea].Name AS 'InformationArea',
 	ISNULL([Class].Local,'Não Informado') AS 'Local',	
-	FORMAT([Class].StartDate,'dd/MM/yy') AS 'Start Date',
-	FORMAT([Class].StartTime,N'hh\:mm') 'Start Time',
-	[Teacher].Name,
-	[Profile].Name,
-	[Class].ClassId
+	FORMAT([Class].StartDate,'dd/MM/yy') AS 'StartDate',
+	FORMAT([Class].StartTime,N'hh\:mm') 'StartTime',
+	[Teacher].Name AS 'Teacher',
+	[Profile].Name AS 'Profile',
+	[Class].ClassId AS 'ClassId'
 FROM
 	[Subscription]
 	LEFT JOIN [Student] ON [Subscription].StudentId = [Student].StudentId
@@ -23,6 +23,8 @@ FROM
 	INNER JOIN [TeacherProfile] ON [TeacherProfile].TeacherId = [Teacher].TeacherId
 	INNER JOIN [Profile] ON [TeacherProfile].ProfileId = [Profile].ProfileId
 WHERE 
-	[Course].Name LIKE 'A%'
-ORDER BY
-	[Student].Name;
+	[Course].Name LIKE 'A%';
+
+--SELECT * FROM SubscriptionsInformations;
+
+	

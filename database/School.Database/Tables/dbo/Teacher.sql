@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Teacher]
 (
 	TeacherId bigint not null,
-	Name varchar(20) not null,
+	Name varchar(32) not null,
 	Gender char(1) not null,
 	LevelId char(1) not null,
 	Salary decimal(10,2) not null,

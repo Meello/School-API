@@ -106,18 +106,18 @@ namespace School.Application.Controllers
 
         [HttpPost]
         public ActionResult<InsertTeacherResponse> Insert([FromBody] IEnumerable<TeacherRequestData> requestDatas)
-        { 
+        {
             InsertTeacherRequest request = new InsertTeacherRequest(requestDatas);
             InsertTeacherResponse response = this._insertTeacher.Process(request);
 
-            if(response.Success == false)
+            if (response.Success == false)
             {
                 return BadRequest(response);
             }
 
             return Ok(response);
         }
-       
+
         [HttpPut]
         public ActionResult<UpdateTeacherResponse> Update([FromBody]TeacherRequestData requestData)
         {

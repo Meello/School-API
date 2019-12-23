@@ -78,7 +78,6 @@
     <Build Include="Tables\dbo\TrackedEntity.sql" />
     <Build Include="Tables\dbo\ChangeHistory.sql" />
     <Build Include="Tables\dbo\ChangeHistoryDetail.sql" />
-    <Build Include="View\Enrolled_Students.sql" />
     <Build Include="Programmability\Procedure_BirthDate.sql" />
     <Build Include="Programmability\Procedure_BirthDate2.sql" />
     <Build Include="Programmability\Procedure_ChangeHistory.sql" />
@@ -109,5 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Data\00-Load-Domains.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Programmability\Procedure_InsertTeacher.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="View\Enrolled_Students.sql" />
   </ItemGroup>
 </Project>

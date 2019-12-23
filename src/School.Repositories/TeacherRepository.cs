@@ -130,38 +130,9 @@ namespace School.Repositories
 
         public void Insert(List<Teacher> teachersToInsert)
         {
-            const string sql = @"
-                INSERT INTO dbo.Teacher
-                (
-                	TeacherId,
-                	Name,
-                	Gender,
-                	LevelId,
-                	Salary,
-                	AdmitionDate
-                )
-                VALUES
-                (
-                    @TeacherId,
-                	@Name,
-                	@Gender,
-                	@Level,
-                	@Salary,
-                	@AdmitionDate
-                )";
-            /*
-            DynamicParameters parameters = new DynamicParameters();
-
-            parameters.AddDynamicParams();
-            {
-                    TeacherId = teachersToInsert.TeacherId,
-                    Name = teacher.Name,
-                    Gender = teacher.Gender,
-                    LevelId = teacher.LevelId,
-                    Salary = teacher.Salary,
-                    AdmitionDate = teacher.AdmitionDate
-            });
-*/            
+            //Esta dizendo que nao acha a procedure
+            const string sql = "Procedure_InsertTeacher";
+            
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 sqlConnection.Execute(sql, teachersToInsert, commandType: CommandType.StoredProcedure);
