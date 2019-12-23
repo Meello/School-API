@@ -74,10 +74,10 @@ namespace School.Application.Controllers
         }
 
         [HttpPost("enrolled_students")]
-        public ActionResult<EnrolledStudentsResponse> EnrolledStudents()
+        public ActionResult<EnrolledStudentResponse> EnrolledStudents()
         {
-            EnrolledStudentsRequest request = new EnrolledStudentsRequest();
-            EnrolledStudentsResponse response = this._enrolledStudents.Process(request);
+            EnrolledStudentRequest request = new EnrolledStudentRequest();
+            EnrolledStudentResponse response = this._enrolledStudents.Process(request);
 
             if (!response.Success)
             {

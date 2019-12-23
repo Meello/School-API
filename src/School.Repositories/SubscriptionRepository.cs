@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using StoneCo.Buy4.School.Core.DTO;
 
 namespace School.Repositories
 {
@@ -63,67 +64,43 @@ namespace School.Repositories
             }
         }
 
-        public IEnumerable<InformationResponseData> InformationsView()
+        public IEnumerable<SubscriptionInformationData> SubscriptionInformations()
         {
-            const string sql = @"SELECT * FROM SubscriptionsInformations";
+            const string sql = @"SELECT 
+                ClassId,
+                Course,
+                InformationArea,
+                Local,
+                Profile,
+                StartDate,
+                StartTime,
+                Studentm
+                Teacherm,
+            FROM
+                SubscriptionsInformations";
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<InformationResponseData> informationView = sqlConnection.Query<InformationResponseData>(sql).ToList();
+                List<SubscriptionInformationData> informationView = sqlConnection.Query<SubscriptionInformationData>(sql).ToList();
 
                 return informationView;
             }
         }
 
-        public IEnumerable<EnrolledStudentsResponseData> EnrolledStudentsView()
+        public IEnumerable<EnrolledStudentData> EnrolledStudents()
         {
-            const string sql = @"SELECT * FROM Enrolled_Students";
+            const string sql = @"SELECT
+                CourseId,
+                Course,
+                EnrolledStudents 
+            FROM
+                Enrolled_Students";
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<EnrolledStudentsResponseData> enrolledStudents = sqlConnection.Query<EnrolledStudentsResponseData>(sql).ToList();
+                List<EnrolledStudentData> enrolledStudents = sqlConnection.Query<EnrolledStudentData>(sql).ToList();
 
                 return enrolledStudents;
-            }
-        }
-
-        public bool ExistByClassId(byte classId)
-        {
-            const string sql = @"SELECT
-                1
-            FROM
-                dbo.Class
-            WHERE
-                ClassId = @ClassId;";
-
-            DynamicParameters parameter = new DynamicParameters();
-            parameter.Add("ClassId",classId,DbType.Byte);
-
-            using (SqlConnection sqlConnection = GetSqlConnection())
-            {
-                bool exist = sqlConnection.ExecuteScalar<bool>(sql,parameter);
-
-                return exist;
-            }
-        }
-
-        public bool ExistByStudentId(long studentId)
-        {
-            const string sql = @"SELECT
-                1
-            FROM
-                dbo.Student
-            WHERE
-                StudentId = @StudentId;";
-
-            DynamicParameters parameter = new DynamicParameters();
-            parameter.Add("StudentId", studentId, DbType.Int64);
-
-            using (SqlConnection sqlConnection = GetSqlConnection())
-            {
-                bool exist = sqlConnection.ExecuteScalar<bool>(sql, parameter);
-
-                return exist;
             }
         }
 

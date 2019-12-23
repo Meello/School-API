@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents
 {
-    public class EnrolledStudentsRequest : OperationRequestBase
+    public class EnrolledStudentRequest : OperationRequestBase
     {
     }
 }

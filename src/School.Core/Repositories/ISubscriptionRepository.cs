@@ -4,6 +4,7 @@ using StoneCo.Buy4.School.DataContracts.Subscription;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using StoneCo.Buy4.School.Core.DTO;
 
 namespace School.Core.Repositories
 {
@@ -13,12 +14,8 @@ namespace School.Core.Repositories
 
         void InsertSubscription(SubscriptionRequestData requestData);
 
-        IEnumerable<InformationResponseData> InformationsView();
+        IEnumerable<SubscriptionInformationData> SubscriptionInformations();
 
-        IEnumerable<EnrolledStudentsResponseData> EnrolledStudentsView();
-
-        bool ExistByClassId(byte classId);
-
-        bool ExistByStudentId(long studentId);
+        IEnumerable<EnrolledStudentData> EnrolledStudents();
     }
 }

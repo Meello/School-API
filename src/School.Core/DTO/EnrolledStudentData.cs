@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents
+namespace StoneCo.Buy4.School.Core.DTO
 {
-    public class EnrolledStudentsResponseData
+    public class EnrolledStudentData
     {
         public byte CourseId { get; }
 

@@ -31,6 +31,7 @@ using School.Core.Operations.Subscription.InsertSubscription;
 using StoneCo.Buy4.School.DataContracts.Subscription.InsertSubscription;
 using StoneCo.Buy4.School.DataContracts.Subscription.GetSubscriptions;
 using School.Core.Validators.Subscription;
+using School.Core.Validators.NullOrZero;
 
 namespace School.Application
 {
@@ -49,6 +50,8 @@ namespace School.Application
             // Repositories
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<ISubscriptionRepository>(provider => new SubscriptionRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<IClassRepository>(provider => new ClassRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<IStudentRepository>(provider => new StudentRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
 
             // Teacher Operations
             services.AddScoped<ISchoolMappingResolver, SchoolMappingResolver>();
@@ -71,11 +74,12 @@ namespace School.Application
             services.AddScoped<IOperationBase<SearchTeacherRequest, SearchTeacherResponse>, SearchTeacher>();
             services.AddScoped<IOperationBase<UpdateTeacherRequest, UpdateTeacherResponse>, UpdateTeacher>();
             // Subscription Operation Base
-            services.AddScoped<IOperationBase<EnrolledStudentsRequest, EnrolledStudentsResponse>, EnrolledStudents>();
+            services.AddScoped<IOperationBase<EnrolledStudentRequest, EnrolledStudentResponse>, EnrolledStudents>();
             services.AddScoped<IOperationBase<GetSubscriptionsRequest, GetSubscriptionsResponse>, GetSubscriptions>();
             services.AddScoped<IOperationBase<InsertSubscriptionRequest, InsertSubscriptionResponse>, InsertSubscription>();
             services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
             // Validators
+            services.AddScoped<IIsNullOrZeroValidator, IsNullOrZeroValidator>();
             services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<IFilterValidator, FilterValidator>();

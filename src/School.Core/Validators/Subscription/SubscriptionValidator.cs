@@ -12,11 +12,19 @@ namespace School.Core.Validators.Subscription
     {
         private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IIsNullOrZeroValidator _validator;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IClassRepository _classRepository;
 
-        public SubscriptionValidator(ISubscriptionRepository subscriptionRepository, IIsNullOrZeroValidator nullOrZeroValidator)
+        public SubscriptionValidator(
+            ISubscriptionRepository subscriptionRepository,
+            IIsNullOrZeroValidator nullOrZeroValidator,
+            IStudentRepository studentRepository,
+            IClassRepository classRepository)
         {
             this._subscriptionRepository = subscriptionRepository;
             this._validator = nullOrZeroValidator;
+            this._studentRepository = studentRepository;
+            this._classRepository = classRepository;
         }
 
         public InsertSubscriptionResponse ValidateSubscription(SubscriptionRequestData requestData)
@@ -25,7 +33,7 @@ namespace School.Core.Validators.Subscription
 
             if(!this._validator.IsNullOrZero(requestData.StudentId, response, nameof(requestData.StudentId)))
             {
-                if (!this._subscriptionRepository.ExistByStudentId(requestData.StudentId))
+                if (!this._studentRepository.ExistByStudentId(requestData.StudentId))
                 {
                     response.AddError("023", "StudentId don't exist");
                 }
@@ -33,7 +41,7 @@ namespace School.Core.Validators.Subscription
 
             if(!this._validator.IsNullOrZero(requestData.ClassId, response, nameof(requestData.ClassId)))
             {
-                if (!this._subscriptionRepository.ExistByClassId(requestData.ClassId))
+                if (!this._classRepository.ExistByClassId(requestData.ClassId))
                 {
                     response.AddError("022", "ClassId don't exist");
                 }

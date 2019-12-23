@@ -4,8 +4,8 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents
 {
-    public class EnrolledStudentsResponse : OperationResponseBase
+    public class EnrolledStudentResponse : OperationResponseBase
     {
-        public EnrolledStudentsResponse() { }
+        public EnrolledStudentResponse() { }
     }
 }

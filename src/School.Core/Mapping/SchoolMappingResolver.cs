@@ -2,9 +2,11 @@
 using System.Linq;
 using School.Core.Filters;
 using School.Core.Models;
+using StoneCo.Buy4.School.Core.DTO;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
-using StoneCo.Buy4.School.DataContracts.UpdateTeacher;
+using StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents;
+using StoneCo.Buy4.School.DataContracts.Subscription.InformationsSubscription;
 
 namespace School.Core.Mapping
 {
@@ -85,6 +87,62 @@ namespace School.Core.Mapping
                 MinSalary = requestFilter.MinSalary,
                 Name = requestFilter.Name
             };
+        }
+
+        public EnrolledStudentResponseData BuildFrom(EnrolledStudentData enrolledStudent)
+        {
+            if(enrolledStudent == null)
+            {
+                return null;
+            }
+
+            return new EnrolledStudentResponseData
+            {
+                Course = enrolledStudent.Course,
+                CourseId = enrolledStudent.CourseId,
+                EnrolledStudents = enrolledStudent.EnrolledStudents
+            };
+        }
+
+        public List<EnrolledStudentResponseData> BuildFrom(IEnumerable<EnrolledStudentData> enrolledStudents)
+        {
+            if(enrolledStudents.Count() == 0)
+            {
+                return null;
+            }
+
+            return enrolledStudents.Select(model => BuildFrom(model)).ToList();
+        }
+
+        public InformationResponseData BuildFrom(SubscriptionInformationData subscriptionInformation)
+        {
+            if(subscriptionInformation == null)
+            {
+                return null;
+            }
+
+            return new InformationResponseData
+            {
+                ClassId = subscriptionInformation.ClassId,
+                Course = subscriptionInformation.Course,
+                InformationArea = subscriptionInformation.InformationArea,
+                Local = subscriptionInformation.Local,
+                Profile = subscriptionInformation.Profile,
+                StartDate = subscriptionInformation.StartDate.ToString("dd/MM/yy"),
+                StartTime = subscriptionInformation.StartTime.ToString("hh:mm"),
+                Student = subscriptionInformation.Student,
+                Teacher = subscriptionInformation.Teacher
+            };
+        }
+
+        public List<InformationResponseData> BuildFrom(IEnumerable<SubscriptionInformationData> subscriptionInformation)
+        {
+            if (subscriptionInformation.Count() == 0)
+            {
+                return null;
+            }
+
+            return subscriptionInformation.Select(model => BuildFrom(model)).ToList();
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using StoneCo.Buy4.School.DataContracts;
+﻿using School.Core.Validators.NullOrZero;
+using StoneCo.Buy4.School.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace School.Core.Validators
+namespace School.Core.Validators.NullOrZero
 {
-    public class IsNullOrZeroValidator
+    public class IsNullOrZeroValidator : IIsNullOrZeroValidator
     {
         public bool IsNullOrZero(long? num, OperationResponseBase response, string fieldname)
         {

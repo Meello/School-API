@@ -5,7 +5,7 @@ using System.Text;
 
 namespace School.Core.Operations.Subscription.EnrolledStudents
 {
-    public interface IEnrolledStudents : IOperationBase<EnrolledStudentsRequest, EnrolledStudentsResponse>
+    public interface IEnrolledStudents : IOperationBase<EnrolledStudentRequest, EnrolledStudentResponse>
     {
     }
 }
