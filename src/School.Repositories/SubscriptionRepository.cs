@@ -63,13 +63,13 @@ namespace School.Repositories
             }
         }
 
-        public IEnumerable<InfomationsViewData> InformationsView()
+        public IEnumerable<InformationResponseData> InformationsView()
         {
             const string sql = @"SELECT * FROM SubscriptionsInformations";
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<InfomationsViewData> informationView = sqlConnection.Query<InfomationsViewData>(sql).ToList();
+                List<InformationResponseData> informationView = sqlConnection.Query<InformationResponseData>(sql).ToList();
 
                 return informationView;
             }
@@ -112,12 +112,12 @@ namespace School.Repositories
             const string sql = @"SELECT
                 1
             FROM
-                dbo.Class
+                dbo.Student
             WHERE
                 StudentId = @StudentId;";
 
             DynamicParameters parameter = new DynamicParameters();
-            parameter.Add("StudentId", studentId, DbType.Byte);
+            parameter.Add("StudentId", studentId, DbType.Int64);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {

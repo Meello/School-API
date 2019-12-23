@@ -13,7 +13,7 @@ namespace School.Core.Repositories
 
         void InsertSubscription(SubscriptionRequestData requestData);
 
-        IEnumerable<InfomationsViewData> InformationsView();
+        IEnumerable<InformationResponseData> InformationsView();
 
         IEnumerable<EnrolledStudentsViewData> EnrolledStudentsView();
 

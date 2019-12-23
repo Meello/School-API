@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.Subscription.InformationsSubscription
 {
-    public class InfomationsViewData
+    public class InformationResponseData
     {
         public string Student { get; }
 
@@ -14,9 +14,9 @@ namespace StoneCo.Buy4.School.DataContracts.Subscription.InformationsSubscriptio
         
         public string Local { get; }
 
-        public string StartDate { get; }
+        public DateTime StartDate { get; }
 
-        public string StartTime { get; }
+        public TimeSpan StartTime { get; }
         
         public string Teacher { get; }
         

@@ -8,8 +8,8 @@ SELECT
 	[Course].Name AS 'Course',
 	[InformationArea].Name AS 'InformationArea',
 	ISNULL([Class].Local,'Não Informado') AS 'Local',	
-	FORMAT([Class].StartDate,'dd/MM/yy') AS 'StartDate',
-	FORMAT([Class].StartTime,N'hh\:mm') 'StartTime',
+	[Class].StartDate AS 'StartDate',
+	[Class].StartTime AS 'StartTime',
 	[Teacher].Name AS 'Teacher',
 	[Profile].Name AS 'Profile',
 	[Class].ClassId AS 'ClassId'

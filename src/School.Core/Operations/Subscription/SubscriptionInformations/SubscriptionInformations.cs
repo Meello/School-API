@@ -21,7 +21,9 @@ namespace School.Core.Operations.Subscription.SubscriptionInformations
         {
             SubscriptionInformationsResponse response = new SubscriptionInformationsResponse();
 
-            response.Data = this._classRepository.InformationsView().ToList();
+            List<InformationResponseData> informations = this._classRepository.InformationsView().ToList();
+
+            response.Data = informations;
 
             return response;
         }

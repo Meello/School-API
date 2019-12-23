@@ -1,4 +1,5 @@
 ﻿using School.Core.Repositories;
+using School.Core.Validators.NullOrZero;
 using StoneCo.Buy4.School.DataContracts.Subscription;
 using StoneCo.Buy4.School.DataContracts.Subscription.InsertSubscription;
 using System;
@@ -10,25 +11,27 @@ namespace School.Core.Validators.Subscription
     public class SubscriptionValidator : ISubscriptionValidator
     {
         private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IIsNullOrZeroValidator _validator;
 
-        public SubscriptionValidator(ISubscriptionRepository subscriptionRepository)
+        public SubscriptionValidator(ISubscriptionRepository subscriptionRepository, IIsNullOrZeroValidator nullOrZeroValidator)
         {
             this._subscriptionRepository = subscriptionRepository;
+            this._validator = nullOrZeroValidator;
         }
 
         public InsertSubscriptionResponse ValidateSubscription(SubscriptionRequestData requestData)
         {
             InsertSubscriptionResponse response = new InsertSubscriptionResponse();
 
-            if(!this.IsNullOrZero(requestData.StudentId, response, nameof(requestData.StudentId)))
+            if(!this._validator.IsNullOrZero(requestData.StudentId, response, nameof(requestData.StudentId)))
             {
-                if (!this._subscriptionRepository.ExistByStudentId(requestData.ClassId))
+                if (!this._subscriptionRepository.ExistByStudentId(requestData.StudentId))
                 {
                     response.AddError("023", "StudentId don't exist");
                 }
             }
 
-            if(!this.IsNullOrZero(requestData.ClassId, response, nameof(requestData.ClassId)))
+            if(!this._validator.IsNullOrZero(requestData.ClassId, response, nameof(requestData.ClassId)))
             {
                 if (!this._subscriptionRepository.ExistByClassId(requestData.ClassId))
                 {
@@ -37,30 +40,6 @@ namespace School.Core.Validators.Subscription
             }
 
             return response;
-        }
-
-        public bool IsNullOrZero(long? num, InsertSubscriptionResponse response, string fieldname)
-        {
-            if(num == 0 || num == null)
-            {
-                response.AddError("002", $"{fieldname} can't be null or zero");
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool IsNullOrZero(int? num, InsertSubscriptionResponse response, string fieldname)
-        {
-            if (num == 0 || num == null)
-            {
-                response.AddError("002", $"{fieldname} can't be null or zero");
-
-                return true;
-            }
-
-            return false;
         }
     }
 }

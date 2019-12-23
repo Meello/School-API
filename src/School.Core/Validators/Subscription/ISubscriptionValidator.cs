@@ -9,9 +9,5 @@ namespace School.Core.Validators.Subscription
     public interface ISubscriptionValidator
     {
         InsertSubscriptionResponse ValidateSubscription(SubscriptionRequestData requestData);
-
-        bool IsNullOrZero(long? num, InsertSubscriptionResponse response, string fieldname);
-
-        bool IsNullOrZero(int? num, InsertSubscriptionResponse response, string fieldname);
     }
 }
