@@ -57,3 +57,9 @@ message = {fieldname} can't be specials characters
 
 code = 021
 message = Number of teachers in list exceeded the limit
+
+code = 022
+message = ClassId don't exist
+
+code = 023
+message = StudentId don't exist

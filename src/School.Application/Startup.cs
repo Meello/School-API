@@ -26,6 +26,11 @@ using School.Core.Operations.Subscription.SubscriptionInformations;
 using StoneCo.Buy4.School.DataContracts.InformationsSubscription;
 using School.Core.Operations.Subscription.EnrolledStudents;
 using StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents;
+using School.Core.Operations.Subscription.GetSubscriptions;
+using School.Core.Operations.Subscription.InsertSubscription;
+using StoneCo.Buy4.School.DataContracts.Subscription.InsertSubscription;
+using StoneCo.Buy4.School.DataContracts.Subscription.GetSubscriptions;
+using School.Core.Validators.Subscription;
 
 namespace School.Application
 {
@@ -45,7 +50,7 @@ namespace School.Application
             services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<ISubscriptionRepository>(provider => new SubscriptionRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
 
-            // Operations
+            // Teacher Operations
             services.AddScoped<ISchoolMappingResolver, SchoolMappingResolver>();
             services.AddScoped<IDeleteTeacher, DeleteTeacher>();
             services.AddScoped<IGetTeacher, GetTeacher>();
@@ -53,18 +58,25 @@ namespace School.Application
             services.AddScoped<IInsertTeacher, InsertTeacher>();
             services.AddScoped<ISearchTeacher, SearchTeacher>();
             services.AddScoped<IUpdateTeacher, UpdateTeacher>();
-            services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
+            // Subscription Operations
             services.AddScoped<IEnrolledStudents, EnrolledStudents>();
-            // Operation Base
+            services.AddScoped<IGetSubscriptions, GetSubscriptions>();
+            services.AddScoped<IInsertSubscription, InsertSubscription>();
+            services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
+            // Teacher Operation Base
             services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
             services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();
             services.AddScoped<IOperationBase<GetTeachersRequest, GetTeachersResponse>, GetTeachers>();
             services.AddScoped<IOperationBase<InsertTeacherRequest, InsertTeacherResponse>, InsertTeacher>();
             services.AddScoped<IOperationBase<SearchTeacherRequest, SearchTeacherResponse>, SearchTeacher>();
             services.AddScoped<IOperationBase<UpdateTeacherRequest, UpdateTeacherResponse>, UpdateTeacher>();
-            services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
+            // Subscription Operation Base
             services.AddScoped<IOperationBase<EnrolledStudentsRequest, EnrolledStudentsResponse>, EnrolledStudents>();
+            services.AddScoped<IOperationBase<GetSubscriptionsRequest, GetSubscriptionsResponse>, GetSubscriptions>();
+            services.AddScoped<IOperationBase<InsertSubscriptionRequest, InsertSubscriptionResponse>, InsertSubscription>();
+            services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
             // Validators
+            services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<IFilterValidator, FilterValidator>();
             services.AddScoped<ITeacherParametersValidator, TeacherParametersValidator>();

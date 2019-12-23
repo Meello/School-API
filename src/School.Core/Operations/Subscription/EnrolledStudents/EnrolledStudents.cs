@@ -18,8 +18,10 @@ namespace School.Core.Operations.Subscription.EnrolledStudents
         protected override EnrolledStudentsResponse ProcessOperation(EnrolledStudentsRequest request)
         {
             EnrolledStudentsResponse response = new EnrolledStudentsResponse();
+            
+            IEnumerable<EnrolledStudentsViewData> enrolledStudents = this._subscriptionRepository.EnrolledStudentsView();
 
-            response.Data = this._subscriptionRepository.EnrolledStudentsView();
+            response.Data = enrolledStudents;
 
             return response;
         }

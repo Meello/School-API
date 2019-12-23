@@ -26,10 +26,10 @@ namespace School.Core.Operations.GetTeachers
         protected override GetTeachersResponse ProcessOperation(GetTeachersRequest request)
         {
             GetTeachersResponse response = new GetTeachersResponse();
+            
+            IEnumerable<Teacher> teachers = this._teacherRepository.ListAll();
 
-            List<Teacher> teachers = this._teacherRepository.ListAll().ToList();
-
-            response.Data = this._mappingResolver.BuildFrom(teachers);
+            response.Data = teachers;
 
             return response;
         }
