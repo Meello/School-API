@@ -122,8 +122,8 @@ namespace School.Core.Mapping
                 return null;
             }
 
-            string startDate = DateTime.Parse(subscriptionInformation.StartDate.ToString()).ToString("dd/MM/yyyy");
-            string startTime = TimeSpan.Parse(subscriptionInformation.StartTime.ToString()).ToString("hh:mm");
+            string startDate = DateTime.Parse(subscriptionInformation.StartDate.ToString()).ToString("dd/MM/yy");
+            string startTime = DateTime.Parse(subscriptionInformation.StartTime.ToString()).ToString("hh:mm");
 
 
             return new InformationResponseData
@@ -133,8 +133,8 @@ namespace School.Core.Mapping
                 InformationArea = subscriptionInformation.InformationArea,
                 Local = subscriptionInformation.Local,
                 Profile = subscriptionInformation.Profile,
-                StartDate = subscriptionInformation.StartDate.ToString("dd/MM/yyyy"),
-                StartTime = subscriptionInformation.StartTime.ToString("hh:mm"),
+                StartDate = DateTime.Parse(subscriptionInformation.StartDate.ToString()).ToString("dd/MM/yy"),
+                StartTime = DateTime.Parse(subscriptionInformation.StartTime.ToString()).ToString("hh:mm"),
                 Student = subscriptionInformation.Student,
                 Teacher = subscriptionInformation.Teacher
             };
