@@ -15,7 +15,7 @@ namespace School.Core.Repositories
 
         IEnumerable<InformationResponseData> InformationsView();
 
-        IEnumerable<EnrolledStudentsViewData> EnrolledStudentsView();
+        IEnumerable<EnrolledStudentsResponseData> EnrolledStudentsView();
 
         bool ExistByClassId(byte classId);
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.Subscription.EnrolledStudents
 {
-    public class EnrolledStudentsViewData
+    public class EnrolledStudentsResponseData
     {
         public byte CourseId { get; }
 

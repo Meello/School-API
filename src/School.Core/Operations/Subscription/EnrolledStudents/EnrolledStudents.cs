@@ -19,7 +19,7 @@ namespace School.Core.Operations.Subscription.EnrolledStudents
         {
             EnrolledStudentsResponse response = new EnrolledStudentsResponse();
             
-            IEnumerable<EnrolledStudentsViewData> enrolledStudents = this._subscriptionRepository.EnrolledStudentsView();
+            IEnumerable<EnrolledStudentsResponseData> enrolledStudents = this._subscriptionRepository.EnrolledStudentsView();
 
             response.Data = enrolledStudents;
 

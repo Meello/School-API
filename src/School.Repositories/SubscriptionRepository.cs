@@ -75,13 +75,13 @@ namespace School.Repositories
             }
         }
 
-        public IEnumerable<EnrolledStudentsViewData> EnrolledStudentsView()
+        public IEnumerable<EnrolledStudentsResponseData> EnrolledStudentsView()
         {
             const string sql = @"SELECT * FROM Enrolled_Students";
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<EnrolledStudentsViewData> enrolledStudents = sqlConnection.Query<EnrolledStudentsViewData>(sql).ToList();
+                List<EnrolledStudentsResponseData> enrolledStudents = sqlConnection.Query<EnrolledStudentsResponseData>(sql).ToList();
 
                 return enrolledStudents;
             }
