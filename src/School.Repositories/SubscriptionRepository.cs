@@ -74,8 +74,8 @@ namespace School.Repositories
                 Profile,
                 StartDate,
                 StartTime,
-                Studentm
-                Teacherm,
+                Student,
+                Teacher
             FROM
                 SubscriptionsInformations";
 

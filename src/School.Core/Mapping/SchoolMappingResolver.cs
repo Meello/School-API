@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using School.Core.Filters;
 using School.Core.Models;
@@ -121,6 +122,10 @@ namespace School.Core.Mapping
                 return null;
             }
 
+            string startDate = DateTime.Parse(subscriptionInformation.StartDate.ToString()).ToString("dd/MM/yyyy");
+            string startTime = TimeSpan.Parse(subscriptionInformation.StartTime.ToString()).ToString("hh:mm");
+
+
             return new InformationResponseData
             {
                 ClassId = subscriptionInformation.ClassId,
@@ -128,7 +133,7 @@ namespace School.Core.Mapping
                 InformationArea = subscriptionInformation.InformationArea,
                 Local = subscriptionInformation.Local,
                 Profile = subscriptionInformation.Profile,
-                StartDate = subscriptionInformation.StartDate.ToString("dd/MM/yy"),
+                StartDate = subscriptionInformation.StartDate.ToString("dd/MM/yyyy"),
                 StartTime = subscriptionInformation.StartTime.ToString("hh:mm"),
                 Student = subscriptionInformation.Student,
                 Teacher = subscriptionInformation.Teacher
