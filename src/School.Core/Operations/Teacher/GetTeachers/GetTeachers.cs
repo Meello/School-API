@@ -27,7 +27,7 @@ namespace School.Core.Operations.GetTeachers
         {
             GetTeachersResponse response = new GetTeachersResponse();
             
-            IEnumerable<Teacher> teachers = this._teacherRepository.ListAll();
+            List<Teacher> teachers = this._teacherRepository.ListAll().ToList();
 
             response.Data = teachers;
 

@@ -1,9 +1,8 @@
 ﻿using School.Core.Repositories;
 using StoneCo.Buy4.School.DataContracts.Subscription;
 using StoneCo.Buy4.School.DataContracts.Subscription.GetSubscriptions;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace School.Core.Operations.Subscription.GetSubscriptions
 {
@@ -20,7 +19,7 @@ namespace School.Core.Operations.Subscription.GetSubscriptions
         {
             GetSubscriptionsResponse response = new GetSubscriptionsResponse();
 
-            IEnumerable<SubscriptionResponseData> subscriptions = this._subscriptionRepository.ListAll();
+            List<SubscriptionResponseData> subscriptions = this._subscriptionRepository.ListAll().ToList();
 
             response.Data = subscriptions;
 

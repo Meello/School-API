@@ -81,9 +81,9 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<SubscriptionInformationData> informationView = sqlConnection.Query<SubscriptionInformationData>(sql).ToList();
+                IEnumerable<SubscriptionInformationData> subscriptionInformations = sqlConnection.Query<SubscriptionInformationData>(sql);
 
-                return informationView;
+                return subscriptionInformations;
             }
         }
 
@@ -98,7 +98,7 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                List<EnrolledStudentData> enrolledStudents = sqlConnection.Query<EnrolledStudentData>(sql).ToList();
+                IEnumerable<EnrolledStudentData> enrolledStudents = sqlConnection.Query<EnrolledStudentData>(sql);
 
                 return enrolledStudents;
             }

@@ -10,18 +10,15 @@ namespace School.Core.Validators.Subscription
 {
     public class SubscriptionValidator : ISubscriptionValidator
     {
-        private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IIsNullOrZeroValidator _validator;
         private readonly IStudentRepository _studentRepository;
         private readonly IClassRepository _classRepository;
 
         public SubscriptionValidator(
-            ISubscriptionRepository subscriptionRepository,
             IIsNullOrZeroValidator nullOrZeroValidator,
             IStudentRepository studentRepository,
             IClassRepository classRepository)
         {
-            this._subscriptionRepository = subscriptionRepository;
             this._validator = nullOrZeroValidator;
             this._studentRepository = studentRepository;
             this._classRepository = classRepository;

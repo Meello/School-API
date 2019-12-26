@@ -122,10 +122,6 @@ namespace School.Core.Mapping
                 return null;
             }
 
-            string startDate = DateTime.Parse(subscriptionInformation.StartDate.ToString()).ToString("dd/MM/yy");
-            string startTime = DateTime.Parse(subscriptionInformation.StartTime.ToString()).ToString("hh:mm");
-
-
             return new InformationResponseData
             {
                 ClassId = subscriptionInformation.ClassId,
