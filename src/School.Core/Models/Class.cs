@@ -6,7 +6,7 @@ namespace School.Core.Models
 {
     public class Class
     {
-		public byte ClassId { get; set; }
+		//public byte ClassId { get; set; }
 
 		public string Local { get; set; }
 		

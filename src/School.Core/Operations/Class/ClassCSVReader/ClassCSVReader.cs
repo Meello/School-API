@@ -1,27 +1,44 @@
-﻿using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
+﻿using School.Core.Mapping;
+using School.Core.Models;
+using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace School.Core.Operations.Class.ClassCSVReader
 {
-    public class ClassCSVReader : IClassCSVReader
+    public class ClassCsvReader : IClassCsvReader
     {
-        public IEnumerable<Models.Class> Read(InsertClassRequestData requestData)
+        private readonly ISchoolMappingResolver _mappingResolver;
+
+        public ClassCsvReader(ISchoolMappingResolver mappingResolver)
         {
-            string line = "";
-            string[] separetedLine = null;
-            StreamReader reader = new StreamReader($@"{requestData.FileAddress}");
+            this._mappingResolver = mappingResolver;
+        }
+
+        public IEnumerable<ClassCsvFile> Execute(InsertClassRequestData requestData)
+        {
+            List<ClassCsvFile> classCsvFiles = new List<ClassCsvFile>();
+
+            StreamReader reader = new StreamReader($@"{requestData.FileAddress}",Encoding.UTF8,true);
+            reader.ReadLine().Skip(1);
 
             while (true)
             {
-                line = reader.ReadLine();
+                string line = reader.ReadLine();
+
                 if (line == null) break;
-                separetedLine = line.Split(';');
+
+                string[] separetedLine = line.Split(';');
+
+                ClassCsvFile classCsvFile = this._mappingResolver.BuildFrom(separetedLine);
+
+                classCsvFiles.Add(classCsvFile);
             }
 
-            return null;
+            return classCsvFiles;
         }
     }
 }

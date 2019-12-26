@@ -146,16 +146,48 @@ namespace School.Core.Mapping
             return subscriptionInformation.Select(model => BuildFrom(model)).ToList();
         }
 
-        public Class BuildFrom(string classString)
+        public Class BuildFrom(ClassCsvFile classCsvFile)
         {
-            if(classString == null)
+            if (classCsvFile == null)
             {
                 return null;
             }
 
+            string[] date = classCsvFile.Period.Split(' ');
+
+            string startTime = classCsvFile.StartTime.ToString();
+
+            int endTimeHour = Convert.ToInt32(startTime.Substring(0, startTime.IndexOf(':'))) + Convert.ToInt32(classCsvFile.DurationInHours);
+
             return new Class
             {
+                //Local,
+                //CourseId,
+                //TeacherId,
+                Shift = classCsvFile.Shift.Substring(0, 1),
+                StartDate = DateTime.Parse(date[0]),
+                EndDate = DateTime.Parse(date[2]),
+                StartTime = classCsvFile.StartTime,
+                EndTime = TimeSpan.Parse($"{endTimeHour}{startTime.Substring(startTime.IndexOf(':'))}")
+            };
+        }
 
+        public ClassCsvFile BuildFrom(string[] classString)
+        {
+            if (classString.Count() == 0)
+            {
+                return null;
+            }
+
+            return new ClassCsvFile
+            {
+                Id = Convert.ToInt32(classString[0]),
+                Teacher = classString[1],
+                Course = classString[2],
+                Shift = classString[3].Substring(0, 1),
+                Period = classString[4],
+                StartTime = TimeSpan.Parse(classString[5]),
+                DurationInHours = Convert.ToInt32(classString[6])
             };
         }
     }

@@ -83,7 +83,6 @@
     <Build Include="Programmability\Procedure_ChangeHistory.sql" />
     <Build Include="Programmability\Procedure_ChangeHistoryDetail.sql" />
     <Build Include="Programmability\Procedure_Verifying_Class.sql" />
-    <Build Include="Programmability\Procedure_VerifyingTime.sql" />
     <Build Include="Programmability\Procedure_Workday_Class.sql" />
     <None Include="Trigger\Trigger_Teacher.sql" />
     <None Include="Exercises\Exercicio1.sql" />
@@ -114,5 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="View\Enrolled_Students.sql" />
+    <None Include="Programmability\Procedure_VerifyingTime.sql" />
   </ItemGroup>
 </Project>

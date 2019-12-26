@@ -1,4 +1,4 @@
-CREATE PROCEDURE Verifying_Times AS
+﻿CREATE PROCEDURE Verifying_Times AS
 	SELECT *,
 	IIF(
 		DATEDIFF(MINUTE, [Class].StartTime,[Class].EndTime) = 180,
@@ -16,5 +16,3 @@ CREATE PROCEDURE Verifying_Times AS
 		'No'
 		) AS 'EndTime <= 22:00'
 	FROM [Class];
-
-DROP PROCEDURE Verifying_Times;

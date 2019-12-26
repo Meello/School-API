@@ -32,6 +32,9 @@ using StoneCo.Buy4.School.DataContracts.Subscription.InsertSubscription;
 using StoneCo.Buy4.School.DataContracts.Subscription.GetSubscriptions;
 using School.Core.Validators.Subscription;
 using School.Core.Validators.NullOrZero;
+using School.Core.Operations.Class.InsertClass;
+using School.Core.Operations.Class.ClassCSVReader;
+using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
 
 namespace School.Application
 {
@@ -66,6 +69,9 @@ namespace School.Application
             services.AddScoped<IGetSubscriptions, GetSubscriptions>();
             services.AddScoped<IInsertSubscription, InsertSubscription>();
             services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
+            // Class Operations
+            services.AddScoped<IInsertClass, InsertClass>();
+            services.AddScoped<IClassCsvReader, ClassCsvReader>();
             // Teacher Operation Base
             services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
             services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();
@@ -78,6 +84,8 @@ namespace School.Application
             services.AddScoped<IOperationBase<GetSubscriptionsRequest, GetSubscriptionsResponse>, GetSubscriptions>();
             services.AddScoped<IOperationBase<InsertSubscriptionRequest, InsertSubscriptionResponse>, InsertSubscription>();
             services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
+            // Class Operation Base
+            services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertClass>();
             // Validators
             services.AddScoped<IIsNullOrZeroValidator, IsNullOrZeroValidator>();
             services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();

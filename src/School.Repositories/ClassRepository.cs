@@ -20,9 +20,9 @@ namespace School.Repositories
 
         public void Insert(Class @class)
         {
-            const string sql = @"INSERT INTO dbo.Class
+            const string sql = @"SET IDENTITY_INSERT dbo.Class ON
+            INSERT INTO dbo.Class
             (
-                ClassId
                 Local
                 CourseId 
                 TeacherId
@@ -34,7 +34,6 @@ namespace School.Repositories
             )
             VALUES
             (
-                @ClassId
                 @Local
                 @CourseId 
                 @TeacherId
@@ -47,7 +46,7 @@ namespace School.Repositories
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.AddDynamicParams(new { 
-                ClassId = @class.ClassId,
+                //ClassId = @class.ClassId,
                 Local = @class.Local,
                 CourseId  = @class.CourseId,
                 TeacherId = @class.TeacherId,
