@@ -28,5 +28,7 @@ namespace School.Core.Mapping
         InformationResponseData BuildFrom(SubscriptionInformationData subscriptionInformation);
 
         List<InformationResponseData> BuildFrom(IEnumerable<SubscriptionInformationData> subscriptionInformation);
+
+        Class BuildFrom(string classString);
     }
 }

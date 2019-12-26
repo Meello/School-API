@@ -145,5 +145,18 @@ namespace School.Core.Mapping
 
             return subscriptionInformation.Select(model => BuildFrom(model)).ToList();
         }
+
+        public Class BuildFrom(string classString)
+        {
+            if(classString == null)
+            {
+                return null;
+            }
+
+            return new Class
+            {
+
+            };
+        }
     }
 }
