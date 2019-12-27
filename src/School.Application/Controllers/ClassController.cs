@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using School.Core.Operations.Class.InsertClass;
 using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
 using System;
@@ -12,26 +13,28 @@ namespace School.Application.Controllers
 
     public class ClassController : ControllerBase
     {
-        private readonly IInsertClass _insertClass;
+        private readonly IInsertSchoolClass _insertClass;
 
         public ClassController(
-            IInsertClass insertClass)
+            IInsertSchoolClass insertClass)
         {
             this._insertClass = insertClass;
         }
 
         [HttpPost]
-        public ActionResult<InsertClassResponse> Insert([FromBody] InsertClassRequestData requestData)
+        public ActionResult<InsertClassResponse> Insert(IFormFile file)
         {
-            InsertClassRequest request = new InsertClassRequest(requestData);
-            InsertClassResponse response = this._insertClass.Process(request);
 
-            if(!response.Success)
-            {
-                return BadRequest(response);
-            }
+            return Ok();
+            //InsertClassRequest request = new InsertClassRequest(requestData);
+            //InsertClassResponse response = this._insertClass.Process(request);
 
-            return Ok(response);
+            //if(!response.Success)
+            //{
+                //return BadRequest(response);
+            //}
+
+            //return Ok(response);
         }
     }
 }

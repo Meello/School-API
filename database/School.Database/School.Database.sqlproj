@@ -114,5 +114,6 @@
   <ItemGroup>
     <None Include="View\Enrolled_Students.sql" />
     <None Include="Programmability\Procedure_VerifyingTime.sql" />
+    <None Include="Programmability\Procedure_InsertSchoolClass.sql" />
   </ItemGroup>
 </Project>

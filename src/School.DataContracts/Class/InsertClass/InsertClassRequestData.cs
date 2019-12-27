@@ -6,6 +6,6 @@ namespace StoneCo.Buy4.School.DataContracts.Class.InsertClass
 {
     public class InsertClassRequestData
     {
-        public string FileAddress { get; set; }
+        public string FullFilePath { get; set; }
     }
 }

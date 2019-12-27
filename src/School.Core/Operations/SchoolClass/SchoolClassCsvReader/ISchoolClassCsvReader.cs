@@ -6,8 +6,8 @@ using System.Text;
 
 namespace School.Core.Operations.Class.ClassCSVReader
 {
-    public interface IClassCsvReader
+    public interface ISchoolClassCsvReader
     {
-        IEnumerable<ClassCsvFile> Execute(InsertClassRequestData requestData);
+        List<string> Execute(InsertClassRequestData requestData);
     }
 }

@@ -7,7 +7,9 @@ namespace School.Core.Repositories
 {
     public interface IClassRepository
     {
-        void Insert(Class @class);
+        void Insert(SchoolClass schoolClass);
+
+        void Insert(List<SchoolClass> schoolClasses);
 
         bool ExistByClassId(byte classId);
     }

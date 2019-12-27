@@ -70,8 +70,8 @@ namespace School.Application
             services.AddScoped<IInsertSubscription, InsertSubscription>();
             services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
             // Class Operations
-            services.AddScoped<IInsertClass, InsertClass>();
-            services.AddScoped<IClassCsvReader, ClassCsvReader>();
+            services.AddScoped<IInsertSchoolClass, InsertSchoolClass>();
+            services.AddScoped<ISchoolClassCsvReader, SchoolClassCsvReader>();
             // Teacher Operation Base
             services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
             services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();
@@ -85,7 +85,7 @@ namespace School.Application
             services.AddScoped<IOperationBase<InsertSubscriptionRequest, InsertSubscriptionResponse>, InsertSubscription>();
             services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
             // Class Operation Base
-            services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertClass>();
+            services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertSchoolClass>();
             // Validators
             services.AddScoped<IIsNullOrZeroValidator, IsNullOrZeroValidator>();
             services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();

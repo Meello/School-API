@@ -63,3 +63,9 @@ message = ClassId don't exist
 
 code = 023
 message = StudentId don't exist
+
+code = 024
+massage = File path is inconsistent.
+
+code = 025
+message = File don't exist.

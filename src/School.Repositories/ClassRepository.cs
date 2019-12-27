@@ -18,48 +18,35 @@ namespace School.Repositories
             this._connectionString = connectionString;
         }
 
-        public void Insert(Class @class)
+        public void Insert(List<SchoolClass> schoolClasses)
         {
-            const string sql = @"SET IDENTITY_INSERT dbo.Class ON
-            INSERT INTO dbo.Class
-            (
-                Local
-                CourseId 
-                TeacherId
-                Shift
-                StartDate
-                EndDate
-                StartTime
-                EndTime
-            )
-            VALUES
-            (
-                @Local
-                @CourseId 
-                @TeacherId
-                @Shift
-                @StartDate
-                @EndDate
-                @StartTime
-                @EndTime
-            )";
+            const string sql = @"InsertSchoolClass";
+
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                sqlConnection.Execute(sql, schoolClasses, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void Insert(SchoolClass schoolClass)
+        {
+            const string sql = @"InsertSchoolClass";
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.AddDynamicParams(new { 
-                //ClassId = @class.ClassId,
-                Local = @class.Local,
-                CourseId  = @class.CourseId,
-                TeacherId = @class.TeacherId,
-                Shift = @class.Shift,
-                StartDate = @class.StartDate,
-                EndDate = @class.EndDate,
-                StartTime = @class.StartTime,
-                EndTime = @class.EndTime
+                Local = schoolClass.Local,
+                CourseId  = schoolClass.CourseId,
+                TeacherId = schoolClass.TeacherId,
+                Shift = schoolClass.Shift,
+                StartDate = schoolClass.StartDate,
+                EndDate = schoolClass.EndDate,
+                StartTime = schoolClass.StartTime,
+                EndTime = schoolClass.EndTime
             });
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                sqlConnection.Execute(sql, parameters);
+                sqlConnection.Execute(sql, parameters, commandType : CommandType.StoredProcedure);
             }
         }
 

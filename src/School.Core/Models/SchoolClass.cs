@@ -4,7 +4,7 @@ using System.Text;
 
 namespace School.Core.Models
 {
-    public class Class
+    public class SchoolClass
     {
 		//public byte ClassId { get; set; }
 

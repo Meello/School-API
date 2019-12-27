@@ -146,49 +146,38 @@ namespace School.Core.Mapping
             return subscriptionInformation.Select(model => BuildFrom(model)).ToList();
         }
 
-        public Class BuildFrom(ClassCsvFile classCsvFile)
+        public SchoolClass BuildFrom(string line)
         {
-            if (classCsvFile == null)
+            string[] splittedLine = line.Split(';');
+            string[] date = splittedLine[4].Split(' ');
+            int endTimeHour = Convert.ToByte(splittedLine[5].Substring(0,splittedLine[5].IndexOf(':'))) + Convert.ToByte(splittedLine[6]);
+
+            if (splittedLine.Count() == 0)
             {
                 return null;
             }
 
-            string[] date = classCsvFile.Period.Split(' ');
-
-            string startTime = classCsvFile.StartTime.ToString();
-
-            int endTimeHour = Convert.ToInt32(startTime.Substring(0, startTime.IndexOf(':'))) + Convert.ToInt32(classCsvFile.DurationInHours);
-
-            return new Class
+            return new SchoolClass
             {
-                //Local,
-                //CourseId,
-                //TeacherId,
-                Shift = classCsvFile.Shift.Substring(0, 1),
+                Local = null, //Não tem o campo Local
+                CourseId = Convert.ToByte(splittedLine[2]),
+                TeacherId = Convert.ToInt64(splittedLine[1]),
+                Shift = splittedLine[3].Substring(0, 1),
                 StartDate = DateTime.Parse(date[0]),
                 EndDate = DateTime.Parse(date[2]),
-                StartTime = classCsvFile.StartTime,
-                EndTime = TimeSpan.Parse($"{endTimeHour}{startTime.Substring(startTime.IndexOf(':'))}")
+                StartTime = TimeSpan.Parse(splittedLine[5]),
+                EndTime = TimeSpan.Parse($"{endTimeHour.ToString()}{splittedLine[5].Substring(splittedLine[5].IndexOf(':'))}")
             };
         }
 
-        public ClassCsvFile BuildFrom(string[] classString)
+        public List<SchoolClass> BuildFrom(List<string> lines)
         {
-            if (classString.Count() == 0)
+            if(lines.Count() == 0)
             {
                 return null;
             }
 
-            return new ClassCsvFile
-            {
-                Id = Convert.ToInt32(classString[0]),
-                Teacher = classString[1],
-                Course = classString[2],
-                Shift = classString[3].Substring(0, 1),
-                Period = classString[4],
-                StartTime = TimeSpan.Parse(classString[5]),
-                DurationInHours = Convert.ToInt32(classString[6])
-            };
+            return lines.Select(model => BuildFrom(model)).ToList();
         }
     }
 }
