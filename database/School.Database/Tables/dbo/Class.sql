@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [Class]
 (
-	ClassId tinyint not null identity(10,10),
+	ClassId int not null identity(10,10),
 	Local varchar(40),
-	CourseId tinyint not null,
+	CourseId int not null,
 	TeacherId bigint not null,
 	[Shift] char(1) not null,
 	StartDate date not null,

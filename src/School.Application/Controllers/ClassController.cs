@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.Core.Operations.Class.InsertClass;
 using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,17 +26,15 @@ namespace School.Application.Controllers
         [HttpPost]
         public ActionResult<InsertClassResponse> Insert(IFormFile file)
         {
+            InsertClassRequest request = new InsertClassRequest(file.OpenReadStream());
+            InsertClassResponse response = this._insertClass.Process(request);
 
-            return Ok();
-            //InsertClassRequest request = new InsertClassRequest(requestData);
-            //InsertClassResponse response = this._insertClass.Process(request);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
 
-            //if(!response.Success)
-            //{
-                //return BadRequest(response);
-            //}
-
-            //return Ok(response);
+            return Ok(response);
         }
     }
 }

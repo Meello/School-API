@@ -146,31 +146,31 @@ namespace School.Core.Mapping
             return subscriptionInformation.Select(model => BuildFrom(model)).ToList();
         }
 
-        public SchoolClass BuildFrom(string line)
+        public ClassInputDto BuildFrom(string line)
         {
             string[] splittedLine = line.Split(';');
             string[] date = splittedLine[4].Split(' ');
-            int endTimeHour = Convert.ToByte(splittedLine[5].Substring(0,splittedLine[5].IndexOf(':'))) + Convert.ToByte(splittedLine[6]);
 
             if (splittedLine.Count() == 0)
             {
                 return null;
             }
 
-            return new SchoolClass
+            return new ClassInputDto
             {
-                Local = null, //Não tem o campo Local
-                CourseId = Convert.ToByte(splittedLine[2]),
-                TeacherId = Convert.ToInt64(splittedLine[1]),
-                Shift = splittedLine[3].Substring(0, 1),
+                Id = Convert.ToInt32(splittedLine[0]),
+                Local = splittedLine[1],
+                Teacher = splittedLine[2],
+                Course = splittedLine[3],
+                Shift = splittedLine[4].Substring(0, 1),
                 StartDate = DateTime.Parse(date[0]),
                 EndDate = DateTime.Parse(date[2]),
                 StartTime = TimeSpan.Parse(splittedLine[5]),
-                EndTime = TimeSpan.Parse($"{endTimeHour.ToString()}{splittedLine[5].Substring(splittedLine[5].IndexOf(':'))}")
+                EndTime = TimeSpan.Parse(splittedLine[5]).Add(TimeSpan.Parse(splittedLine[6]))
             };
         }
 
-        public List<SchoolClass> BuildFrom(List<string> lines)
+        public List<ClassInputDto> BuildFrom(List<string> lines)
         {
             if(lines.Count() == 0)
             {
@@ -181,3 +181,17 @@ namespace School.Core.Mapping
         }
     }
 }
+
+//return new SchoolClass
+//{
+    //Local = null, //Não tem o campo Local
+    ////Buscar no banco
+    //CourseId = Convert.ToByte(splittedLine[2]),
+    //TeacherId = Convert.ToInt64(splittedLine[1]),
+    //Shift = splittedLine[3].Substring(0, 1),
+    //StartDate = DateTime.Parse(date[0]),
+    //EndDate = DateTime.Parse(date[2]),
+    //StartTime = TimeSpan.Parse(splittedLine[5]),
+    ////TimeSpan tem metodo para somar horas
+    //EndTime = TimeSpan.Parse(splittedLine[5]).Add(addHour)
+//};

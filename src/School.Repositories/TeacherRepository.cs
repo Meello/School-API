@@ -262,36 +262,24 @@ namespace School.Repositories
             }
         }
 
-        public bool ExistByLevelId(char levelId)
+        public long GetTeacherIdByName(string name)
         {
-            const string sql = @"SELECT 
-                1
+            const string sql = @"SELECT
+                TeacherId
             FROM
-                dbo.Level
+                dbo.TeacherId
             WHERE
-                LevelId = @levelId";
+                Name = @Name";
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("levelId", levelId, DbType.String);
+            parameters.Add("Name", name, DbType.Int64);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.ExecuteScalar<bool>(sql, parameters);
+                return sqlConnection.ExecuteScalar<long>(sql, parameters);
             }
         }
 
-        public IEnumerable<char> ValidLevelIds()
-        {
-            const string sql = @"SELECT 
-                LevelId
-            FROM
-                dbo.Level";
-            
-            using (SqlConnection sqlConnection = GetSqlConnection())
-            {
-                return sqlConnection.Query<char>(sql);
-            }
-        }
         private SqlConnection GetSqlConnection()
         {
             return new SqlConnection(this._connectionString);

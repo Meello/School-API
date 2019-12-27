@@ -12,10 +12,14 @@ namespace School.Core.Validators.ValidateTeacherParameters
     public class TeacherParametersValidator : ITeacherParametersValidator
     {
         private readonly ITeacherRepository _teacherRepository;
+        private readonly ILevelRepository _levelRepository;
 
-        public TeacherParametersValidator(ITeacherRepository teacherRepository)
+        public TeacherParametersValidator(
+            ITeacherRepository teacherRepository,
+            ILevelRepository levelRepository)
         {
             this._teacherRepository = teacherRepository;
+            this._levelRepository = levelRepository;
         }
 
         public void ValidateTeacherId(long? value, OperationResponseBase response, string fieldname)
@@ -69,7 +73,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
             {
                 response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
             }
-            else if (!this._teacherRepository.ExistByLevelId(level.Value))
+            else if (!this._levelRepository.ExistByLevelId(level.Value))
             {
                 response.AddError("005", $"Invalid {fieldname}! Choose J or P or S");
             }

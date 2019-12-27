@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace StoneCo.Buy4.School.DataContracts.Class.InsertClass
 {
     public class InsertClassRequest : OperationRequestBase
     {
-        public InsertClassRequest(InsertClassRequestData requestData)
+        public InsertClassRequest(Stream file)
         {
-            Data = requestData;
+            File = file;
         }
 
-        public InsertClassRequestData Data { get; }
+        public Stream File { get; }
     }
 }

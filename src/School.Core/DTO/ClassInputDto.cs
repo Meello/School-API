@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace School.Core.Models
+namespace StoneCo.Buy4.School.Core.DTO
 {
-    public class ClassCsvFile
+    public class ClassInputDto
     {
         public int Id { get; set; }
+
+        public string Local { get; set; }
 
         public string Teacher { get; set; }
 
@@ -14,10 +16,12 @@ namespace School.Core.Models
 
         public string Shift { get; set; }
 
-        public string Period { get; set; }
+        public DateTime StartDate { get; set; }
+        
+        public DateTime EndDate { get; set; }
 
         public TimeSpan StartTime { get; set; }
 
-        public int DurationInHours { get; set; }
+        public TimeSpan EndTime { get; set; }
     }
 }

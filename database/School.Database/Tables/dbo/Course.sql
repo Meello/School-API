@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Course]
 (
-	CourseId tinyint not null identity(1,1),
+	CourseId INT not null identity(1,1),
 	AreaId smallint not null,
 	Name varchar(30) not null,
 	Workload smallint not null,

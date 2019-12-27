@@ -22,8 +22,6 @@ namespace School.Core.Repositories
 
         bool ExistByTeacherId(long teacherId);
 
-        bool ExistByLevelId(char levelId);
-
-        IEnumerable<char> ValidLevelIds();
+        long GetTeacherIdByName(string name);
     }
 }

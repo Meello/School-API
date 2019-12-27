@@ -27,6 +27,8 @@ namespace School.Core.Operations.Class.ClassCSVReader
                 schoolClassFileLines.Add(line);
             }
 
+            //Voltar para como era, construir o objeto aqui mesmo
+
             return schoolClassFileLines;
         }
     }

@@ -9,7 +9,7 @@
 @StartTime time,
 @EndTime time
 AS
-    SET IDENTITY_INSERT dbo.Class ON
+    SET IDENTITY_INSERT dbo.Class OFF
     INSERT INTO dbo.Class
     (
         Local,
@@ -31,4 +31,5 @@ AS
         @EndDate,
         @StartTime,
         @EndTime
-    );
+    )
+    SET IDENTITY_INSERT dbo.Class ON;
