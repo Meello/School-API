@@ -71,7 +71,7 @@ namespace School.Application
             services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
             // Class Operations
             services.AddScoped<IInsertSchoolClass, InsertSchoolClass>();
-            services.AddScoped<ISchoolClassCsvReader, SchoolClassCsvReader>();
+            services.AddScoped<IClassInputFile, ClassInputFile>();
             // Teacher Operation Base
             services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
             services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();

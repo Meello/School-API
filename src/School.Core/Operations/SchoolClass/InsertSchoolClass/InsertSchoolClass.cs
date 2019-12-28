@@ -16,16 +16,16 @@ namespace School.Core.Operations.Class.InsertClass
     {
         private ICollection<ClassInputDto> classInputDtos;
 
-        private readonly ISchoolClassCsvReader _classCsvReader;
+        private readonly IClassInputFile _classInputFile;
         private readonly ISchoolMappingResolver _mapperResolver;
         private readonly IClassRepository _classRepository;
 
         public InsertSchoolClass(
-            ISchoolClassCsvReader classCsvReader, 
+            IClassInputFile classInputFile, 
             ISchoolMappingResolver mapperResolver,
             IClassRepository classRepository)
         {
-            this._classCsvReader = classCsvReader;
+            this._classInputFile = classInputFile;
             this._mapperResolver = mapperResolver;
             this._classRepository = classRepository;
         }

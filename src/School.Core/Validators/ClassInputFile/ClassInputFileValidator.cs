@@ -4,7 +4,7 @@ using System.Text;
 
 namespace School.Core.Validators.SchoolClassCsvFile
 {
-    public interface ISchoolClassFileValidator
+    public class ClassInputFileValidator : IClassInputFileValidator
     {
     }
 }
