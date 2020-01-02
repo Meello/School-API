@@ -22,6 +22,8 @@ namespace School.Core.Repositories
 
         bool ExistByTeacherId(long teacherId);
 
+        bool ExistByName(string name);
+
         long GetTeacherIdByName(string name);
     }
 }

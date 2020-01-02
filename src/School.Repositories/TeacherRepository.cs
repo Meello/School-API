@@ -36,7 +36,6 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                //Não estpa encontrando a procedure --> procedure não consta no banco de dados, como consertar?
                 return sqlConnection.QuerySingleOrDefault<Teacher>(sql, parameters, commandType: CommandType.StoredProcedure);
             }
         }
@@ -259,6 +258,27 @@ namespace School.Repositories
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 bool exist = sqlConnection.ExecuteScalar<bool>(sql, parameters);
+
+                return exist;
+            }
+        }
+
+        public bool ExistByName(string name)
+        {
+            const string sql = @"SELECT
+                1
+            FROM
+                dbo.Teacher
+            WHERE
+                Name = @Name";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Name", name, DbType.String);
+
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                bool exist = sqlConnection.ExecuteScalar<bool>(sql, parameters);
+
                 return exist;
             }
         }
@@ -278,6 +298,7 @@ namespace School.Repositories
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
                 long teacherId = sqlConnection.ExecuteScalar<long>(sql, parameters);
+
                 return teacherId;
             }
         }

@@ -17,6 +17,26 @@ namespace School.Repositories
             this._connectionString = connectionString;
         }
 
+        public bool ExistByName(string name)
+        {
+            const string sql = @"SELECT
+                1
+            FROM
+                dbo.Course
+            WHERE
+                Name = @Name";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Name", name, DbType.String);
+
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                bool exist = sqlConnection.ExecuteScalar<bool>(sql, parameters);
+
+                return exist;
+            }
+        }
+
         public int GetCourseIdByName(string name)
         {
             const string sql = @"SELECT
@@ -27,11 +47,13 @@ namespace School.Repositories
                 Name = @Name";
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("Name", name, DbType.Int64);
+            parameters.Add("Name", name, DbType.String);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.ExecuteScalar<int>(sql, parameters);
+                int courseId = sqlConnection.ExecuteScalar<int>(sql, parameters);
+
+                return courseId;
             }
         }
 

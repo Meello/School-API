@@ -10,12 +10,12 @@ namespace School.Core.Validators.Subscription
 {
     public class SubscriptionValidator : ISubscriptionValidator
     {
-        private readonly IIsNullOrZeroValidator _validator;
+        private readonly INullOrZeroValidator _validator;
         private readonly IStudentRepository _studentRepository;
         private readonly IClassRepository _classRepository;
 
         public SubscriptionValidator(
-            IIsNullOrZeroValidator nullOrZeroValidator,
+            INullOrZeroValidator nullOrZeroValidator,
             IStudentRepository studentRepository,
             IClassRepository classRepository)
         {
@@ -28,7 +28,7 @@ namespace School.Core.Validators.Subscription
         {
             InsertSubscriptionResponse response = new InsertSubscriptionResponse();
 
-            if(!this._validator.IsNullOrZero(requestData.StudentId, response, nameof(requestData.StudentId)))
+            if(!this._validator.Execute(requestData.StudentId, response, nameof(requestData.StudentId)))
             {
                 if (!this._studentRepository.ExistByStudentId(requestData.StudentId))
                 {
@@ -36,7 +36,7 @@ namespace School.Core.Validators.Subscription
                 }
             }
 
-            if(!this._validator.IsNullOrZero(requestData.ClassId, response, nameof(requestData.ClassId)))
+            if(!this._validator.Execute(requestData.ClassId, response, nameof(requestData.ClassId)))
             {
                 if (!this._classRepository.ExistByClassId(requestData.ClassId))
                 {

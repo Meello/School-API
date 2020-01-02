@@ -87,3 +87,12 @@ message = StartDate can't be bigger than EndDate
 
 code = 031
 message = StartTime can't be bigger than EndTime
+
+code = 032
+message = The course can't start before 8:00
+
+code = 033
+message = The course can't end after 22:00
+
+code = 034
+message = Duration can't be bigger than 3h

@@ -36,6 +36,7 @@ using School.Core.Operations.Class.InsertClass;
 using School.Core.Operations.Class.ClassCSVReader;
 using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
 using School.Core.Validators.SchoolClassCsvFile;
+using School.Core.Validators.ClassInputDtoParameters;
 
 namespace School.Application
 {
@@ -91,7 +92,8 @@ namespace School.Application
             services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertClass>();
             // Validators
             services.AddScoped<IClassInputDtoValidator, ClassInputDtoValidator>();
-            services.AddScoped<IIsNullOrZeroValidator, IsNullOrZeroValidator>();
+            services.AddScoped<IClassInputDtoParametersValidator, ClassInputDtoParametersValidator>();
+            services.AddScoped<INullOrZeroValidator, NullOrZeroValidator>();
             services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();
             services.AddScoped<ITeacherValidator, TeacherValidator>();
             services.AddScoped<IFilterValidator, FilterValidator>();

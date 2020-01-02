@@ -174,7 +174,7 @@ namespace School.Core.Mapping
                 Local = splittedLine[1],
                 Teacher = splittedLine[2],
                 Course = splittedLine[3],
-                Shift = splittedLine[4].Substring(0, 1),
+                Shift = splittedLine[4],
                 StartDate = DateTime.Parse(date[0]),
                 EndDate = DateTime.Parse(date[2]),
                 StartTime = TimeSpan.Parse(splittedLine[6]),
@@ -196,7 +196,7 @@ namespace School.Core.Mapping
                 EndDate = classInputDto.EndDate,
                 EndTime = classInputDto.EndTime,
                 Local = classInputDto.Local,
-                Shift = classInputDto.Shift,
+                Shift = classInputDto.Shift[0],
                 StartDate = classInputDto.StartDate,
                 StartTime = classInputDto.StartTime,
                 TeacherId = this._teacherRepository.GetTeacherIdByName(classInputDto.Teacher)

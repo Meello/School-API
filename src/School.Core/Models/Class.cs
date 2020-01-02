@@ -14,7 +14,7 @@ namespace School.Core.Models
 		
 		public Int64 TeacherId { get; set; }
 
-		public string Shift { get; set; }
+		public char Shift { get; set; }
 		
 		public DateTime StartDate { get; set; }
 
