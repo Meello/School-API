@@ -12,4 +12,3 @@ CREATE PROCEDURE Verifying_Class AS
 			[Class].CourseId IS NOT NULL
 			AND [Class].TeacherId IS NOT NULL
 		);
-DROP PROCEDURE Verifying_Class;

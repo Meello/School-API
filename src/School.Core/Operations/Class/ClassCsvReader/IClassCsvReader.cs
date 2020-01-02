@@ -7,8 +7,8 @@ using System.Text;
 
 namespace School.Core.Operations.Class.ClassCSVReader
 {
-    public interface IClassInputFile
+    public interface IClassCsvReader
     {
-        List<ClassInputDto> Execute(Stream file);
+        ICollection<ClassInputDto> Execute(Stream file);
     }
 }

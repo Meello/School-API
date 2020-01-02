@@ -17,7 +17,7 @@ namespace School.Repositories
             this._connectionString = connectionString;
         }
 
-        public long GetCourseIdByName(string name)
+        public int GetCourseIdByName(string name)
         {
             const string sql = @"SELECT
                 CourseId
@@ -31,7 +31,7 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.ExecuteScalar<long>(sql, parameters);
+                return sqlConnection.ExecuteScalar<int>(sql, parameters);
             }
         }
 

@@ -18,7 +18,7 @@ namespace School.Repositories
             this._connectionString = connectionString;
         }
 
-        public void Insert(List<SchoolClass> schoolClasses)
+        public void Insert(List<Class> schoolClasses)
         {
             const string sql = @"InsertSchoolClass";
 
@@ -28,12 +28,13 @@ namespace School.Repositories
             }
         }
 
-        public void Insert(SchoolClass schoolClass)
+        public void Insert(Class schoolClass)
         {
             const string sql = @"InsertSchoolClass";
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.AddDynamicParams(new { 
+                ClassId = schoolClass.ClassId,
                 Local = schoolClass.Local,
                 CourseId  = schoolClass.CourseId,
                 TeacherId = schoolClass.TeacherId,
@@ -50,7 +51,7 @@ namespace School.Repositories
             }
         }
 
-        public bool ExistByClassId(byte classId)
+        public bool ExistByClassId(int classId)
         {
             const string sql = @"SELECT
                 1
@@ -60,7 +61,7 @@ namespace School.Repositories
                 ClassId = @ClassId;";
 
             DynamicParameters parameter = new DynamicParameters();
-            parameter.Add("ClassId", classId, DbType.Byte);
+            parameter.Add("ClassId", classId, DbType.Int32);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {

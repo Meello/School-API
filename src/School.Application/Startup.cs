@@ -35,6 +35,7 @@ using School.Core.Validators.NullOrZero;
 using School.Core.Operations.Class.InsertClass;
 using School.Core.Operations.Class.ClassCSVReader;
 using StoneCo.Buy4.School.DataContracts.Class.InsertClass;
+using School.Core.Validators.SchoolClassCsvFile;
 
 namespace School.Application
 {
@@ -51,10 +52,12 @@ namespace School.Application
         public void ConfigureServices(IServiceCollection services)
         {
             // Repositories
-            services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
-            services.AddScoped<ISubscriptionRepository>(provider => new SubscriptionRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<IClassRepository>(provider => new ClassRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<ICourseRepository>(provider => new CourseRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<ILevelRepository>(provider => new LevelRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
             services.AddScoped<IStudentRepository>(provider => new StudentRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<ISubscriptionRepository>(provider => new SubscriptionRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
+            services.AddScoped<ITeacherRepository>(provider => new TeacherRepository(provider.GetService<IConfiguration>().GetConnectionString("SchoolConnection")));
 
             // Teacher Operations
             services.AddScoped<ISchoolMappingResolver, SchoolMappingResolver>();
@@ -70,8 +73,8 @@ namespace School.Application
             services.AddScoped<IInsertSubscription, InsertSubscription>();
             services.AddScoped<ISubscriptionInformations, SubscriptionInformations>();
             // Class Operations
-            services.AddScoped<IInsertSchoolClass, InsertSchoolClass>();
-            services.AddScoped<IClassInputFile, ClassInputFile>();
+            services.AddScoped<IInsertClass, InsertClass>();
+            services.AddScoped<IClassCsvReader, ClassCsvReader>();
             // Teacher Operation Base
             services.AddScoped<IOperationBase<DeleteTeacherRequest, DeleteTeacherResponse>, DeleteTeacher>();
             services.AddScoped<IOperationBase<GetTeacherRequest, GetTeacherResponse>, GetTeacher>();
@@ -85,8 +88,9 @@ namespace School.Application
             services.AddScoped<IOperationBase<InsertSubscriptionRequest, InsertSubscriptionResponse>, InsertSubscription>();
             services.AddScoped<IOperationBase<SubscriptionInformationsRequest, SubscriptionInformationsResponse>, SubscriptionInformations>();
             // Class Operation Base
-            services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertSchoolClass>();
+            services.AddScoped<IOperationBase<InsertClassRequest, InsertClassResponse>, InsertClass>();
             // Validators
+            services.AddScoped<IClassInputDtoValidator, ClassInputDtoValidator>();
             services.AddScoped<IIsNullOrZeroValidator, IsNullOrZeroValidator>();
             services.AddScoped<ISubscriptionValidator, SubscriptionValidator>();
             services.AddScoped<ITeacherValidator, TeacherValidator>();

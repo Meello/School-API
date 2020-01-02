@@ -1,5 +1,5 @@
 ﻿code = 001
-message = Request can't be null 
+message = Request/Object can't be null 
 
 code = 002
 message = TeacherId can't be null
@@ -65,7 +65,25 @@ code = 023
 message = StudentId don't exist
 
 code = 024
-massage = File path is inconsistent.
+message = File is empty
 
 code = 025
-message = File don't exist.
+message = ClassId already exist
+
+code = 026
+message = Invalid teacher
+
+code = 027
+message = Invalid course
+
+code = 028
+message = First letter of shift must be in uppercase
+
+code = 029
+message = Invalid Shift! Valid shifts: Manhã, Tarde, Noite
+
+code = 030
+message = StartDate can't be bigger than EndDate
+
+code = 031
+message = StartTime can't be bigger than EndTime

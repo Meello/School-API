@@ -6,6 +6,6 @@ namespace School.Core.Repositories
 {
     public interface ICourseRepository
     {
-        long GetCourseIdByName(string name);
+        int GetCourseIdByName(string name);
     }
 }

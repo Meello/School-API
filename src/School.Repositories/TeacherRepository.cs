@@ -258,7 +258,8 @@ namespace School.Repositories
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.ExecuteScalar<bool>(sql, parameters);
+                bool exist = sqlConnection.ExecuteScalar<bool>(sql, parameters);
+                return exist;
             }
         }
 
@@ -267,16 +268,17 @@ namespace School.Repositories
             const string sql = @"SELECT
                 TeacherId
             FROM
-                dbo.TeacherId
+                dbo.Teacher
             WHERE
                 Name = @Name";
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("Name", name, DbType.Int64);
+            parameters.Add("Name", name, DbType.String);
 
             using (SqlConnection sqlConnection = GetSqlConnection())
             {
-                return sqlConnection.ExecuteScalar<long>(sql, parameters);
+                long teacherId = sqlConnection.ExecuteScalar<long>(sql, parameters);
+                return teacherId;
             }
         }
 

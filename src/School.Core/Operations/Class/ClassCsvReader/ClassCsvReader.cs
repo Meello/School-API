@@ -10,20 +10,20 @@ using System.Text;
 
 namespace School.Core.Operations.Class.ClassCSVReader
 {
-    public class ClassInputFile : IClassInputFile
+    public class ClassCsvReader : IClassCsvReader
     {
         private readonly ISchoolMappingResolver _mappingResolver;
 
-        public ClassInputFile(ISchoolMappingResolver mappingResolver)
+        public ClassCsvReader(ISchoolMappingResolver mappingResolver)
         {
             this._mappingResolver = mappingResolver;
         }
 
-        public List<ClassInputDto> Execute(Stream file)
+        public ICollection<ClassInputDto> Execute(Stream file)
         {
-            List<ClassInputDto> classInputDtos = new List<ClassInputDto>();
+            ICollection<ClassInputDto> classInputDtos = new List<ClassInputDto>();
 
-            StreamReader reader = new StreamReader($@"{file.FullFilePath}",Encoding.UTF8,true);
+            StreamReader reader = new StreamReader(file, true);
             reader.ReadLine().Skip(1);
 
             while (true)

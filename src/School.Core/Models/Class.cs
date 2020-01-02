@@ -4,13 +4,13 @@ using System.Text;
 
 namespace School.Core.Models
 {
-    public class SchoolClass
+    public class Class
     {
-		//public byte ClassId { get; set; }
+		public int ClassId { get; set; }
 
 		public string Local { get; set; }
 		
-		public byte CourseId { get; set; }
+		public int CourseId { get; set; }
 		
 		public Int64 TeacherId { get; set; }
 

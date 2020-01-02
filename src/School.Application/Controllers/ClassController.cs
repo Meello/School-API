@@ -15,10 +15,10 @@ namespace School.Application.Controllers
 
     public class ClassController : ControllerBase
     {
-        private readonly IInsertSchoolClass _insertClass;
+        private readonly IInsertClass _insertClass;
 
         public ClassController(
-            IInsertSchoolClass insertClass)
+            IInsertClass insertClass)
         {
             this._insertClass = insertClass;
         }

@@ -52,7 +52,7 @@ namespace School.Core.Operations.InsertTeacher
 
                 if(!response.Success)
                 {
-                    response.Errors.Insert(0, new OperationError("000",$"Error!! Value(s) in teacher Id:{teacher.TeacherId} is invalid(s)"));
+                    response.Errors.Insert(0, new OperationError("000",$"Error!! Value(s) in teacher {teacher.TeacherId} is invalid(s)"));
 
                     return response;
                 }

@@ -31,6 +31,8 @@ namespace School.Core.Mapping
 
         ClassInputDto BuildFrom(string line);
 
-        List<ClassInputDto> BuildFrom(List<string> lines);
+        Class BuildFrom(ClassInputDto classInputDtos);
+
+        List<Class> BuildFrom(ICollection<ClassInputDto> classInputDtos);
     }
 }

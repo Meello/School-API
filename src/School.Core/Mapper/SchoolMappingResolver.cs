@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using School.Core.Filters;
 using School.Core.Models;
+using School.Core.Repositories;
 using StoneCo.Buy4.School.Core.DTO;
 using StoneCo.Buy4.School.DataContracts;
 using StoneCo.Buy4.School.DataContracts.SearchTeacher;
@@ -13,6 +14,17 @@ namespace School.Core.Mapping
 {
     public class SchoolMappingResolver : ISchoolMappingResolver
     {
+        private readonly ITeacherRepository _teacherRepository;
+        private readonly ICourseRepository _courseRepository;
+
+        public SchoolMappingResolver(
+            ITeacherRepository teacherRepository,
+            ICourseRepository courseRepository)
+        {
+            this._teacherRepository = teacherRepository;
+            this._courseRepository = courseRepository;
+        }
+
         public TeacherResponseData BuildFrom(Teacher teacher)
         {
             if(teacher == null)
@@ -149,7 +161,7 @@ namespace School.Core.Mapping
         public ClassInputDto BuildFrom(string line)
         {
             string[] splittedLine = line.Split(';');
-            string[] date = splittedLine[4].Split(' ');
+            string[] date = splittedLine[5].Split(' ');
 
             if (splittedLine.Count() == 0)
             {
@@ -165,33 +177,40 @@ namespace School.Core.Mapping
                 Shift = splittedLine[4].Substring(0, 1),
                 StartDate = DateTime.Parse(date[0]),
                 EndDate = DateTime.Parse(date[2]),
-                StartTime = TimeSpan.Parse(splittedLine[5]),
-                EndTime = TimeSpan.Parse(splittedLine[5]).Add(TimeSpan.Parse(splittedLine[6]))
+                StartTime = TimeSpan.Parse(splittedLine[6]),
+                EndTime = TimeSpan.Parse(splittedLine[6]).Add(TimeSpan.FromHours(Convert.ToInt32(splittedLine[7])))
             };
         }
 
-        public List<ClassInputDto> BuildFrom(List<string> lines)
+        public Class BuildFrom(ClassInputDto classInputDto)
         {
-            if(lines.Count() == 0)
+            if(classInputDto == null)
             {
                 return null;
             }
 
-            return lines.Select(model => BuildFrom(model)).ToList();
+            return new Class
+            {
+                ClassId = classInputDto.Id,
+                CourseId = this._courseRepository.GetCourseIdByName(classInputDto.Course),
+                EndDate = classInputDto.EndDate,
+                EndTime = classInputDto.EndTime,
+                Local = classInputDto.Local,
+                Shift = classInputDto.Shift,
+                StartDate = classInputDto.StartDate,
+                StartTime = classInputDto.StartTime,
+                TeacherId = this._teacherRepository.GetTeacherIdByName(classInputDto.Teacher)
+            };
+        }
+
+        public List<Class> BuildFrom(ICollection<ClassInputDto> classInputDtos)
+        {
+            if(classInputDtos.Count() == 0)
+            {
+                return null;
+            }
+
+            return classInputDtos.Select(model => BuildFrom(model)).ToList();
         }
     }
 }
-
-//return new SchoolClass
-//{
-    //Local = null, //Não tem o campo Local
-    ////Buscar no banco
-    //CourseId = Convert.ToByte(splittedLine[2]),
-    //TeacherId = Convert.ToInt64(splittedLine[1]),
-    //Shift = splittedLine[3].Substring(0, 1),
-    //StartDate = DateTime.Parse(date[0]),
-    //EndDate = DateTime.Parse(date[2]),
-    //StartTime = TimeSpan.Parse(splittedLine[5]),
-    ////TimeSpan tem metodo para somar horas
-    //EndTime = TimeSpan.Parse(splittedLine[5]).Add(addHour)
-//};
