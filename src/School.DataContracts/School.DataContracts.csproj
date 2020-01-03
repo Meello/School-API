@@ -6,4 +6,10 @@
     <RootNamespace>StoneCo.Buy4.School.DataContracts</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.0" />
+  </ItemGroup>
+
 </Project>
