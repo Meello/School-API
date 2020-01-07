@@ -5,7 +5,7 @@ using System.Text;
 
 namespace School.Core.Validators.NullOrZero
 {
-    public interface INullOrZeroValidator
+    public interface IIsNullOrZeroValidator
     {
         bool Execute(long? num, OperationResponseBase response, string fieldname);
 
@@ -13,8 +13,8 @@ namespace School.Core.Validators.NullOrZero
 
         bool Execute(string str, OperationResponseBase response, string fieldname);
 
-        bool Execute(DateTime date, OperationResponseBase response, string fieldname);
+        bool Execute(DateTime? date, OperationResponseBase response, string fieldname);
 
-        bool Execute(TimeSpan time, OperationResponseBase response, string fieldname);
+        bool Execute(TimeSpan? time, OperationResponseBase response, string fieldname);
     }
 }

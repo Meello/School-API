@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace School.Application.Controllers
 {
-    [Route("api/teachers")]
+    [Route("api/v1/teachers")]
     //sempre plural o nome de rota --> boas praticas API REST
     //[ApiController] evitar de usar --> customizar as mensagens de erro
     public class TeacherController : ControllerBase

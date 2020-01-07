@@ -66,10 +66,10 @@ namespace School.Core.Mapping
             {
                 TeacherId = requestData.TeacherId,
                 Name = requestData.Name,
-                Gender = requestData.Gender,
-                LevelId = requestData.Level,
-                Salary = requestData.Salary,
-                AdmitionDate = requestData.AdmitionDate
+                Gender = requestData.Gender.Value,
+                LevelId = requestData.Level.Value,
+                Salary = requestData.Salary.Value,
+                AdmitionDate = requestData.AdmitionDate.Value
             };
         }
 

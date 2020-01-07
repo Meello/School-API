@@ -7,24 +7,22 @@ namespace School.Core.Validators.ValidateTeacherParameters
 {
     public interface ITeacherParametersValidator
     {
-        void ValidateTeacherId(long? value, OperationResponseBase response, string fieldName);
+        void ValidateTeacherId(long? value, OperationResponseBase response);
 
-        void ValidateName(string name, OperationResponseBase response, string fieldName);
+        void ValidateName(string name, OperationResponseBase response);
 
-        void ValidateGender(char? gender, OperationResponseBase response, string fieldname);
+        void ValidateGender(char? gender, OperationResponseBase response);
 
-        void ValidateLevel(char? level, OperationResponseBase response, string fieldname);
+        void ValidateLevel(char? level, OperationResponseBase response);
 
-        void ValidateSalary(decimal? salary, OperationResponseBase response, string fieldname);
+        void ValidateSalary(decimal? salary, OperationResponseBase response, string filedname);
 
-        void ValidateAdmitionDate(DateTime? AdmitionDate, OperationResponseBase response, string fieldname);
+        void ValidateAdmitionDate(DateTime? AdmitionDate, OperationResponseBase response, string filedname);
 
-        bool ValidateGender(char? gender);
+        bool IsGenderValid(char? gender);
 
-        bool ValidateLevel(char? level);
+        void ValidatePageSize(int? pageSize, OperationResponseBase response);
 
-        void ValidatePageSize(int pageSize, OperationResponseBase response);
-
-        void ValidatePageNumber(int pageNumber, OperationResponseBase response);
+        void ValidatePageNumber(int? pageNumber, OperationResponseBase response);
     }
 }

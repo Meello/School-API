@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace School.Application.Controllers
 {
-    [Route("api/classes")]
+    [Route("api/v1/classes")]
 
     public class ClassController : ControllerBase
     {

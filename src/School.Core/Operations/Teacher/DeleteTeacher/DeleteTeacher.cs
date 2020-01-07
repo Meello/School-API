@@ -1,6 +1,7 @@
 ﻿using School.Core.Mapping;
 using School.Core.Models;
 using School.Core.Repositories;
+using School.Core.Validators.NullOrZero;
 using StoneCo.Buy4.School.DataContracts.DeleteTeacher;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace School.Core.Operations.DeleteTeacher
     {
         private readonly ITeacherRepository _teacherRepository;
 
-        public DeleteTeacher(ITeacherRepository teacherRepository)
+        public DeleteTeacher(
+            ITeacherRepository teacherRepository)
         {
             this._teacherRepository = teacherRepository;
         }
@@ -33,7 +35,7 @@ namespace School.Core.Operations.DeleteTeacher
 
             if (this._teacherRepository.ExistByTeacherId(request.TeacherId) == false)
             {
-                response.AddError("003", $"{nameof(request.TeacherId)} not found");
+                response.AddError("003", $"{nameof(request.TeacherId)}: {request.TeacherId} not found");
             }
 
             return response;

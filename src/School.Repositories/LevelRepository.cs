@@ -35,6 +35,19 @@ namespace School.Repositories
             }
         }
 
+        public IEnumerable<char> ListAll()
+        {
+            const string sql = @"SELECT 
+                LevelId
+            FROM
+                dbo.Level";
+
+            using (SqlConnection sqlConnection = GetSqlConnection())
+            {
+                return sqlConnection.Query<char>(sql);
+            }
+        }
+
         private SqlConnection GetSqlConnection()
         {
             return new SqlConnection(this._connectionString);

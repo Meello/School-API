@@ -8,9 +8,9 @@ namespace StoneCo.Buy4.School.DataContracts.SearchTeacher
     {
         public string Name { get; set; }
 
-        public List<char?> Genders { get; set; }
+        public List<char> Genders { get; set; }
 
-        public List<char?> LevelIds { get; set; }
+        public List<char> LevelIds { get; set; }
 
         public decimal? MinSalary { get; set; }
 

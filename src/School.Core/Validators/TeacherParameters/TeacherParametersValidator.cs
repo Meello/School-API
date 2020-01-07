@@ -6,140 +6,113 @@ using System.Collections.Generic;
 using System.Text;
 using School.Core.Repositories;
 using System.Linq;
+using School.Core.Validators.NullOrZero;
 
 namespace School.Core.Validators.ValidateTeacherParameters
 {
     public class TeacherParametersValidator : ITeacherParametersValidator
     {
-        private readonly ITeacherRepository _teacherRepository;
         private readonly ILevelRepository _levelRepository;
 
         public TeacherParametersValidator(
-            ITeacherRepository teacherRepository,
             ILevelRepository levelRepository)
         {
-            this._teacherRepository = teacherRepository;
             this._levelRepository = levelRepository;
         }
 
-        public void ValidateTeacherId(long? value, OperationResponseBase response, string fieldname)
+        public void ValidateTeacherId(long? value, OperationResponseBase response)
         {
             if (value == null || value == 0)
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
+                response.AddError("002", $"TeacherId can't be null or zero.");
             }
         }
 
-        public void ValidateName(string name, OperationResponseBase response, string fieldname)
+        public void ValidateName(string name, OperationResponseBase response)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
+                response.AddError("002", $"Name can't be null or empty.");
+
+                return;
             }
-            else if (name.Length > ModelConstants.Teacher.NameMaxLength)
+            
+            if (name.Length > ModelConstants.Teacher.NameMaxLength)
             {
-                response.AddError("004", $"{fieldname} lenght don't supported! Limit: {ModelConstants.Teacher.NameMaxLength} caracters");
+                response.AddError("004", $"Invalid name length: {name.Length} exceeded the limit! Max: {ModelConstants.Teacher.NameMaxLength}.");
             }
-            else if (Regex.IsMatch(name, @"[^a-zA-Z]"))
+
+            if (Regex.IsMatch(name, @"[^a-zA-Z]"))
             {
-                response.AddError("020",$"{fieldname} can't have specials characters");
+                response.AddError("020",$"Name can't have specials characters.");
             }
         }
 
-        public void ValidateGender(char? gender, OperationResponseBase response, string fieldname)
+        public void ValidateGender(char? gender, OperationResponseBase response)
         {
-            if(gender == null || gender == '\u0000')
+            if(!this.IsGenderValid(gender))
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
-            }
-            else if(!char.IsUpper(gender.Value))
-            {
-                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
-            }
-            else if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
-            {
-                response.AddError("005", $"Invalid {fieldname}! Choose M or F");
+                response.AddError("005", $"Invalid gender value: {gender}! Gender must be 'M' or 'F'");
             }
         }
 
-        //Tem que consertar --> como escrever todos os valores possíveis?
-        public void ValidateLevel(char? level, OperationResponseBase response, string fieldname)
+        public void ValidateLevel(char? level, OperationResponseBase response)
         {
-            if (level == null || level == '\u0000')
+            IEnumerable<char> levels = this._levelRepository.ListAll();
+
+            if (!levels.Any(l => l == level))
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
-            }
-            else if (!char.IsUpper(level.Value))
-            {
-                response.Errors.Add(new OperationError("018", $"{fieldname} must be in upper case"));
-            }
-            else if (!this._levelRepository.ExistByLevelId(level.Value))
-            {
-                response.AddError("005", $"Invalid {fieldname}! Choose J or P or S");
+                response.AddError("005", $"Invalid level value: {level}! Valid levels: {string.Join(", ",levels.ToArray())}");
             }
         }
 
-        public void ValidateSalary(decimal? salary, OperationResponseBase response, string fieldname)
+        public void ValidateSalary(decimal? salary, OperationResponseBase response, string filedname)
         {
-            if(salary == null || salary == decimal.MinValue)
+            if(salary > ModelConstants.Teacher.MaxSalary || salary < ModelConstants.Teacher.MinSalary)
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
-            }
-            else if(salary > ModelConstants.Teacher.MaxSalary || salary < ModelConstants.Teacher.MinSalary)
-            {
-                response.AddError("007", $"Value of {fieldname} don't accepted! Choose a value between {ModelConstants.Teacher.MinSalary} and {ModelConstants.Teacher.MaxSalary}");
+                response.AddError("007", $"{filedname} value: {salary} don't accepted! Choose a value between {ModelConstants.Teacher.MinSalary} and {ModelConstants.Teacher.MaxSalary}");
             }
         }
 
         public void ValidateAdmitionDate(DateTime? admitionDate, OperationResponseBase response, string fieldname)
         {
-            if(admitionDate == null || admitionDate == DateTime.MinValue)
+            if(admitionDate == DateTime.MinValue || admitionDate == null)
             {
-                response.AddError("002", $"Field {fieldname} can't be null or zero");
+                response.AddError("002",$"{fieldname} value: {admitionDate} can't be null or zero");
             }
             else if (admitionDate > DateTime.MinValue && admitionDate > DateTime.Today)
             {
-                response.AddError("008", $"{fieldname} can't be bigger than today");
+                response.AddError("008", $"{fieldname} value: {admitionDate} can't be bigger than today");
             }
         }
 
-        public bool ValidateGender(char? gender)
+        public bool IsGenderValid(char? gender)
         {
-            if (gender != null && gender != '\u0000' && gender != 'F' && gender != 'M')
+            if (gender == 'F' || gender == 'M')
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
-        public bool ValidateLevel(char? level)
+        public void ValidatePageSize(int? pageSize, OperationResponseBase response)
         {
-            if (level != null && level != '\u0000' && level != 'J' && level != 'P' && level != 'S')
+            if(pageSize <= 0 || pageSize == null)
             {
-                return false;
-            }
-
-            return true;
-        }
-
-        public void ValidatePageSize(int pageSize, OperationResponseBase response)
-        {
-            if(pageSize <= 0)
-            {
-                response.AddError("002", $"Field {pageSize} can't be null or zero");
+                response.AddError("002", $"Page size: {pageSize} can't be null or zero.");
             }
             else if (pageSize > ModelConstants.Teacher.MaxTeachersPerPage)
             {
-                response.Errors.Add(new OperationError("015", "Number of teachers per page exceeded the limit"));
+                response.Errors.Add(new OperationError("015", $"Page size value: {pageSize} exceeded the limit."));
             }
         }
 
-        public void ValidatePageNumber(int pageNumber, OperationResponseBase response)
+        public void ValidatePageNumber(int? pageNumber, OperationResponseBase response)
         {
-            if (pageNumber <= 0)
+            if (pageNumber <= 0 || pageNumber == null)
             {
-                response.AddError("002", $"Field {pageNumber} can't be null or zero");
+                response.AddError("002", $"Page number: {pageNumber} can't be null or zero.");
             }
         }
     }

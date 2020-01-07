@@ -13,23 +13,23 @@ namespace School.Core.Validators.ClassInputDtoParameters
         private readonly IClassRepository _classRepository;
         private readonly ITeacherRepository _teacherRepository;
         private readonly ICourseRepository _courseRepository;
-        private readonly INullOrZeroValidator _nullOrZeroValidator;
+        private readonly IIsNullOrZeroValidator _isNullOrZeroValidator;
 
         public ClassInputDtoParametersValidator(
             IClassRepository classRepository,
             ITeacherRepository teacherRepository,
             ICourseRepository courseRepository,
-            INullOrZeroValidator nullOrZeroValidator)
+            IIsNullOrZeroValidator isNullOrZeroValidator)
         {
             this._classRepository = classRepository;
             this._teacherRepository = teacherRepository;
             this._courseRepository = courseRepository;
-            this._nullOrZeroValidator = nullOrZeroValidator;
+            this._isNullOrZeroValidator = isNullOrZeroValidator;
         }
 
         public void ClassId(int classId, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(classId, response, "Id"))
+            if (!this._isNullOrZeroValidator.Execute(classId, response, "Id"))
             {
                 if (this._classRepository.ExistByClassId(classId) == true)
                 {
@@ -40,7 +40,7 @@ namespace School.Core.Validators.ClassInputDtoParameters
 
         public void Teacher(string teacher, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(teacher, response, "Teacher"))
+            if (!this._isNullOrZeroValidator.Execute(teacher, response, "Teacher"))
             {
                 if (!this._teacherRepository.ExistByName(teacher))
                 {
@@ -51,7 +51,7 @@ namespace School.Core.Validators.ClassInputDtoParameters
 
         public void Course(string course, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(course, response, "Course"))
+            if (!this._isNullOrZeroValidator.Execute(course, response, "Course"))
             {
                 if (!this._courseRepository.ExistByName(course))
                 {
@@ -62,7 +62,7 @@ namespace School.Core.Validators.ClassInputDtoParameters
 
         public void Shift(string shift, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(shift, response,"Shift"))
+            if (!this._isNullOrZeroValidator.Execute(shift, response,"Shift"))
             {
                 if (!char.IsUpper(shift[0]))
                 {
@@ -77,7 +77,7 @@ namespace School.Core.Validators.ClassInputDtoParameters
 
         public void Date(DateTime startDate, DateTime endDate, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(startDate, response, "StartDate") && !this._nullOrZeroValidator.Execute(endDate, response, "EndDate"))
+            if (!this._isNullOrZeroValidator.Execute(startDate, response, "StartDate") && !this._isNullOrZeroValidator.Execute(endDate, response, "EndDate"))
             {
                 if (startDate > endDate)
                 {
@@ -88,7 +88,7 @@ namespace School.Core.Validators.ClassInputDtoParameters
 
         public void Time(TimeSpan startTime, TimeSpan endTime, OperationResponseBase response, string lineWithError)
         {
-            if (!this._nullOrZeroValidator.Execute(startTime, response, "StartTime") && !this._nullOrZeroValidator.Execute(endTime, response, "EndTime"))
+            if (!this._isNullOrZeroValidator.Execute(startTime, response, "StartTime") && !this._isNullOrZeroValidator.Execute(endTime, response, "EndTime"))
             {
                 StartTime(startTime, response, lineWithError);
                 
