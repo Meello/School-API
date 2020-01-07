@@ -22,7 +22,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
 
         public void ValidateTeacherId(long? value, OperationResponseBase response)
         {
-            if (value == null || value == 0)
+            if (value == null || value <= 0)
             {
                 response.AddError("002", $"TeacherId can't be null or zero.");
             }
