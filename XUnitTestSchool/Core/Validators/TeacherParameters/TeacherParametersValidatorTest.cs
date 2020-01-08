@@ -4,6 +4,7 @@ using School.Core.Repositories;
 using School.Core.Validators.ValidateTeacherParameters;
 using StoneCo.Buy4.School.DataContracts;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,10 @@ namespace XUnitTestSchool.Core.Validators.TeacherParameters
         public TeacherParametersValidatorTest()
         {
             this._levelRepositoryMock = new Mock<ILevelRepository>();
+
+            this._levelRepositoryMock.Setup(x => x.ListAll()).Returns("SPJ");
+
+            //this._levelRepositoryMock.Setup(x => x.ExistByLevelId(It.IsAny<char>())).Returns(false);
 
             this._validator = new TeacherParametersValidator(this._levelRepositoryMock.Object);
         }
@@ -49,16 +54,7 @@ namespace XUnitTestSchool.Core.Validators.TeacherParameters
         }
 
         [Theory]
-        [InlineData("",false,1)]
-        [InlineData(null,false,1)]
-        [InlineData("b@&¨@&*%#!&$)*#&*$¨@#&%*)@#&%$(@#¨&%&($(", false, 2)]
-        [InlineData("12345678901234567890123456789012", false, 1)]
-        [InlineData("q^/", false, 1)]
-        [InlineData("123456789012345678901234567890123", false, 2)]
-        [InlineData("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", false, 1)]
-        [InlineData("qá", true, 0)]
-        [InlineData("a", true, 0)]
-        [InlineData("abcdefghijklmnopqrstuvwxyzABCDEF", true, 0)]
+        [ClassData(typeof(ValidateNameTestData))]
         public void ValidateName_Should_WorkCorrectly(string input, bool isValid, int errorCount)
         {
             // Arrange
@@ -68,18 +64,12 @@ namespace XUnitTestSchool.Core.Validators.TeacherParameters
             this._validator.ValidateName(input, response);
 
             // Assert
-            response.Errors.Count.Should().Be(errorCount);
             response.Success.Should().Be(isValid);
+            response.Errors.Count.Should().Be(errorCount);
         }
 
         [Theory]
-        [InlineData(null, false)]
-        [InlineData(minChar, false)]
-        [InlineData(maxChar, false)]
-        [InlineData('A', false)]
-        [InlineData('Z', false)]
-        [InlineData('F', true)]
-        [InlineData('M', true)]
+        [ClassData(typeof(ValidateGenderTestData))]
         public void IsGenderValid_Should_ReturnTrue_When_FOrM_And_False_Otherwise(char? input, bool isValid)
         {
             // Act
@@ -90,13 +80,8 @@ namespace XUnitTestSchool.Core.Validators.TeacherParameters
         }
 
         [Theory]
-        [InlineData(null, false)]
-        [InlineData('\0', false)]
-        [InlineData('A', false)]
-        [InlineData('Z', false)]
-        [InlineData('F', true)]
-        [InlineData('M', true)]
-        public void ValidateGender_Should_ReturnTrue_When_FOrM_And_False_Otherwise(char? input, bool isValid)
+        [ClassData(typeof(ValidateGenderTestData))]
+        public void ValidateGender_Should_HaveNoError_When_FOrM_And_AddError_Otherwise(char? input, bool isValid)
         {
             // Arrange
             int errorCount = isValid ? 0 : 1;
@@ -110,7 +95,56 @@ namespace XUnitTestSchool.Core.Validators.TeacherParameters
             responseBase.Success.Should().Be(isValid);
             responseBase.Errors.Count.Should().Be(errorCount);
         }
+
+        [Theory]
+        [ClassData(typeof(ValidateLevelTestData))]
+        public void ValidateLevel_Should_HaveNoError_When_SOrPOrJ_And_AddError_Otherwise(char? input, bool isValid)
+        {
+            // Arrange
+            int errorCount = isValid ? 0 : 1;
+
+            OperationResponseBase responseBase = new OperationResponseBase();
+
+            // Act
+            this._validator.ValidateLevel(input, responseBase);
+
+            // Assert
+            responseBase.Success.Should().Be(isValid);
+            responseBase.Errors.Count.Should().Be(errorCount);
+        }
+
+        [Theory]
+        [ClassData(typeof(ValidateSalaryTestData))]
+        public void ValidateSalary_Should_HaveNoError_When_Between1000And10000_And_AddError_Otherwise(decimal? input, bool isValid)
+        {
+            // Arrange
+            int errorCount = isValid ? 0 : 1;
+
+            OperationResponseBase responseBase = new OperationResponseBase();
+
+            // Act
+            this._validator.ValidateSalary(input, responseBase, "Teste");
+
+            // Assert
+            responseBase.Success.Should().Be(isValid);
+            responseBase.Errors.Count.Should().Be(errorCount);
+        }
+
+        [Theory]
+        [ClassData(typeof(ValidateSalaryTestData))]
+        public void ValidateAdmitionDate_Should_HaveNoError_When_Between1000And10000_And_AddError_Otherwise(decimal? input, bool isValid)
+        {
+            // Arrange
+            int errorCount = isValid ? 0 : 1;
+
+            OperationResponseBase responseBase = new OperationResponseBase();
+
+            // Act
+            this._validator.ValidateSalary(input, responseBase, "Teste");
+
+            // Assert
+            responseBase.Success.Should().Be(isValid);
+            responseBase.Errors.Count.Should().Be(errorCount);
+        }
     }
 }
-
-//this._levelRepositoryMock.Setup(x => x.ExistByLevelId(It.IsAny<char>())).Returns(false);

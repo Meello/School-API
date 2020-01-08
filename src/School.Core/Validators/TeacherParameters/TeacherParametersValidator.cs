@@ -42,7 +42,7 @@ namespace School.Core.Validators.ValidateTeacherParameters
                 response.AddError("004", $"Invalid name length: {name.Length} exceeded the limit! Max: {ModelConstants.Teacher.NameMaxLength}.");
             }
 
-            if (Regex.IsMatch(name, @"[^a-zA-Z]"))
+            if (name.Any(c => char.IsSymbol(c)) || name.Any(c => char.IsNumber(c)))
             {
                 response.AddError("020",$"Name can't have specials characters.");
             }
