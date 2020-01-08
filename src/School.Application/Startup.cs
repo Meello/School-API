@@ -104,7 +104,7 @@ namespace School.Application
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ic Vibrations", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "School Application", Version = "v1" });
             });
         }
 
